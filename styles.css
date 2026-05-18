@@ -191,7 +191,7 @@ body.boot .app { display: none !important; }
 .narrator {
   position: fixed;
   right: 1rem; bottom: 1rem;
-  z-index: 80;
+  z-index: 250;
   max-width: 380px;
   background: linear-gradient(180deg, #1d1812 0%, #16110b 100%);
   border: 1px solid #3a2f1f;
