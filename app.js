@@ -1,3 +1,7 @@
+/* Greet anyone who opens DevTools — they're the kind of person who'd enjoy what's hidden. */
+console.log('%c👋 You opened the inspector.', 'color:#c69b5e;font-size:14px;font-weight:700;font-family:monospace;');
+console.log('%c   He hoped you would. Press ~ to open the terminal.', 'color:#9a8c6f;font-size:12px;font-family:monospace;');
+
 /* ════════════════════════════════════════════════════════════════════════
    Nikos Nikolaou — personal site
    Single-file app. Sections (search for "═══" to jump):
@@ -49,6 +53,9 @@ const LS = {
   SEEN_INTRO: 'nikos.seenIntro',   // '1'
   VIEW:     'nikos.view',          // 'adventurer' | 'patron'
   VISITS:   'nikos.visits',        // number
+  D20_RESULT: 'nikos.d20Result',   // last roll, persists; one roll per visitor
+  // The "trolled" flag is intentionally in-memory only (State.cursedTrolled)
+  // so the joke resets on reload.
 };
 
 const State = {
@@ -57,6 +64,7 @@ const State = {
   audioEnabled: false,
   swapCount: 0,        // mid-session view swaps
   cursedClicks: 0,
+  cursedTrolled: false, // resets on reload — button reappears after refresh
 };
 
 const Storage = {
@@ -102,15 +110,13 @@ function showDataError() {
 /* ════ 3. Narrator ════ */
 
 const Narrator = {
-  queue: [],
-  current: null,
-  lastFired: {},
-  history: [],   // recent line IDs for anti-repeat
+  current: null,         // currently playing { line, triggerId }
+  lastFired: {},         // trigger -> ts (for per-trigger cooldown)
+  history: [],           // recent line IDs (anti-repeat)
   audioEl: null,
   bubbleEl: null,
   textEl: null,
   hideTimer: null,
-  textTimer: null,
   cooldownDefault: 8000,
 
   init() {
@@ -118,41 +124,31 @@ const Narrator = {
     this.textEl = $('#narratorText');
     this.audioEl = $('#narratorAudio');
     this.audioEl.addEventListener('ended', () => this.audioEnded());
-    this.audioEl.addEventListener('error', () => this.audioEnded()); // graceful fallback
+    // If audio fails to load (file missing, 404, network), don't dismiss the
+    // bubble — fall back to the text-read timer so the visitor can still read.
+    this.audioEl.addEventListener('error', () => this.audioFailedFallback());
     $('#audioToggle').addEventListener('click', () => this.toggleAudio());
     $('#dismissNarrator').addEventListener('click', () => this.dismiss());
     this.refreshAudioIcon();
   },
 
+  /* No queue — every fire pre-empts the current line and plays the new one.
+     Cooldown is per-trigger (don't spam the same one); anti-repeat history
+     keeps multi-line triggers from saying the same line twice in a row. */
   fire(triggerId, opts = {}) {
-    const { priority = 'NORMAL', cooldown = this.cooldownDefault } = opts;
+    const { cooldown = this.cooldownDefault, onEnd = null } = opts;
     const lines = State.data?.voicelines?.[triggerId];
-    if (!lines || lines.length === 0) return;
+    if (!lines || lines.length === 0) { if (onEnd) onEnd(); return; }
 
-    // Cooldown check
     const last = this.lastFired[triggerId];
-    if (last && Date.now() - last < cooldown && priority !== 'HIGH') return;
+    if (last && Date.now() - last < cooldown) { if (onEnd) onEnd(); return; }
 
     const line = this.pickLine(lines);
-    if (!line) return;
+    if (!line) { if (onEnd) onEnd(); return; }
 
-    if (priority === 'HIGH') {
-      this.stopCurrent();
-      this.queue = [{ triggerId, line }];
-      this.playNext();
-    } else if (priority === 'NORMAL') {
-      if (this.current) {
-        this.queue = [{ triggerId, line }];   // replace queue (latest wins)
-      } else {
-        this.queue.push({ triggerId, line });
-        this.playNext();
-      }
-    } else { // LOW
-      if (this.current || this.queue.length > 0) return; // drop
-      this.queue.push({ triggerId, line });
-      this.playNext();
-    }
-
+    this.stopCurrent();
+    this._onEnd = onEnd;
+    this.playLine(triggerId, line);
     this.lastFired[triggerId] = Date.now();
   },
 
@@ -162,19 +158,15 @@ const Narrator = {
     return rand(available.length ? available : lines);
   },
 
-  playNext() {
-    if (this.current) return;
-    const slot = this.queue.shift();
-    if (!slot) return;
-    this.current = slot;
-    this.history.push(slot.line.id);
+  playLine(triggerId, line) {
+    this.current = { triggerId, line };
+    this.history.push(line.id);
     if (this.history.length > 20) this.history.shift();
-    this.showBubble(slot.line.text);
-    if (State.audioEnabled && slot.line.id) {
-      this.playAudio(slot.line.id);
+    this.showBubble(line.text);
+    if (State.audioEnabled && line.id) {
+      this.playAudio(line.id);
     } else {
-      // Auto-dismiss after estimated read time
-      const ms = this.estimateReadMs(slot.line.text);
+      const ms = this.estimateReadMs(line.text);
       this.hideTimer = setTimeout(() => this.audioEnded(), ms);
     }
   },
@@ -182,21 +174,24 @@ const Narrator = {
   playAudio(id) {
     const src = `audio/${id}.mp3`;
     this.audioEl.src = src;
-    this.audioEl.play().catch(() => {
-      // Audio file missing or blocked — fall back to text timer
-      const ms = this.estimateReadMs(this.current?.line.text || '');
-      this.hideTimer = setTimeout(() => this.audioEnded(), ms);
-    });
+    this.audioEl.play().catch(() => this.audioFailedFallback());
+  },
+
+  /* Audio file missing / blocked / 404 — keep the bubble visible for the
+     estimated read time so the visitor still sees the line. */
+  audioFailedFallback() {
+    if (!this.current) return;
+    if (this.hideTimer) clearTimeout(this.hideTimer);
+    const ms = this.estimateReadMs(this.current.line.text || '');
+    this.hideTimer = setTimeout(() => this.audioEnded(), ms);
   },
 
   audioEnded() {
     if (this.hideTimer) { clearTimeout(this.hideTimer); this.hideTimer = null; }
     this.current = null;
-    // Brief gap before next line, then continue queue or hide bubble
-    setTimeout(() => {
-      if (this.queue.length > 0) this.playNext();
-      else this.hideBubble();
-    }, 350);
+    const cb = this._onEnd; this._onEnd = null;
+    if (cb) { try { cb(); } catch {} }
+    setTimeout(() => { if (!this.current) this.hideBubble(); }, 300);
   },
 
   stopCurrent() {
@@ -217,16 +212,15 @@ const Narrator = {
   },
 
   hideBubble() {
-    if (this.current || this.queue.length > 0) return;
+    if (this.current) return;
     this.bubbleEl.classList.add('leaving');
     setTimeout(() => {
-      if (!this.current && this.queue.length === 0) this.bubbleEl.hidden = true;
+      if (!this.current) this.bubbleEl.hidden = true;
     }, 300);
   },
 
   dismiss() {
     this.stopCurrent();
-    this.queue = [];
     this.hideBubble();
   },
 
@@ -264,15 +258,17 @@ const Intro = {
     $$('.door').forEach(btn => {
       btn.addEventListener('click', () => this.chooseDoor(btn.dataset.view));
     });
-
-    const seenBefore = Storage.get(LS.SEEN_INTRO) === '1';
-    if (seenBefore) {
-      // Returning visitor — light flow
-      this.chooseAudio(Storage.get(LS.AUDIO) === 'on', { quick: true });
+    // We always show the audio prompt on every load. Browsers block audio
+    // playback without a user gesture, so the prompt's click is the gesture
+    // that authorises everything downstream. Returning visitors just see a
+    // different cold-open line.
+    const promptTitle = $('#audioPromptTitle');
+    if (promptTitle && Storage.get(LS.SEEN_INTRO) === '1') {
+      promptTitle.textContent = '🔊 Back again. Voice on?';
     }
   },
 
-  chooseAudio(audioOn, { quick = false } = {}) {
+  chooseAudio(audioOn) {
     State.audioEnabled = audioOn;
     Storage.set(LS.AUDIO, audioOn ? 'on' : 'off');
     Narrator.refreshAudioIcon();
@@ -282,24 +278,19 @@ const Intro = {
     coldOpen.classList.add('introStep--active');
     coldOpen.setAttribute('aria-hidden', 'false');
 
-    const isReturning = Storage.get(LS.SEEN_INTRO) === '1';
-
-    if (quick && isReturning) {
-      // Short return line, skip the full cold open typewriter
-      $('#coldOpenText').textContent = '';
-      $('#coldOpenText').classList.add('done');
-      $('#doors').classList.add('visible');
-      // Trigger return line through narrator AFTER intro is gone
-      setTimeout(() => Narrator.fire('returningVisitor', { priority: 'HIGH' }), 600);
-    } else {
-      this.runColdOpen();
-    }
+    this.runColdOpen();
   },
 
   async runColdOpen() {
     const textEl = $('#coldOpenText');
-    const lines = State.data.voicelines.coldOpen;
-    const line = lines[0];
+    const isReturning = Storage.get(LS.SEEN_INTRO) === '1';
+    const is3am = new Date().getHours() === 3;
+    // 3am window replaces the welcome entirely — easter egg for the insomniacs.
+    let bank;
+    if (is3am && State.data.voicelines.welcome_3am) bank = State.data.voicelines.welcome_3am;
+    else if (isReturning) bank = State.data.voicelines.returningVisitor || State.data.voicelines.coldOpen;
+    else bank = State.data.voicelines.coldOpen;
+    const line = bank[Math.floor(Math.random() * bank.length)];
     const fullText = line.text;
 
     // Pre-play audio if enabled — kicks off in parallel with type-on
@@ -329,9 +320,12 @@ const Intro = {
   skip() {
     this.skipped = true;
     try { Narrator.audioEl.pause(); } catch {}
-    // Force-finish text + reveal doors immediately
-    const lines = State.data.voicelines.coldOpen;
-    $('#coldOpenText').textContent = lines[0].text;
+    const isReturning = Storage.get(LS.SEEN_INTRO) === '1';
+    const bank = isReturning
+      ? (State.data.voicelines.returningVisitor || State.data.voicelines.coldOpen)
+      : State.data.voicelines.coldOpen;
+    const line = bank[0];
+    $('#coldOpenText').textContent = line.text;
     $('#coldOpenText').classList.add('done');
     $('#audioPrompt').classList.remove('introStep--active');
     const coldOpen = $('#coldOpenScreen');
@@ -403,7 +397,10 @@ const Views = {
       const modStr = mod >= 0 ? `+${mod}` : `${mod}`;
       return el('button', {
           class: 'stat', dataset: { id: s.id },
-          onclick: () => Narrator.fire(`clickStat_${s.id}`, { priority: 'NORMAL', cooldown: 4000 })
+          onclick: () => {
+            Narrator.fire(`clickStat_${s.id}`, { cooldown: 4000 });
+            Hints.noteStatClick();
+          }
         },
         el('div', { class: 'statLabel' }, s.label),
         el('div', { class: 'statValue' }, String(s.value)),
@@ -502,6 +499,24 @@ const Views = {
         el('span', {}, '📍 ' + d.identity.location),
       ),
     );
+
+    // Cursed seal — final element of the Adventurer view, centered.
+    // Hidden after BSOD fires for the rest of THIS session; reload restores.
+    const view = $('#view-adventurer');
+    let cursedRow = view.querySelector('.cursedRow');
+    if (!cursedRow && !State.cursedTrolled) {
+      cursedRow = el('div', { class: 'cursedRow' },
+        el('button', { id: 'cursedButton', class: 'cursedButton', 'aria-label': 'Do not click', title: "don't" }, '⚠ DO NOT CLICK'),
+      );
+      view.append(cursedRow);
+    }
+
+    // Restore D20 result if visitor already rolled this visit (LS-backed).
+    const savedRoll = Storage.get(LS.D20_RESULT);
+    if (savedRoll != null) {
+      const value = parseInt(savedRoll, 10);
+      if (!isNaN(value)) D20.applyResult(value, { restoring: true });
+    }
   },
 
   renderPatron() {
@@ -663,7 +678,12 @@ const Showcase = {
       this.el.setAttribute('aria-hidden', 'true');
       document.body.style.overflow = '';
     }, 280);
-    Narrator.fire('closeShowcase', { priority: 'NORMAL', cooldown: 0 });
+    // First-time close fires the terminal hint variant; subsequent closes use the generic line.
+    if (!Hints.fired.has('closeShowcase_first')) {
+      Hints.fireOnce('closeShowcase_first');
+    } else {
+      Narrator.fire('closeShowcase', { cooldown: 0 });
+    }
   },
 };
 
@@ -693,6 +713,14 @@ const Console = {
     });
 
     this.input.addEventListener('keydown', (e) => {
+      // When the RPG is active and input is empty, arrows/enter/digits drive its menu.
+      const rpgMenuMode = window.RPG?.active && this.input.value === '';
+      if (rpgMenuMode) {
+        if (e.key === 'ArrowUp')   { e.preventDefault(); window.RPG.menuMove(-1); return; }
+        if (e.key === 'ArrowDown') { e.preventDefault(); window.RPG.menuMove(1);  return; }
+        if (e.key === 'Enter')     { e.preventDefault(); window.RPG.menuRun();    return; }
+        if (/^[1-9]$/.test(e.key)) { e.preventDefault(); window.RPG.menuPick(parseInt(e.key, 10) - 1); return; }
+      }
       if (e.key === 'Enter') {
         const cmd = this.input.value.trim();
         this.input.value = '';
@@ -715,12 +743,36 @@ const Console = {
     this.el.hidden = false;
     this.visible = true;
     this.input.focus();
+    this.dockNarrator();
+    Secrets.unlock('terminal');
     if (this.history.children.length === 0) {
-      this.print('nikos@dm:~$ tilde to toggle. type "help" for commands.', 'out');
+      this.print('nikos@dm:~$ tilde to toggle. type "help" for commands. type `play` to enter the dungeon.', 'out');
       Narrator.fire('openConsole', { priority: 'HIGH', cooldown: 5000 });
     }
   },
-  hide() { this.el.hidden = true; this.visible = false; },
+  hide() {
+    this.el.hidden = true;
+    this.visible = false;
+    this.undockNarrator();
+  },
+
+  /* When the console is open the narrator docks to the top of it as a
+     terminal-flavored strip — keeps the speech "inside" the same window
+     the player is reading instead of floating over the page. */
+  dockNarrator() {
+    const narrator = $('#narrator');
+    if (!narrator) return;
+    if (narrator.parentNode === this.el) return;
+    this.el.prepend(narrator);
+    narrator.classList.add('narrator--docked');
+  },
+  undockNarrator() {
+    const narrator = $('#narrator');
+    if (!narrator) return;
+    if (narrator.parentNode !== this.el) return;
+    document.body.append(narrator);
+    narrator.classList.remove('narrator--docked');
+  },
 
   print(text, cls = 'out') {
     const row = el('div', { class: `row ${cls}` }, text);
@@ -728,7 +780,46 @@ const Console = {
     this.history.scrollTop = this.history.scrollHeight;
   },
 
+  /* Clickable line — used by the help listing and one-shot reveals like the
+     post-dungeon "Hack Terminal?" prompt. */
+  printCmd(cmd, desc) {
+    const row = el('div', { class: 'row cmdRow' });
+    const btn = el('button', {
+      class: 'cmdLink',
+      onclick: () => {
+        // Commands with placeholders pre-fill the input for the visitor to edit;
+        // others run immediately.
+        const hasPlaceholder = /[<\[]/.test(cmd);
+        if (hasPlaceholder) {
+          // Drop placeholder text, keep the verb (e.g. "cast <spell>" → "cast ")
+          this.input.value = cmd.replace(/\s*[<\[].+$/, '') + ' ';
+          this.input.focus();
+        } else {
+          this.run(cmd);
+        }
+      },
+    }, cmd);
+    row.append(btn);
+    if (desc) row.append(el('span', { class: 'cmdDesc' }, ' — ' + desc));
+    this.history.append(row);
+    this.history.scrollTop = this.history.scrollHeight;
+  },
+
+  printButton(label, onClick, cls = 'cmdLink consoleReveal') {
+    const row = el('div', { class: 'row' });
+    const btn = el('button', { class: cls, onclick: onClick }, label);
+    row.append(btn);
+    this.history.append(row);
+    this.history.scrollTop = this.history.scrollHeight;
+  },
+
   run(cmd) {
+    // If RPG game is active, route all input there
+    if (window.RPG?.active) {
+      this.print(`dungeon> ${cmd}`);
+      window.RPG.process(cmd);
+      return;
+    }
     this.print(`nikos@dm:~$ ${cmd}`);
     const [name, ...args] = cmd.split(/\s+/);
     const handler = this.commands[name.toLowerCase()];
@@ -738,17 +829,32 @@ const Console = {
 
   commands: {
     help() {
-      this.print('Available:', 'out');
-      this.print('  help                    — this list', 'out');
-      this.print('  whoami                  — who is Nikos', 'out');
-      this.print('  ls hobbies              — list current hobbies', 'out');
-      this.print('  ls work                 — list work history', 'out');
-      this.print('  cast <spell>            — cast a spell (try fireball)', 'out');
-      this.print('  roll [Nd]M              — dice roll, e.g. roll 1d20', 'out');
-      this.print('  view adventurer|patron  — switch view', 'out');
-      this.print('  contact                 — how to reach him', 'out');
-      this.print('  clear                   — clear console', 'out');
-      this.print('  exit                    — close console', 'out');
+      this.print('Available — click a command to run, or type:', 'out');
+      this.printCmd('help',              'this list');
+      this.printCmd('whoami',            'who is Nikos');
+      this.printCmd('ls hobbies',        'list current hobbies');
+      this.printCmd('ls work',           'list work history');
+      this.printCmd('cast <spell>',      'cast a spell (try fireball)');
+      this.printCmd('roll 1d20',         'roll dice');
+      this.printCmd('view adventurer',   'switch view');
+      this.printCmd('view patron',       'switch view');
+      this.printCmd('contact',           'how to reach him');
+      this.printCmd('play',              'enter the dungeon (RPG game)');
+      this.printCmd('reset',             'wipe state, reload (testing)');
+      this.printCmd('clear',             'clear console');
+      this.printCmd('exit',              'close console');
+    },
+    play(args) {
+      if (!window.RPG) { this.print('RPG module not loaded.', 'err'); return; }
+      window.RPG.start(args[0]);
+    },
+    reset(args) {
+      const what = (args[0] || 'all').toLowerCase();
+      this.print(`Clearing state: ${what}. Reloading...`, 'narr');
+      const target = what === 'intro'
+        ? `?reset=intro`
+        : `?reset`;
+      setTimeout(() => { window.location.search = target; }, 600);
     },
     whoami() {
       this.print(State.data.content.identity.name + ' — ' + State.data.content.identity.tagline, 'out');
@@ -801,32 +907,205 @@ const Console = {
 /* ════ 9. Easter eggs ════ */
 
 const Cursed = {
+  clickTimes: [],   // recent click timestamps within the 20s window
+  locked: false,    // true after click 13 — prevents accidental retrigger during the BSOD ramp
   init() {
-    $('#cursedButton').addEventListener('click', () => this.click());
+    document.addEventListener('click', (e) => {
+      const btn = e.target.closest && e.target.closest('#cursedButton');
+      if (btn) this.click();
+    });
   },
   click() {
-    State.cursedClicks += 1;
+    // Hard-stop once the BSOD has been armed — buys ~2-3s of safety before the
+    // overlay actually covers the page and the button row is removed.
+    if (this.locked) return;
+
+    // 13 clicks within 20 seconds → the troll fires. Counter is in-memory only
+    // (resets on refresh) — the gag is a fast-spam discovery, not a slow grind.
+    const now = Date.now();
+    this.clickTimes = this.clickTimes.filter(t => now - t < 20000);
+    this.clickTimes.push(now);
+    const count = this.clickTimes.length;
+    State.cursedClicks = count;
+
+    Secrets.unlock('cursed_click');
+
+    // Always glitch
     const app = $('#app');
-    app.classList.remove('glitching'); void app.offsetWidth; // restart animation
+    app.classList.remove('glitching'); void app.offsetWidth;
     app.classList.add('glitching');
     setTimeout(() => app.classList.remove('glitching'), 900);
-    Narrator.fire(State.cursedClicks === 1 ? 'cursedButton_first' : 'cursedButton_repeat', { priority: 'HIGH', cooldown: 0 });
+
+    if (count >= 13) {
+      this.locked = true;
+      this.clickTimes = [];
+      Secrets.unlock('cursed_bsod');
+      this.playCrashSfx();
+      Narrator.fire('cursedBSOD', { priority: 'HIGH', cooldown: 0 });
+      setTimeout(() => {
+        this.goFullscreen();
+        setTimeout(() => BSOD.trigger(), 500);
+      }, 600);
+    } else {
+      // One unique line per click 1..12
+      const n = Math.min(count, 12);
+      Narrator.fire(`cursedButton_${n}`, { priority: 'HIGH', cooldown: 0 });
+    }
+  },
+  goFullscreen() {
+    const el = document.documentElement;
+    const req = el.requestFullscreen || el.webkitRequestFullscreen || el.msRequestFullscreen;
+    if (!req || document.fullscreenElement) return;
+    try { Promise.resolve(req.call(el)).catch(() => {}); } catch {}
+  },
+  /* Synthesized crash SFX — Web Audio so we don't ship an extra MP3.
+     Gated on audioEnabled to respect the opt-in audio design lock. */
+  playCrashSfx() {
+    if (!State.audioEnabled) return;
+    try {
+      const Ctx = window.AudioContext || window.webkitAudioContext;
+      if (!Ctx) return;
+      const ctx = new Ctx();
+      const now = ctx.currentTime;
+
+      // White-noise burst, decaying — the "crunch"
+      const len = Math.floor(ctx.sampleRate * 0.45);
+      const buf = ctx.createBuffer(1, len, ctx.sampleRate);
+      const data = buf.getChannelData(0);
+      for (let i = 0; i < len; i++) data[i] = (Math.random() * 2 - 1) * (1 - i / len);
+      const noise = ctx.createBufferSource();
+      noise.buffer = buf;
+      const noiseGain = ctx.createGain();
+      noiseGain.gain.setValueAtTime(0.35, now);
+      noise.connect(noiseGain).connect(ctx.destination);
+      noise.start(now);
+
+      // Descending sawtooth — the "drop"
+      const osc = ctx.createOscillator();
+      osc.type = 'sawtooth';
+      osc.frequency.setValueAtTime(520, now);
+      osc.frequency.exponentialRampToValueAtTime(40, now + 0.55);
+      const oscGain = ctx.createGain();
+      oscGain.gain.setValueAtTime(0.22, now);
+      oscGain.gain.exponentialRampToValueAtTime(0.001, now + 0.55);
+      osc.connect(oscGain).connect(ctx.destination);
+      osc.start(now);
+      osc.stop(now + 0.55);
+
+      // Close the context after the tail so we don't leak nodes
+      setTimeout(() => { try { ctx.close(); } catch {} }, 800);
+    } catch {}
+  },
+};
+
+const BSOD = {
+  el: null, interval: null, timer: null,
+  trigger() {
+    this.show();
+    this.timer = setTimeout(() => this.hide(), 11000);
+  },
+  show() {
+    if (this.el) this.el.remove();
+    this.el = el('div', { class: 'bsod', role: 'alert', 'aria-live': 'assertive' },
+      el('div', { class: 'bsodInner' },
+        el('div', { class: 'bsodFace' }, ':('),
+        el('div', { class: 'bsodLede' }, "Your portfolio ran into a problem and needs to restart."),
+        el('div', { class: 'bsodBody' },
+          el('p', {}, "He warned you. The button literally said don't."),
+          el('p', {}, "Twelve clicks could have been an accident. Thirteen is a confession."),
+        ),
+        el('div', { class: 'bsodProgress' }, '0% complete'),
+        el('div', { class: 'bsodMeta' },
+          el('div', {}, "If you'd like to know more, you can search online later for:"),
+          el('div', {}, "Stop code: HE_TOLD_YOU_NOT_TO_CLICK"),
+        ),
+      ),
+    );
+    document.body.append(this.el);
+    document.body.style.overflow = 'hidden';
+
+    let p = 0;
+    const progress = this.el.querySelector('.bsodProgress');
+    this.interval = setInterval(() => {
+      p = Math.min(100, p + Math.floor(Math.random() * 12) + 3);
+      progress.textContent = `${p}% complete`;
+      if (p >= 100) { clearInterval(this.interval); this.interval = null; }
+    }, 600);
+
+    // Click/keypress dismisses early
+    const dismiss = () => { this.hide(); };
+    setTimeout(() => {
+      this.el?.addEventListener('click', dismiss, { once: true });
+      document.addEventListener('keydown', dismiss, { once: true });
+    }, 1500);
+  },
+  hide() {
+    if (this.timer) { clearTimeout(this.timer); this.timer = null; }
+    if (this.interval) { clearInterval(this.interval); this.interval = null; }
+    if (!this.el) return;
+    this.el.classList.add('leaving');
+    document.body.style.overflow = '';
+    // Exit fullscreen so the page returns to normal
+    if (document.fullscreenElement && document.exitFullscreen) {
+      document.exitFullscreen().catch(() => {});
+    }
+    // Hide the cursed button for the rest of this session (resets on reload).
+    State.cursedTrolled = true;
+    const row = document.querySelector('.cursedRow');
+    if (row) row.remove();
+    setTimeout(() => {
+      this.el?.remove();
+      this.el = null;
+      // Post-BSOD narrator riff — "got you there, didn't I?"
+      Narrator.fire('cursedRecover', { priority: 'HIGH', cooldown: 0 });
+    }, 480);
   },
 };
 
 const D20 = {
+  locked: false,
+  firstNat20Seen: false,
   init() {
-    $('#d20Btn').addEventListener('click', () => this.roll());
+    // Restore "first nat 20 seen" flag — drives the special konami hint line
+    this.firstNat20Seen = Storage.get('nikos.d20.firstNat20Seen') === '1';
+    const btn = $('#d20Btn');
+    btn.addEventListener('click', () => {
+      if (this.locked) return;
+      this.roll();
+    });
   },
   roll() {
     const value = 1 + Math.floor(Math.random() * 20);
+    Storage.set(LS.D20_RESULT, String(value));
+    this.applyResult(value, { restoring: false });
+  },
+  applyResult(value, { restoring = false } = {}) {
+    const btn = $('#d20Btn');
     const result = $('#d20Result');
     result.classList.remove('nat20', 'nat1');
-    result.textContent = `Rolled ${value}`;
-    let trigger = 'd20_normal';
-    if (value === 20) { result.classList.add('nat20'); result.textContent = `🎯 NAT 20 — ${value}`; trigger = 'd20_nat20'; }
-    else if (value === 1) { result.classList.add('nat1'); result.textContent = `💀 NAT 1 — ${value}`; trigger = 'd20_nat1'; }
-    Narrator.fire(trigger, { priority: 'HIGH', cooldown: 0 });
+    if (value === 20) { result.classList.add('nat20'); result.textContent = `🎯 NAT 20 — ${value}`; }
+    else if (value === 1) { result.classList.add('nat1'); result.textContent = `💀 NAT 1 — ${value}`; }
+    else { result.textContent = `Rolled ${value}`; }
+
+    // Only a nat 1 locks the die — everyone else can keep rolling
+    if (value === 1) {
+      this.locked = true;
+      btn.disabled = true;
+      btn.classList.add('used');
+      btn.setAttribute('aria-disabled', 'true');
+    }
+    Secrets.unlock('d20');
+    if (restoring) return;
+
+    if (value === 20 && !this.firstNat20Seen) {
+      // First nat 20 ever — fire the konami hint line, then mark seen
+      this.firstNat20Seen = true;
+      Storage.set('nikos.d20.firstNat20Seen', '1');
+      Narrator.fire('d20_nat20_first', { cooldown: 0 });
+    } else {
+      const trigger = value === 20 ? 'd20_nat20' : value === 1 ? 'd20_nat1' : 'd20_normal';
+      Narrator.fire(trigger, { cooldown: 0 });
+    }
   },
 };
 
@@ -848,62 +1127,180 @@ const Konami = {
   },
   fire() {
     this.triggered = true;
-    Narrator.fire('konami', { priority: 'HIGH', cooldown: 0 });
+    Secrets.unlock('konami');
     document.documentElement.style.setProperty('--accent', '#e8a857');
-    // Easter-egg shimmer for 4 seconds
     document.body.animate(
       [{ filter: 'hue-rotate(0)' }, { filter: 'hue-rotate(15deg)' }, { filter: 'hue-rotate(0)' }],
       { duration: 4000, iterations: 1 }
     );
+    // Wait for the konami line to finish before opening the hacker terminal.
+    // Then let the hacker_open line play naturally too — two sequential lines.
+    Narrator.fire('konami', {
+      cooldown: 0,
+      onEnd: () => { if (window.Hacker?.open) window.Hacker.open(); },
+    });
   },
 };
 
 const DevTools = {
-  triggered: false,
+  _waiting: false,
   init() {
-    // Heuristic: if the gap between window.outerWidth and innerWidth is big, devtools is likely open
-    const check = () => {
-      if (this.triggered) return;
-      const threshold = 160;
-      const widthDiff = window.outerWidth - window.innerWidth;
-      const heightDiff = window.outerHeight - window.innerHeight;
-      if (widthDiff > threshold || heightDiff > threshold) {
-        this.triggered = true;
-        Narrator.fire('openDevTools', { priority: 'LOW', cooldown: 60000 });
-      }
+    // Intro is "visible" until its display goes to none (i.e. through fade too).
+    const introVisible = () => {
+      const i = $('#intro');
+      return i && i.style.display !== 'none';
     };
-    window.addEventListener('resize', check);
-    setTimeout(check, 2000);
+    // Defer firing while the intro is up OR another narrator line is currently
+    // playing. Single shared poll so spam-presses don't stack intervals.
+    const fire = () => {
+      const blocked = introVisible() || Narrator.current;
+      if (blocked) {
+        if (this._waiting) return;
+        this._waiting = true;
+        const wait = setInterval(() => {
+          if (!introVisible() && !Narrator.current) {
+            clearInterval(wait);
+            this._waiting = false;
+            Secrets.unlock('devtools');
+            Narrator.fire('openDevTools', { cooldown: 30000 });
+          }
+        }, 400);
+        return;
+      }
+      Secrets.unlock('devtools');
+      Narrator.fire('openDevTools', { cooldown: 30000 });
+    };
+    // Listen on window in capture phase so nothing can swallow the event first.
+    // Use e.key, e.code, and e.keyCode (deprecated but most reliable cross-browser)
+    // — some keyboards/OS combos don't set e.key='F12' consistently.
+    const handler = (e) => {
+      const k = e.key;
+      const code = e.code;
+      const kc = e.keyCode;
+      const isF12 = k === 'F12' || code === 'F12' || kc === 123;
+      const isCtrlShift = (e.ctrlKey || e.metaKey) && e.shiftKey && /^[ijc]$/i.test(k || '');
+      const isCmdOpt    = e.metaKey && e.altKey && /^[ij]$/i.test(k || '');
+      if (isF12 || isCtrlShift || isCmdOpt) fire();
+    };
+    window.addEventListener('keydown', handler, { capture: true });
+    document.addEventListener('keydown', handler, { capture: true });
   },
 };
 
 
 /* ════ 10. Ambient triggers ════ */
 
+/* ════ Hints — fires once per session to nudge toward hidden features ════ */
+const Hints = {
+  fired: new Set(),
+  fireOnce(narratorTrigger) {
+    if (this.fired.has(narratorTrigger)) return;
+    this.fired.add(narratorTrigger);
+    Narrator.fire(narratorTrigger, { cooldown: 0 });
+  },
+  statClicks: 0,
+  noteStatClick() {
+    this.statClicks += 1;
+    if (this.statClicks >= 3) this.fireOnce('hintTerminal_stats');
+  },
+};
+
+/* ════ Secrets system ════ */
+
+const SECRETS_DEF = [
+  { id: 'terminal',     name: 'Opened the Terminal',  trigger: 'Press ` or ~ on your keyboard.',                          hint: 'secretHint_terminal' },
+  { id: 'd20',          name: 'Rolled the Die',        trigger: 'Click the 🎲 d20 button in the sheet header.',           hint: 'secretHint_d20' },
+  { id: 'devtools',     name: 'Inspected the Page',    trigger: 'Open DevTools (F12 or Ctrl+Shift+I).',                   hint: 'secretHint_devtools' },
+  { id: 'konami',       name: 'The Old Code',          trigger: '↑ ↑ ↓ ↓ ← → ← → B A — the Konami code.',                 hint: 'secretHint_konami' },
+  { id: 'cursed_click', name: 'Heeded the Warning',    trigger: 'Press the "DO NOT CLICK" button.',                       hint: 'secretHint_cursed_click' },
+  { id: 'cursed_bsod',  name: 'Ignored the Warning',   trigger: 'Click the cursed button 13 times within 20 seconds.',    hint: 'secretHint_cursed_bsod' },
+  { id: 'late_night',   name: 'Burned the Midnight',   trigger: 'Visit between 3:00 and 3:59 AM local time.',             hint: 'secretHint_late_night' },
+];
+const LS_SECRETS = 'nikos.secrets';
+
+const Secrets = {
+  state: {},
+  init() {
+    try { this.state = JSON.parse(localStorage.getItem(LS_SECRETS) || '{}'); } catch { this.state = {}; }
+    this.render();
+    const counter = $('#secretsCounter');
+    const close   = $('#secretsClose');
+    const backdrop = document.querySelector('#secretsModal .secretsBackdrop');
+    if (counter)  counter.addEventListener('click', () => this.openModal());
+    if (close)    close.addEventListener('click', () => this.closeModal());
+    if (backdrop) backdrop.addEventListener('click', () => this.closeModal());
+    document.addEventListener('keydown', (e) => {
+      if (e.key === 'Escape' && !$('#secretsModal').hidden) this.closeModal();
+    });
+  },
+  unlock(id) {
+    if (this.state[id]) return;
+    this.state[id] = true;
+    try { localStorage.setItem(LS_SECRETS, JSON.stringify(this.state)); } catch {}
+    this.render();
+  },
+  count() { return SECRETS_DEF.filter(s => this.state[s.id]).length; },
+  render() {
+    const n = this.count();
+    const total = SECRETS_DEF.length;
+    const txt = `${n}/${total}`;
+    const c1 = $('#secretsCount');
+    const c2 = $('#secretsModalCount');
+    if (c1) c1.textContent = txt;
+    if (c2) c2.textContent = txt;
+    const list = $('#secretsList');
+    if (!list) return;
+    list.replaceChildren(...SECRETS_DEF.map(s => {
+      const found = !!this.state[s.id];
+      const attrs = { class: 'secretsItem' + (found ? ' found' : '') };
+      if (!found && s.hint) {
+        // Per-trigger cooldown so rapid clicks on the same row don't re-fire mid-line.
+        attrs.onclick = () => Narrator.fire(s.hint, { cooldown: 10000 });
+      }
+      return el('li', attrs,
+        el('span', { class: 'secretsMark' }, found ? '✓' : '?'),
+        el('span', { class: 'secretsName' }, found ? s.name : '???'),
+        el('span', { class: 'secretsHow' }, found ? s.trigger : ' '),
+      );
+    }));
+  },
+  openModal() { $('#secretsModal').hidden = false; this.render(); },
+  closeModal() { $('#secretsModal').hidden = true; },
+};
+
 const Ambient = {
   idleTimer: null,
+  IDLE_MS: 25000,   // was 60000 — felt too long
   init() {
-    // Idle 60s
     const reset = () => {
       if (this.idleTimer) clearTimeout(this.idleTimer);
+      // Only schedule when the tab is visible; otherwise we'd fire into an empty room
+      if (document.visibilityState !== 'visible') return;
       this.idleTimer = setTimeout(() => {
-        Narrator.fire('idle_30s', { priority: 'LOW', cooldown: 90000 });
-      }, 60000);
+        // Re-check visibility at fire time — the user might have switched tabs mid-countdown
+        if (document.visibilityState === 'visible') {
+          Narrator.fire('idle_30s', { priority: 'LOW', cooldown: 90000 });
+        }
+      }, this.IDLE_MS);
     };
     ['mousemove','keydown','scroll','click','touchstart'].forEach(evt => window.addEventListener(evt, reset, { passive: true }));
     reset();
 
-    // Tab blur
+    // Tab visibility — pause/resume the idle timer; ribbing when they return
     document.addEventListener('visibilitychange', () => {
       if (document.visibilityState === 'visible') {
         Narrator.fire('tabBlurred', { priority: 'LOW', cooldown: 120000 });
+        reset();
+      } else if (this.idleTimer) {
+        clearTimeout(this.idleTimer);
+        this.idleTimer = null;
       }
     });
 
-    // Late night
+    // 3 AM window — easter-egg unlock (the welcome line itself plays at intro time).
     const hour = new Date().getHours();
-    if (hour >= 0 && hour < 5) {
-      setTimeout(() => Narrator.fire('lateNight', { priority: 'LOW', cooldown: 0 }), 5000);
+    if (hour === 3) {
+      Secrets.unlock('late_night');
     }
 
     // Fast skim — detects scroll velocity bursts
@@ -925,7 +1322,34 @@ const Ambient = {
 
 /* ════ 11. Boot ════ */
 
+function maybeReset() {
+  // ?reset clears all our state for dev/testing. After clearing, strip the
+  // param from the URL so a refresh doesn't keep wiping.
+  const params = new URLSearchParams(window.location.search);
+  if (!params.has('reset')) return false;
+  const what = params.get('reset') || 'all';
+  try {
+    if (what === 'intro') {
+      localStorage.removeItem(LS.SEEN_INTRO);
+      localStorage.removeItem(LS.VISITS);
+    } else {
+      // Full wipe — only keys under our `nikos.` namespace
+      const keys = [];
+      for (let i = 0; i < localStorage.length; i++) {
+        const k = localStorage.key(i);
+        if (k && k.startsWith('nikos.')) keys.push(k);
+      }
+      keys.forEach(k => localStorage.removeItem(k));
+    }
+  } catch {}
+  params.delete('reset');
+  const newUrl = window.location.pathname + (params.toString() ? '?' + params.toString() : '') + window.location.hash;
+  window.history.replaceState({}, '', newUrl);
+  return true;
+}
+
 async function boot() {
+  maybeReset();
   State.audioEnabled = Storage.get(LS.AUDIO) === 'on';
   await loadData();
 
@@ -939,6 +1363,11 @@ async function boot() {
   Konami.init();
   DevTools.init();
   Ambient.init();
+  Secrets.init();
+
+  // Expose for cross-module integration (RPG + hacker game call into these)
+  window.Console = Console;
+  window.Narrator = Narrator;
 }
 
 if (document.readyState === 'loading') {

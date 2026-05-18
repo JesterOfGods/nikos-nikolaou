@@ -248,6 +248,76 @@ These play as the sheet "puts down" and the showcase opens.
 
 ---
 
+## 16. Dungeon RPG (terminal `play` command)
+
+The same DM narrator runs the dungeon. The line fires from the bubble while the game text runs in the console.
+
+### `rpg_firstPlay_1.mp3` — very first time a visitor types `play`
+> You typed 'play'. He hoped you would. The console isn't just a console — it's a table. Pull up a chair. I'll D M this one too.
+
+### `rpg_start_1.mp3` — any subsequent new dungeon roll
+> New session. Rolled the dungeon for you — he likes randomness more than he admits.
+
+### `rpg_resume_1.mp3` — picking up an in-progress dungeon
+> Picking up where you left off. He saves state. He's that kind of player.
+
+### `rpg_start_crypt_1.mp3` — entering the Lich's Crypt
+> The Crypt. Liches. Footnotes. He ran a campaign in one of these once — three players, one T P K, everyone left smiling.
+
+### `rpg_start_cavern_1.mp3` — entering the Deep-Cave of Wyrms
+> Dragons. Of course. He paints these for fun. Don't tell him the dragon is also a mini in a box at his apartment.
+
+### `rpg_start_library_1.mp3` — entering the Sunken Library
+> A library. Joke's on him — he doesn't read books. He'll D M this one harder out of spite.
+
+### `rpg_start_throne_1.mp3` — entering the Throne of Ra-Nekhet
+> A pharaoh. He has opinions about historical accuracy. He will not air them. He will simply judge you.
+
+### `rpg_start_temple_1.mp3` — entering the Forsaken Temple
+> The Star-Eaten. He wrote this one late at night, between client emails. It shows.
+
+### `rpg_death_1.mp3` — HP drops to 0
+> You went down. He's not letting you stay down. Back to the door. That's the deal — we never quit.
+
+### `rpg_boss_crypt_1.mp3` — Lich defeated
+> Lich, deceased. He'd want a write-up. Don't give him one.
+
+### `rpg_boss_cavern_1.mp3` — Dragon defeated
+> You killed his dragon. He'll forgive you eventually. Probably.
+
+### `rpg_boss_library_1.mp3` — Drowned Archivist defeated
+> Cleared. The Archivist would have hated you on principle. He likes you for it.
+
+### `rpg_boss_throne_1.mp3` — Pharaoh defeated
+> Pharaoh down. Bureaucracy never dies, but the man behind it does.
+
+### `rpg_boss_temple_1.mp3` — Star-Eaten Priest defeated
+> The Priest is gone. The Star-Eaten god takes nothing. He's quietly proud of you.
+
+### `rpg_quit_1.mp3` — visitor quits the dungeon
+> Saved. Resume anytime. He plays the same way — bookmarks everything, finishes things eventually.
+
+### `rpg_restart_1.mp3` — visitor restarts game from scratch
+> Cleared the table. Codes stay. He's not cruel about progression.
+
+---
+
+## 17. Hacker game (cursed "DO NOT CLICK" button)
+
+### `hacker_open_1.mp3` — visitor enters the backroom (plays AFTER the konami line completes)
+> Welcome to the backroom. Solve a challenge, earn a code, take it back to the dungeon. He built this when he should've been sleeping.
+
+### `hacker_exit_1.mp3` — visitor leaves the backroom
+> You left the backroom. The site looks more normal now. Trust me, it isn't.
+
+### `hacker_solved_1.mp3` — first time solving a challenge
+> Solved. Code's yours. Use it in `play` — he's curious which spell you go for first.
+
+### `hacker_resolved_1.mp3` — re-solving an already-solved challenge
+> You solved this one already. He still appreciates the effort.
+
+---
+
 # Quick batch suggestions
 
 **Tier 1 — record these first** (~7 lines): `coldOpen_1`, `adv_1`, `pat_1`, `swap_combo`, `cursed_1`, `nat20_1`, `kon_1`.

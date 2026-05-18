@@ -94,21 +94,39 @@
   "konami": [
     { "id": "kon_1", "text": "He hoped someone would try that. Welcome to the back room." }
   ],
+  "d20_nat20_first": [
+    { "id": "nat20_first_1", "text": "Nat 20. Lucky you. He hid more games behind ancient inputs — the kind that came from a man named Konami. Try the arrows you remember." }
+  ],
   "d20_nat20": [
-    { "id": "nat20_1", "text": "Nat 20. You got lucky. Take it. You only get one roll — he insisted on that." }
+    { "id": "nat20_1", "text": "Another nat 20. The dice are with you tonight." },
+    { "id": "nat20_2", "text": "Twenty again. He'd shake your hand. He'd also accuse you of cheating." },
+    { "id": "nat20_3", "text": "Nat 20. He's not surprised anymore. Mildly impressed, still." }
   ],
   "d20_nat1": [
-    { "id": "nat1_1", "text": "Nat 1. Embarrassing. The roll stands. He insisted." }
+    { "id": "nat1_1", "text": "Nat 1. The die is done. He warned the universe and the universe disagreed. The button locks." }
   ],
   "d20_normal": [
-    { "id": "d20_norm_1", "text": "A respectable roll. Nothing's going to happen because of it. He thought that was funnier." }
+    { "id": "d20_norm_1", "text": "A respectable roll. Nothing's going to happen because of it. He thought that was funnier." },
+    { "id": "d20_norm_2", "text": "Average roll for an average evening. He doesn't mean that as an insult. Much." },
+    { "id": "d20_norm_3", "text": "You keep rolling. He likes that. Most people roll once and move on." },
+    { "id": "d20_norm_4", "text": "Mid-range. The dice gods are neutral on this one." },
+    { "id": "d20_norm_5", "text": "Statistics in motion. Expected value of a d20 is ten-point-five, in case you were keeping score." },
+    { "id": "d20_norm_6", "text": "Still spinning. He left the die there because he likes seeing what people do with permission." }
   ],
-  "cursedButton_first": [
-    { "id": "cursed_1", "text": "There it is. I told him to label it 'do not click' and you'd press it harder. He bet me dinner." }
-  ],
-  "cursedButton_repeat": [
-    { "id": "cursed_2", "text": "You're really committed to breaking this. Fine. He admires the persistence." }
-  ],
+  "cursedButton_1":  [{ "id": "cursed_1",  "text": "There it is. I told him to label it 'do not click' and you'd press it harder. He bet me dinner. By the way — he hid more behind tilde." }],
+  "cursedButton_2":  [{ "id": "cursed_2",  "text": "Twice. That wasn't accident-curiosity. That was a decision." }],
+  "cursedButton_3":  [{ "id": "cursed_3",  "text": "Three. He's started counting. Don't ask why." }],
+  "cursedButton_4":  [{ "id": "cursed_4",  "text": "Four. Most people stop around here. He's wondering what kind of person you are." }],
+  "cursedButton_5":  [{ "id": "cursed_5",  "text": "Five. Halfway. To what — you don't know. He does." }],
+  "cursedButton_6":  [{ "id": "cursed_6",  "text": "Six. The button has a fan club now. You're a founding member." }],
+  "cursedButton_7":  [{ "id": "cursed_7",  "text": "Seven. Lucky number. Stop now and I'll remember you fondly. He won't." }],
+  "cursedButton_8":  [{ "id": "cursed_8",  "text": "Eight. Past curious. Welcome to commitment." }],
+  "cursedButton_9":  [{ "id": "cursed_9",  "text": "Nine. He just looked up from his coffee. He's interested. That's not always good." }],
+  "cursedButton_10": [{ "id": "cursed_10", "text": "Ten. Double digits. He admires the consistency. He's also slightly concerned." }],
+  "cursedButton_11": [{ "id": "cursed_11", "text": "Eleven. You are deeply, deliberately ignoring the label. He respects the disrespect." }],
+  "cursedButton_12": [{ "id": "cursed_12", "text": "Twelve. One more. We both know what you'll do." }],
+  "cursedBSOD":      [{ "id": "cursed_bsod", "text": "Thirteen. He warned you twelve times. This is what comes after warnings." }],
+  "cursedRecover":   [{ "id": "cursed_recover", "text": "Got you there, didn't I? Nothing actually broke. Except your composure." }],
   "openShowcase_ttrpg": [
     { "id": "show_ttrpg_1", "text": "He puts the sheet down. Behind it: the manuscript. The good stuff. Or the part he'll let you see." }
   ],
@@ -124,16 +142,111 @@
   "closeShowcase": [
     { "id": "close_show_1", "text": "Back to the sheet. He picks it up. We continue." }
   ],
-  "lateNight": [
+  "welcome_3am": [
     { "id": "late_1", "text": "3 a.m.? He'd be up too. He'd tell you to sleep, then keep working." }
   ],
   "tabBlurred": [
     { "id": "blur_1", "text": "You left. He's not offended. He left tabs open during his own honeymoon." }
   ],
   "audioOn": [
-    { "id": "audio_on_1", "text": "Voice on. Hello. You can hear me. That's still novel for both of us." }
+    { "id": "audio_on_1", "text": "Voice on. Hello. You can hear me. I'm not the only voice he hid here — try the terminal. The squiggly key." }
   ],
   "audioOff": [
     { "id": "audio_off_1", "text": "Muted. Probably for the best. You'll still see me. Like a subtitle. With opinions." }
+  ],
+
+  "rpg_firstPlay": [
+    { "id": "rpg_firstPlay_1", "text": "You typed 'play'. He hoped you would. The console isn't just a console — it's a table. Pull up a chair. I'll DM this one too." }
+  ],
+  "rpg_start": [
+    { "id": "rpg_start_1", "text": "New session. Rolled the dungeon for you — he likes randomness more than he admits." }
+  ],
+  "rpg_resume": [
+    { "id": "rpg_resume_1", "text": "Picking up where you left off. He saves state. He's that kind of player." }
+  ],
+  "rpg_start_crypt": [
+    { "id": "rpg_start_crypt_1", "text": "The Crypt. Liches. Footnotes. He ran a campaign in one of these once — three players, one TPK, everyone left smiling." }
+  ],
+  "rpg_start_cavern": [
+    { "id": "rpg_start_cavern_1", "text": "Dragons. Of course. He paints these for fun. Don't tell him the dragon is also a mini in a box at his apartment." }
+  ],
+  "rpg_start_library": [
+    { "id": "rpg_start_library_1", "text": "A library. Joke's on him — he doesn't read books. He'll DM this one harder out of spite." }
+  ],
+  "rpg_start_throne": [
+    { "id": "rpg_start_throne_1", "text": "A pharaoh. He has opinions about historical accuracy. He will not air them. He will simply judge you." }
+  ],
+  "rpg_start_temple": [
+    { "id": "rpg_start_temple_1", "text": "The Star-Eaten. He wrote this one late at night, between client emails. It shows." }
+  ],
+  "rpg_death": [
+    { "id": "rpg_death_1", "text": "You went down. He's not letting you stay down. Back to the door. That's the deal — we never quit." }
+  ],
+  "rpg_boss_crypt": [
+    { "id": "rpg_boss_crypt_1", "text": "Lich, deceased. He'd want a write-up. Don't give him one." }
+  ],
+  "rpg_boss_cavern": [
+    { "id": "rpg_boss_cavern_1", "text": "You killed his dragon. He'll forgive you eventually. Probably." }
+  ],
+  "rpg_boss_library": [
+    { "id": "rpg_boss_library_1", "text": "Cleared. The Archivist would have hated you on principle. He likes you for it." }
+  ],
+  "rpg_boss_throne": [
+    { "id": "rpg_boss_throne_1", "text": "Pharaoh down. Bureaucracy never dies, but the man behind it does." }
+  ],
+  "rpg_boss_temple": [
+    { "id": "rpg_boss_temple_1", "text": "The Priest is gone. The Star-Eaten god takes nothing. He's quietly proud of you." }
+  ],
+  "rpg_quit": [
+    { "id": "rpg_quit_1", "text": "Saved. Resume anytime. He plays the same way — bookmarks everything, finishes things eventually." }
+  ],
+  "rpg_restart": [
+    { "id": "rpg_restart_1", "text": "Cleared the table. Codes stay. He's not cruel about progression." }
+  ],
+
+  "hacker_open": [
+    { "id": "hacker_open_1", "text": "Welcome to the backroom. Solve a challenge, earn a code, take it back to the dungeon. He built this when he should've been sleeping." }
+  ],
+  "hacker_exit": [
+    { "id": "hacker_exit_1", "text": "You left the backroom. The site looks more normal now. Trust me, it isn't." }
+  ],
+  "hacker_solved": [
+    { "id": "hacker_solved_1", "text": "Solved. Code's yours. Use it in `play` — he's curious which spell you go for first." }
+  ],
+  "hacker_resolved": [
+    { "id": "hacker_resolved_1", "text": "You solved this one already. He still appreciates the effort." }
+  ],
+  "hacker_nameGiven": [
+    { "id": "hacker_nameGiven_1", "text": "You really gave me your name so easily. I thought you were a hacker." }
+  ],
+  "hacker_vpn": [
+    { "id": "hacker_vpn_1", "text": "You should have used a V P N. Don't worry — I won't track this. Much." }
+  ],
+  "hintTerminal_stats": [
+    { "id": "hint_stats_1", "text": "You're poking. Good. There's a key for poking deeper — tilde. Try it." }
+  ],
+  "closeShowcase_first": [
+    { "id": "close_show_first_1", "text": "You came up for air. There's a terminal too — tilde opens it. He hid things in there." }
+  ],
+  "secretHint_terminal": [
+    { "id": "hint_term_1", "text": "He left a back door for people who type things they shouldn't have to. It's a key most people have never pressed on purpose." }
+  ],
+  "secretHint_d20": [
+    { "id": "hint_d20_1", "text": "Something on the sheet is asking to be touched. He's a programmer — he'd put a probability where a decoration could go." }
+  ],
+  "secretHint_devtools": [
+    { "id": "hint_dev_1", "text": "The seams are visible if you know where to look. Most browsers ship a tool for that exact kind of curiosity." }
+  ],
+  "secretHint_konami": [
+    { "id": "hint_kon_1", "text": "There's a cheat code older than him. The kind of thing your thumbs remember from a couch in a room you don't live in anymore." }
+  ],
+  "secretHint_cursed_click": [
+    { "id": "hint_curse1_1", "text": "He labeled something so you wouldn't press it. He knew exactly what that would do." }
+  ],
+  "secretHint_cursed_bsod": [
+    { "id": "hint_curse2_1", "text": "Once is a moment of weakness. Many, fast — that's a personality." }
+  ],
+  "secretHint_late_night": [
+    { "id": "hint_late_1", "text": "This one isn't a click. It's a clock. He keeps a particular hour. Visit then." }
   ]
 }

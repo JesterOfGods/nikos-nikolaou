@@ -85,6 +85,9 @@
             <span class="alignmentValue"></span>
             <button id="d20Btn" class="d20Btn" title="Roll for initiative">🎲 d20</button>
             <span id="d20Result" class="d20Result"></span>
+            <button id="secretsCounter" class="secretsCounter" title="What have you found?">
+              🔍 Secrets · <span id="secretsCount">0/7</span>
+            </button>
           </div>
         </div>
         <p class="bio"></p>
@@ -156,11 +159,6 @@
         <div class="backstory" id="backstory"></div>
       </div>
 
-      <!-- Cursed button — easter egg -->
-      <button id="cursedButton" class="cursedButton" aria-label="Do not click">
-        <span>⚠ DO NOT CLICK</span>
-      </button>
-
     </section>
 
     <!-- ─────── Patron view ─────── -->
@@ -231,15 +229,32 @@
   <!-- ──────────────────────────── Console (~) ──────────────────────────── -->
   <div id="console" class="console" hidden role="dialog" aria-label="Developer console">
     <div id="consoleHistory" class="consoleHistory"></div>
+    <div id="consoleMenu" class="consoleMenu" hidden aria-label="Available actions"></div>
     <div class="consoleInputRow">
       <span class="consolePrompt">nikos@dm:~$</span>
       <input id="consoleInput" class="consoleInput" type="text" autocomplete="off" spellcheck="false" />
     </div>
   </div>
 
+  <!-- ──────────────────────────── Secrets modal ──────────────────────────── -->
+  <div id="secretsModal" class="secretsModal" hidden role="dialog" aria-modal="true" aria-label="Secrets found">
+    <div class="secretsBackdrop"></div>
+    <div class="secretsInner">
+      <header class="secretsHead">
+        <h2>Secrets · <span id="secretsModalCount">0/7</span></h2>
+        <button id="secretsClose" class="secretsClose" aria-label="Close">×</button>
+      </header>
+      <ul id="secretsList" class="secretsList"></ul>
+      <p class="secretsFootnote">Found ones reveal their name and how you triggered them. The rest stay hidden until you find them.</p>
+    </div>
+  </div>
+
   <!-- ──────────────────────────── Audio element ──────────────────────────── -->
   <audio id="narratorAudio" preload="none"></audio>
 
+  <script src="game-rpg.js" defer></script>
+  <script src="game-hacker.js" defer></script>
+  <script src="game-trivia.js" defer></script>
   <script src="app.js" defer></script>
 </body>
 </html>

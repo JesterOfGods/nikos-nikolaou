@@ -25,6 +25,7 @@ img, svg, video { display: block; max-width: 100%; }
 button { font: inherit; color: inherit; background: none; border: 0; cursor: pointer; }
 a { color: inherit; }
 ul { list-style: none; }
+[hidden] { display: none !important; }
 
 :root {
   /* Palette — warm-dark, parchment accents */
@@ -157,9 +158,17 @@ body.boot .app { display: none !important; }
 .doors {
   display: grid; grid-template-columns: 1fr 1fr; gap: 1rem;
   opacity: 0; transform: translateY(8px); pointer-events: none;
-  transition: opacity var(--t-med) var(--ease), transform var(--t-med) var(--ease);
+  /* Collapse the layout space too — so the empty gap doesn't show before fade-in */
+  max-height: 0; overflow: hidden; margin-top: 0;
+  transition: opacity var(--t-med) var(--ease),
+              transform var(--t-med) var(--ease),
+              max-height 320ms var(--ease),
+              margin-top 320ms var(--ease);
 }
-.doors.visible { opacity: 1; transform: none; pointer-events: auto; }
+.doors.visible {
+  opacity: 1; transform: none; pointer-events: auto;
+  max-height: 240px; margin-top: 1rem;
+}
 .door {
   padding: 1.5rem 1.25rem;
   background: var(--surface);
@@ -224,6 +233,34 @@ body.boot .app { display: none !important; }
   font-family: var(--ff-disp);
   color: var(--ink);
   line-height: 1.5;
+}
+
+/* Docked into the terminal — neutralise the floating-bubble styling and
+   make it read as a top header strip of the console panel. */
+.narrator--docked {
+  position: static;
+  inset: auto;
+  max-width: none;
+  margin: 0;
+  padding: 0.55rem 0.85rem 0.6rem;
+  background: rgba(198, 155, 94, 0.05);
+  border: 0;
+  border-bottom: 1px dashed rgba(198, 155, 94, 0.25);
+  border-radius: 0;
+  box-shadow: none;
+  animation: none !important;
+  transform: none !important;
+  opacity: 1;
+}
+.narrator--docked.leaving { opacity: 0.5; }
+.narrator--docked .narratorInner { gap: 0.25rem; }
+.narrator--docked .narratorMeta { padding-bottom: 0.25rem; border-bottom: none; }
+.narrator--docked .narratorLabel { color: var(--accent); font-size: 0.68rem; }
+.narrator--docked .narratorText {
+  font-family: var(--ff-mono);
+  font-size: 0.88rem;
+  color: var(--accent);
+  line-height: 1.45;
 }
 
 /* ─────────────── 5. Topbar & view toggle ─────────────── */
@@ -306,6 +343,51 @@ body.boot .app { display: none !important; }
   transition: all var(--t-fast) ease;
 }
 .d20Btn:hover { border-color: var(--accent); color: var(--accent); transform: translateY(-1px); }
+.d20Btn:disabled, .d20Btn.used { opacity: 0.45; cursor: not-allowed; transform: none; border-style: dashed; }
+.d20Btn:disabled:hover, .d20Btn.used:hover { border-color: #3a3122; color: var(--ink); transform: none; }
+
+/* Secrets counter — sits in the sheet header next to the d20 */
+.secretsCounter {
+  margin-top: 0.35rem;
+  padding: 0.4rem 0.7rem;
+  background: var(--surface);
+  border: 1px solid #3a3122;
+  border-radius: var(--rad);
+  color: var(--ink);
+  font-family: var(--ff-mono);
+  font-size: 0.82rem;
+  letter-spacing: 0.03em;
+  cursor: pointer;
+  transition: all var(--t-fast) ease;
+}
+.secretsCounter:hover, .secretsCounter:focus-visible {
+  border-color: var(--accent);
+  color: var(--accent);
+  transform: translateY(-1px);
+}
+#secretsCount { color: var(--accent); font-weight: 700; margin-left: 0.15rem; }
+
+/* Secrets modal */
+.secretsModal { position: fixed; inset: 0; z-index: 140; display: grid; place-items: center; padding: 2rem 1rem; animation: secretsIn 220ms cubic-bezier(0.22, 1, 0.36, 1) both; }
+@keyframes secretsIn { 0% { opacity: 0; transform: scale(0.98); } 100% { opacity: 1; transform: none; } }
+.secretsBackdrop { position: absolute; inset: 0; background: rgba(0, 0, 0, 0.65); backdrop-filter: blur(3px); cursor: pointer; }
+.secretsInner { position: relative; width: 100%; max-width: 560px; max-height: 78vh; overflow-y: auto; background: linear-gradient(180deg, #1a1611 0%, #14110b 100%); border: 1px solid #3a2f1f; border-radius: var(--rad-lg); padding: 1.25rem 1.4rem; box-shadow: 0 30px 80px -20px rgba(0,0,0,0.7); }
+.secretsHead { display: flex; align-items: baseline; justify-content: space-between; margin-bottom: 1rem; padding-bottom: 0.6rem; border-bottom: 1px dashed #2a2418; }
+.secretsHead h2 { color: var(--accent); font-family: var(--ff-disp); }
+.secretsHead h2 span { color: var(--ink); }
+.secretsClose { font-size: 1.4rem; color: var(--ink-faint); padding: 0 0.5rem; line-height: 1; }
+.secretsClose:hover { color: var(--accent); }
+.secretsList { display: grid; gap: 0.5rem; }
+.secretsItem { display: grid; grid-template-columns: 1.6em 1fr; gap: 0.5rem; padding: 0.55rem 0.7rem; background: var(--surface); border: 1px solid #2c2517; border-radius: var(--rad); }
+.secretsItem:not(.found) { cursor: pointer; }
+.secretsItem:not(.found):hover { border-color: rgba(198,155,94,0.25); background: rgba(198,155,94,0.02); }
+.secretsItem.found { border-color: rgba(198,155,94,0.4); background: rgba(198,155,94,0.04); }
+.secretsMark { font-family: var(--ff-mono); color: var(--ink-faint); text-align: center; }
+.secretsItem.found .secretsMark { color: var(--good); font-weight: 700; }
+.secretsName { color: var(--ink); font-weight: 600; font-size: 0.95rem; }
+.secretsItem.found .secretsName { color: var(--accent); }
+.secretsHow { grid-column: 2; font-size: 0.82rem; color: var(--ink-dim); margin-top: 0.2rem; line-height: 1.4; }
+.secretsFootnote { margin-top: 1rem; font-size: 0.75rem; color: var(--ink-faint); font-style: italic; line-height: 1.5; }
 .d20Result { font-size: 0.95rem; color: var(--accent); min-height: 1.2em; }
 .d20Result.nat20 { color: var(--gold); font-weight: 700; text-shadow: 0 0 12px rgba(217,184,122,0.5); }
 .d20Result.nat1  { color: var(--crit); font-weight: 700; }
@@ -567,12 +649,95 @@ body.boot .app { display: none !important; }
 .consolePrompt { color: var(--accent); }
 .consoleInput { flex: 1; background: transparent; border: 0; outline: 0; color: var(--ink); font-family: var(--ff-mono); font-size: 0.86rem; caret-color: var(--accent); }
 
+/* Clickable command lines in the console (help output + reveal buttons) */
+.cmdRow { display: flex; align-items: baseline; gap: 0.15rem; padding: 0.1rem 0; }
+.cmdLink {
+  display: inline-block;
+  padding: 0.05rem 0.5rem;
+  background: rgba(198,155,94,0.08);
+  border: 1px solid rgba(198,155,94,0.25);
+  border-radius: 4px;
+  color: var(--accent);
+  font-family: var(--ff-mono);
+  font-size: 0.86rem;
+  cursor: pointer;
+  transition: all var(--t-fast) ease;
+}
+.cmdLink:hover, .cmdLink:focus-visible {
+  background: rgba(198,155,94,0.18);
+  border-color: var(--accent);
+  color: var(--gold);
+}
+.cmdDesc { color: var(--ink-dim); font-size: 0.82rem; }
+.consoleReveal {
+  font-size: 0.95rem;
+  font-weight: 700;
+  letter-spacing: 0.05em;
+  padding: 0.35rem 0.85rem;
+  margin: 0.2rem 0;
+  background: rgba(198,155,94,0.12);
+  border-color: rgba(198,155,94,0.5);
+  animation: revealPulse 2.2s ease-in-out infinite;
+}
+@keyframes revealPulse {
+  0%, 100% { box-shadow: 0 0 0 0 rgba(198,155,94,0); }
+  50%      { box-shadow: 0 0 14px 0 rgba(198,155,94,0.3); }
+}
+
+/* Arrow-key menu shown while the dungeon RPG is active */
+.consoleMenu { display: grid; gap: 0.1rem; padding: 0.45rem 0.2rem; max-height: 14rem; overflow-y: auto; border-top: 1px dashed rgba(198,155,94,0.25); border-bottom: 1px dashed rgba(198,155,94,0.25); margin: 0.4rem 0 0.2rem; font-size: 0.85rem; line-height: 1.4; }
+.consoleMenu .menuTitle { color: var(--ink-faint); font-size: 0.72rem; letter-spacing: 0.08em; text-transform: uppercase; padding: 0.15rem 0.3rem 0.25rem; }
+.consoleMenuItem { display: grid; grid-template-columns: 1.6em 1.4em 1fr auto; gap: 0.4rem; align-items: center; padding: 0.18rem 0.4rem; border-radius: 4px; color: var(--ink-dim); cursor: pointer; transition: background 80ms ease, color 80ms ease; user-select: none; }
+.consoleMenuItem:hover { color: var(--ink); background: rgba(198,155,94,0.06); }
+.consoleMenuItem.selected { background: rgba(198,155,94,0.16); color: var(--accent); }
+.consoleMenuItem .idx { color: var(--ink-faint); font-size: 0.78rem; }
+.consoleMenuItem .arrow { color: var(--accent); opacity: 0; }
+.consoleMenuItem.selected .arrow { opacity: 1; }
+.consoleMenuItem .meta { color: var(--ink-faint); font-size: 0.72rem; }
+.consoleMenuItem.disabled { opacity: 0.4; pointer-events: none; }
+
 /* ─────────────── 10. Easter eggs ─────────────── */
 
+/* ─── BSOD (13th click on the cursed button) ─── */
+.bsod {
+  position: fixed; inset: 0;
+  z-index: 200;
+  background: #0078d7;
+  color: #ffffff;
+  font-family: "Segoe UI", system-ui, -apple-system, sans-serif;
+  display: grid; place-items: center;
+  padding: 6vh 8vw;
+  animation: bsodIn 380ms ease both;
+  text-rendering: geometricPrecision;
+}
+@keyframes bsodIn {
+  0%   { opacity: 0; background: #ffffff; }
+  18%  { opacity: 1; background: #ffffff; }
+  22%  { background: #0078d7; }
+  100% { opacity: 1; background: #0078d7; }
+}
+.bsod.leaving { animation: bsodOut 460ms ease both; }
+@keyframes bsodOut { to { opacity: 0; } }
+.bsodInner { max-width: 880px; width: 100%; display: grid; gap: 1.5rem; }
+.bsodFace { font-size: clamp(5rem, 14vw, 9rem); font-weight: 200; line-height: 1; letter-spacing: -0.04em; }
+.bsodLede { font-size: clamp(1.2rem, 2.2vw, 1.7rem); font-weight: 300; line-height: 1.35; max-width: 38ch; }
+.bsodBody { font-size: clamp(0.95rem, 1.3vw, 1.05rem); line-height: 1.5; max-width: 60ch; opacity: 0.95; display: grid; gap: 0.55rem; }
+.bsodBody p { color: #ffffff; }
+.bsodProgress { font-family: ui-monospace, Consolas, monospace; font-size: 0.95rem; opacity: 0.85; }
+.bsodMeta { font-family: ui-monospace, Consolas, monospace; font-size: 0.85rem; opacity: 0.75; margin-top: 1rem; }
+.bsodMeta div { margin-bottom: 0.15rem; }
+@media (max-width: 560px) {
+  .bsod { padding: 5vh 6vw; }
+}
+
+/* Cursed button — original red-pulse seal. Lives inline at the bottom of
+   the Adventurer view (inside .cursedRow), not fixed-position. */
+.cursedRow {
+  grid-column: 1 / -1;
+  display: flex; justify-content: center;
+  padding: 1rem 0 2rem;
+}
 .cursedButton {
-  position: fixed;
-  bottom: 1rem; left: 1rem;
-  z-index: 70;
   padding: 0.5rem 0.85rem;
   background: linear-gradient(180deg, #2a1612 0%, #1a0c0a 100%);
   border: 1px solid var(--crit);
@@ -582,14 +747,19 @@ body.boot .app { display: none !important; }
   letter-spacing: 0.05em;
   text-transform: uppercase;
   box-shadow: 0 0 18px rgba(176,75,61,0.2), inset 0 1px 0 rgba(255,255,255,0.05);
-  transition: all var(--t-fast) ease;
+  transition: transform var(--t-fast) ease, color var(--t-fast) ease;
   animation: cursedPulse 2.4s ease-in-out infinite;
+  cursor: pointer;
 }
 @keyframes cursedPulse {
   0%, 100% { box-shadow: 0 0 18px rgba(176,75,61,0.2), inset 0 1px 0 rgba(255,255,255,0.05); }
   50%      { box-shadow: 0 0 32px rgba(176,75,61,0.45), inset 0 1px 0 rgba(255,255,255,0.05); }
 }
-.cursedButton:hover { transform: scale(1.04); background: linear-gradient(180deg, #3a1a14 0%, #20100c 100%); color: #e88a7a; }
+.cursedButton:hover, .cursedButton:focus-visible {
+  transform: scale(1.04);
+  background: linear-gradient(180deg, #3a1a14 0%, #20100c 100%);
+  color: #e88a7a;
+}
 
 /* Glitch effect when cursed button is hit */
 .app.glitching { animation: appGlitch 800ms steps(1) both; }
@@ -602,6 +772,152 @@ body.boot .app { display: none !important; }
   60%  { filter: hue-rotate(20deg); transform: translateY(-1px) skewY(0.3deg); }
   80%  { filter: none; transform: none; }
   100% { filter: none; transform: none; }
+}
+
+/* ─────────────── 10b. Hacker overlay (cursed button) ─────────────── */
+
+.hacker {
+  position: fixed; inset: 0; z-index: 110;
+  background: #050a05;
+  color: #7df084;
+  font-family: ui-monospace, "SF Mono", Consolas, "Liberation Mono", monospace;
+  font-size: 13.5px; line-height: 1.5;
+  overflow: hidden;
+  animation: hackerIn 240ms cubic-bezier(0.22, 1, 0.36, 1) both;
+  will-change: opacity, transform;
+}
+@keyframes hackerIn {
+  0%   { opacity: 0; transform: scale(1.015); }
+  100% { opacity: 1; transform: none; }
+}
+
+.hacker::before {
+  content: "";
+  position: absolute; inset: 0;
+  background:
+    radial-gradient(ellipse at center, transparent 60%, rgba(0,0,0,0.65) 100%),
+    linear-gradient(180deg, rgba(125,240,132,0.03), transparent 8%);
+  pointer-events: none;
+  z-index: 1;
+}
+
+.hackerScanlines {
+  position: absolute; inset: 0;
+  background-image: repeating-linear-gradient(
+    0deg,
+    rgba(125,240,132,0.04) 0px,
+    rgba(125,240,132,0.04) 1px,
+    transparent 1px,
+    transparent 3px
+  );
+  pointer-events: none;
+  z-index: 2;
+  mix-blend-mode: screen;
+  animation: scanlineDrift 8s linear infinite;
+}
+@keyframes scanlineDrift {
+  to { background-position-y: 24px; }
+}
+
+.hackerInner {
+  position: relative; z-index: 3;
+  height: 100%;
+  max-width: 980px; margin: 0 auto;
+  display: grid; grid-template-rows: auto 1fr auto;
+  padding: 1rem clamp(0.75rem, 3vw, 2rem) 0;
+}
+
+.hackerBar {
+  display: flex; align-items: center; gap: 0.6rem;
+  padding: 0.4rem 0.6rem;
+  border: 1px solid rgba(125,240,132,0.3);
+  border-bottom: 0;
+  background: rgba(125,240,132,0.04);
+  font-size: 0.78rem; letter-spacing: 0.04em;
+}
+.hackerBarDot { width: 8px; height: 8px; border-radius: 50%; background: #7df084; box-shadow: 0 0 8px #7df084; animation: hackerBlink 1.5s steps(2) infinite; }
+@keyframes hackerBlink { 50% { opacity: 0.3; } }
+.hackerBarLabel { flex: 1; opacity: 0.85; }
+.hackerClose { color: #7df084; padding: 0.2rem 0.5rem; cursor: pointer; }
+.hackerClose:hover { background: rgba(125,240,132,0.15); }
+
+.hackerScreen {
+  padding: 1rem 0.6rem;
+  border: 1px solid rgba(125,240,132,0.3);
+  background: rgba(0,0,0,0.35);
+  overflow-y: auto;
+  white-space: pre-wrap;
+  word-break: break-word;
+}
+.hackerLine { padding: 0.05rem 0; opacity: 0; transform: translateY(2px); animation: hackerLineIn 220ms ease both; }
+@keyframes hackerLineIn { to { opacity: 1; transform: none; } }
+.hackerLine.echo { color: #c2ffc6; opacity: 0.6; }
+.hackerLine.narr { color: #d6ffe0; }
+.hackerLine.err  { color: #ff6e6e; }
+.hackerLine.ok   { color: #b7ffbf; text-shadow: 0 0 6px rgba(183,255,191,0.4); }
+
+.hackerInputRow {
+  display: flex; gap: 0.5rem; align-items: center;
+  border: 1px solid rgba(125,240,132,0.3); border-top: 0;
+  padding: 0.55rem 0.6rem; background: rgba(125,240,132,0.04);
+}
+.hackerPrompt { color: #7df084; }
+.hackerInput { flex: 1; background: transparent; border: 0; outline: 0; color: #ecfff0; font-family: inherit; font-size: 0.95rem; caret-color: #7df084; }
+
+/* Trivia popup — a "second terminal" floating over the hacker terminal */
+.trivia { position: fixed; inset: 0; z-index: 130; display: grid; place-items: center; padding: 2rem 1rem; animation: triviaIn 240ms cubic-bezier(0.22, 1, 0.36, 1) both; }
+.triviaBackdrop { position: absolute; inset: 0; background: rgba(0, 0, 0, 0.7); backdrop-filter: blur(3px); }
+.triviaInner { position: relative; width: 100%; max-width: 780px; height: min(78vh, 640px); display: grid; grid-template-rows: auto 1fr auto; background: #050a05; border: 1px solid rgba(125,240,132,0.5); border-radius: 6px; box-shadow: 0 30px 80px -10px rgba(0,0,0,0.8), 0 0 0 1px rgba(125,240,132,0.1); color: #7df084; font-family: ui-monospace, "SF Mono", Consolas, monospace; font-size: 13.5px; overflow: hidden; }
+@keyframes triviaIn { 0% { opacity: 0; transform: scale(0.97); } 100% { opacity: 1; transform: none; } }
+.triviaBar { display: flex; align-items: center; gap: 0.6rem; padding: 0.45rem 0.7rem; background: rgba(125,240,132,0.05); border-bottom: 1px solid rgba(125,240,132,0.2); font-size: 0.78rem; letter-spacing: 0.04em; }
+.triviaBarDot { width: 8px; height: 8px; border-radius: 50%; background: #7df084; box-shadow: 0 0 8px #7df084; animation: hackerBlink 1.5s steps(2) infinite; }
+.triviaBarLabel { flex: 1; opacity: 0.85; }
+.triviaClose { color: #7df084; padding: 0.2rem 0.55rem; cursor: pointer; font-family: inherit; font-size: 0.78rem; }
+.triviaClose:hover { background: rgba(125,240,132,0.15); }
+.triviaScreen { padding: 1rem; overflow-y: auto; white-space: pre-wrap; word-break: break-word; line-height: 1.5; }
+.triviaLine { padding: 0.05rem 0; }
+.triviaLine.echo { color: #c2ffc6; opacity: 0.6; }
+.triviaLine.narr { color: #d6ffe0; }
+.triviaLine.err  { color: #ff6e6e; }
+.triviaLine.ok   { color: #b7ffbf; text-shadow: 0 0 6px rgba(183,255,191,0.4); }
+.triviaInputRow { display: flex; gap: 0.5rem; align-items: center; border-top: 1px solid rgba(125,240,132,0.2); padding: 0.55rem 0.7rem; background: rgba(125,240,132,0.04); }
+.triviaPrompt { color: #7df084; }
+.triviaInput { flex: 1; background: transparent; border: 0; outline: 0; color: #ecfff0; font-family: inherit; font-size: 0.95rem; caret-color: #7df084; }
+
+/* Discoverability — small terminal toggle in the topbar */
+.terminalToggle { padding: 0.35rem 0.6rem; background: var(--surface); border: 1px solid #2c2517; border-radius: 6px; color: var(--ink-dim); font-family: var(--ff-mono); font-size: 0.78rem; cursor: pointer; transition: all var(--t-fast) ease; }
+.terminalToggle:hover, .terminalToggle:focus-visible { border-color: var(--accent); color: var(--accent); }
+.terminalToggle .kbd { display: inline-block; padding: 0 0.3rem; border: 1px solid currentColor; border-radius: 3px; font-size: 0.7em; margin-right: 0.25rem; opacity: 0.7; }
+
+/* Dashboard line inside the hacker terminal (user + IP) */
+.hackerDashboard { display: flex; gap: 0.25rem; flex-wrap: wrap; padding: 0.2rem 0.2rem 0.45rem; border-bottom: 1px dashed rgba(125,240,132,0.18); margin-bottom: 0.35rem; }
+.hackerDashboard .dashTag { color: #b7ffbf; }
+.hackerDashboard .dashIp  { color: #7df084; opacity: 0.85; cursor: help; transition: opacity 120ms ease, text-shadow 120ms ease; }
+.hackerDashboard .dashIp:hover { opacity: 1; text-shadow: 0 0 6px rgba(125,240,132,0.4); }
+
+/* Wordle tiles inside the hacker terminal */
+.wordleRow { display: flex; gap: 6px; padding: 0.35rem 0.4rem; }
+.wordleTile {
+  display: inline-grid; place-items: center;
+  width: 2.1em; height: 2.1em;
+  font-weight: 800; font-size: 1.05em;
+  border-radius: 4px;
+  text-transform: uppercase;
+  border: 1px solid rgba(255,255,255,0.08);
+  color: #fff;
+  animation: wordleFlip 360ms ease both;
+}
+.wordleTile.green  { background: #538d4e; color: #fff; }
+.wordleTile.orange { background: #f08a3c; color: #fff; }
+.wordleTile.white  { background: #f5f5f5; color: #1a1a1a; border-color: rgba(0,0,0,0.15); }
+@keyframes wordleFlip {
+  0%   { transform: rotateX(0); opacity: 0; }
+  50%  { transform: rotateX(90deg); opacity: 1; }
+  100% { transform: rotateX(0); opacity: 1; }
+}
+
+@media (max-width: 600px) {
+  .hacker { font-size: 12.5px; }
 }
 
 /* ─────────────── 11. Showcase moods ─────────────── */
