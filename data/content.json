@@ -1,0 +1,264 @@
+{
+  "identity": {
+    "name": "Nikolaos Nikolaou",
+    "shortName": "Nikos",
+    "tagline": "Senior XR Developer · Tabletop DM · Maker",
+    "classChain": "Senior XR Developer 6 / Tabletop DM 7 / Maker 5 / Painter 3",
+    "race": "Greek (Living in Denmark)",
+    "alignment": "Chaotic Constructive",
+    "location": "Copenhagen, Denmark",
+    "email": "N.nikolaou@mail.com",
+    "linkedin": "https://www.linkedin.com/in/nikosnikolaou/",
+    "bio": "Senior Unity gameplay programmer with 6+ years of high-performance C# architecture and polished player interactions. Master of strict VR/XR technical requirements — spatial UI, 3D math, optimization for mobile. I build modular, decoupled systems that support rapid iteration and large-scale content delivery. I turn complex requirements into intuitive, responsive gameplay. Self-driven collaborator committed to technical excellence and meticulous refinement of the player experience."
+  },
+
+  "stats": [
+    { "id": "xrArch",     "label": "XR Architecture",      "value": 16, "blurb": "Strict VR optimization, spatial UI, mobile XR." },
+    { "id": "systems",    "label": "Systems Thinking",    "value": 17, "blurb": "Sees the second-order effects before the first ones ship." },
+    { "id": "advCha",     "label": "Adversarial CHA",      "value": 15, "blurb": "Will argue against a closed-and-done conclusion if it makes the conversation better." },
+    { "id": "caffeine",   "label": "Caffeine Resistance",  "value": 6,  "blurb": "Drinks coffee anyway. Calls it a superpower." },
+    { "id": "painting",   "label": "Painting",             "value": 12, "blurb": "Resin and FDM. Minis, statues, conversions." },
+    { "id": "strength",   "label": "Strength",             "value": 8,  "blurb": "The character has never invested a point here." }
+  ],
+
+  "savingThrows": [
+    { "label": "Impossible Problems",        "modifier": "+5", "type": "advantage" },
+    { "label": "Scope Creep",                "modifier": "+3", "type": "advantage" },
+    { "label": "Imposter Syndrome",          "modifier": "+1", "type": "proficient" },
+    { "label": "\"If it works don't touch it\"", "modifier": "-2", "type": "disadvantage" },
+    { "label": "Remembering to Eat",         "modifier": "-3", "type": "disadvantage" }
+  ],
+
+  "traits": [
+    { "name": "Hyperfocus",            "desc": "Locks onto a problem until it's solved. Forgets meals. Worth it." },
+    { "name": "Break-and-Repurpose",   "desc": "Uses tools against their design. Often it works. Sometimes it works better." },
+    { "name": "Think Fast",            "desc": "Reasons through what'll work before building. Rejects 'fail fast' as wasteful." },
+    { "name": "Anticipate Failure",    "desc": "Names the failure modes before they fail. The future thanks him." },
+    { "name": "Adversarial Communicator", "desc": "Defends the non-obvious. Challenges the consensus. Makes meetings worth having." },
+    { "name": "ADHD-Probably",         "desc": "Multiple hobbies, multiple obsessions, one extremely tidy git history." }
+  ],
+
+  "skills": [
+    { "id": "unity",      "name": "Unity 3D",       "level": "Expert",    "years": 6, "tags": ["Daily"] },
+    { "id": "csharp",     "name": "C#",             "level": "Expert",    "years": 6, "tags": ["Daily"] },
+    { "id": "unreal",     "name": "Unreal Engine 5", "level": "Strong",    "years": 2, "tags": ["Past"] },
+    { "id": "math",       "name": "3D Math & Physics", "level": "Strong", "years": 6, "tags": ["Bread & butter"] },
+    { "id": "optim",      "name": "Performance Optimization", "level": "Expert", "years": 6, "tags": ["Mobile XR"] },
+    { "id": "arch",       "name": "Code Architecture", "level": "Expert", "years": 6, "tags": ["Modular, decoupled"] },
+    { "id": "design",     "name": "Systemic Game Design", "level": "Strong", "years": 8, "tags": ["DM-trained"] },
+    { "id": "mentor",     "name": "Mentoring & Leadership", "level": "Strong", "years": 4, "tags": ["Code review, juniors"] },
+    { "id": "vcs",        "name": "Git / Version Control", "level": "Strong", "years": 8, "tags": [] }
+  ],
+
+  "languages": [
+    { "name": "Greek",   "level": "Native" },
+    { "name": "English", "level": "Fluent" },
+    { "name": "Code",    "level": "Native (C# primary)" },
+    { "name": "Dungeon Master", "level": "7 years at the table" }
+  ],
+
+  "work": [
+    {
+      "id": "novo",
+      "role": "Senior XR Developer",
+      "company": "Novo Nordisk",
+      "location": "Copenhagen",
+      "period": "2025–Present",
+      "bullets": [
+        "Designed custom Unity tools that accelerated prototyping and shortened design-feedback loops.",
+        "Led high-fidelity training simulations with strict modular architecture and performance budgets.",
+        "Owned performance profiling and debugging for heavy scenes — kept everything smooth.",
+        "Mentored junior developers and reviewed code to raise team production standards."
+      ]
+    },
+    {
+      "id": "khora",
+      "role": "Lead XR Developer",
+      "company": "Khora Virtual Reality",
+      "location": "Copenhagen",
+      "period": "2021–2025",
+      "bullets": [
+        "Spearheaded engineering on an SXSW-award-winning project — translated abstract design into C# mechanics.",
+        "Built development templates and standardized assets that streamlined studio workflow.",
+        "Worked tight loops with artists and designers — bridged visual fidelity and technical constraints.",
+        "Developed on-location AR with high-precision tracking and custom interaction logic.",
+        "Built interactive training simulations for healthcare education in Denmark and East Africa."
+      ]
+    },
+    {
+      "id": "silkroad",
+      "role": "Unreal Engine Developer — CTO",
+      "company": "Silkroad Studios",
+      "location": "Copenhagen",
+      "period": "2019–2021",
+      "bullets": [
+        "Sole programmer on a narrative game demo in Unreal 5 — owned gameplay systems concept to DFI-funded vertical slice.",
+        "Implemented character controllers, interaction systems, game states — responsive, bug-free demo.",
+        "Collaborated on core design decisions — mechanics had to be fun, responsive, technically feasible.",
+        "Applied Agile to align technical deliverables with evolving design goals."
+      ]
+    }
+  ],
+
+  "education": [
+    {
+      "degree": "MSc Medialogy",
+      "institution": "Aalborg University, Copenhagen",
+      "thesis": "Comfort XR — investigating immersion systems to alleviate physical discomfort.",
+      "tags": ["Unity", "C#", "Game Design"]
+    },
+    {
+      "degree": "MSc Products and Systems Design Engineering",
+      "institution": "University of the Aegean, Syros",
+      "thesis": "Big Chimera — location-based serious AR game.",
+      "tags": ["Game Design", "Interactive Systems", "Unity", "C#"]
+    }
+  ],
+
+  "factions": [
+    {
+      "id": "rohan",
+      "name": "Rohan",
+      "game": "Middle-earth Strategy Battle Game",
+      "blurb": "Horse lords. He likes that the cool guys ride in late and turn the battle.",
+      "color": "#7a8a4a"
+    },
+    {
+      "id": "greyknights",
+      "name": "Grey Knights",
+      "game": "Warhammer 40,000",
+      "blurb": "Daemon hunters in silver. He paints them one model at a time. He'll finish. Probably.",
+      "color": "#b8b9c2"
+    },
+    {
+      "id": "mtg",
+      "name": "Commander (EDH)",
+      "game": "Magic: The Gathering",
+      "blurb": "100-card singleton format. Long games, weird boards, longer arguments about politics.",
+      "color": "#c89060"
+    },
+    {
+      "id": "faerun",
+      "name": "Homebrew Faerûn",
+      "game": "Dungeons & Dragons (DM, 6+ years)",
+      "blurb": "His Faerûn. Players bend the world; the world bends back.",
+      "color": "#9a6a3e"
+    },
+    {
+      "id": "ttrpg",
+      "name": "My TTRPG",
+      "game": "Original system — in development",
+      "blurb": "Rules, setting, stories. Slowly growing. When it's right.",
+      "color": "#c69b5e"
+    }
+  ],
+
+  "library": {
+    "books": [],
+    "booksNote": "The character will not be taking that proficiency.",
+    "games": [
+      { "title": "The Beginner's Guide", "note": "We're basically inside it right now." },
+      { "title": "The Stanley Parable", "note": "Sets the tone for this entire site." },
+      { "title": "League of Legends", "note": "" },
+      { "title": "Lord of the Rings Online (LOTRO)", "note": "" }
+    ],
+    "films": [
+      { "title": "The League of Extraordinary Gentlemen", "note": "" },
+      { "title": "The Lord of the Rings (trilogy)", "note": "" },
+      { "title": "Deadpool", "note": "Meta voice. Clean version." },
+      { "title": "The Sorcerer's Apprentice", "note": "" },
+      { "title": "Knives Out", "note": "" }
+    ],
+    "anime": [
+      { "title": "One Piece" },
+      { "title": "Naruto" },
+      { "title": "Bleach" },
+      { "title": "My Hero Academia" },
+      { "title": "Seven Deadly Sins" },
+      { "title": "Death Note" },
+      { "title": "Frieren" },
+      { "title": "Witch Hat Atelier" },
+      { "title": "Delicious in Dungeon" }
+    ],
+    "series": [
+      { "title": "Critical Role (animations)" },
+      { "title": "Sherlock" },
+      { "title": "Parks and Recreation" },
+      { "title": "Silicon Valley" },
+      { "title": "The Big Bang Theory" },
+      { "title": "The Arrowverse" },
+      { "title": "Supernatural" }
+    ]
+  },
+
+  "showcases": [
+    {
+      "id": "ttrpg",
+      "title": "My TTRPG",
+      "tagline": "Rules + setting + stories — slowly growing",
+      "mood": "manuscript",
+      "status": "in-development",
+      "tags": ["TTRPG", "Worldbuilding", "Game Design", "Original IP"],
+      "hero": "assets/showcase/ttrpg/hero.jpg",
+      "gallery": [],
+      "story": "A custom TTRPG system, born from years of DM-ing D&D and a homebrew Faerûn that kept outgrowing its borrowed bones. Rules, setting, and stories — built together so the mechanics serve the world and the world earns its mechanics. Currently in active development.",
+      "milestones": [
+        "6+ years DM-ing D&D",
+        "Custom Faerûn that kept outgrowing canon",
+        "Started building my own system in 2024",
+        "Rules and setting growing in parallel"
+      ]
+    },
+    {
+      "id": "minis",
+      "title": "3D Print & Paint",
+      "tagline": "Resin + FDM. Minis, statues, conversions.",
+      "mood": "workshop",
+      "status": "ongoing",
+      "tags": ["3D Printing", "Resin", "FDM", "Mini Painting", "Making"],
+      "hero": "assets/showcase/minis/hero.jpg",
+      "gallery": [],
+      "story": "Started with one printer. Ended up with a small company for a while. Resin for fine detail, FDM for terrain and brackets. I paint the minis I print — Grey Knights for 40k, Rohan for Middle-earth Strategy Battle Game, and one-off characters for whoever's at the table.",
+      "milestones": [
+        "Ran a small 3D print company",
+        "Resin + FDM at home",
+        "Painting Grey Knights (40k) — long-term army",
+        "Painting Rohan (MESBG)"
+      ]
+    },
+    {
+      "id": "faerun",
+      "title": "Homebrew Faerûn",
+      "tagline": "Six years of DM notes — the players' fault, mostly",
+      "mood": "dm-screen",
+      "status": "active-campaign",
+      "tags": ["D&D", "DM", "Worldbuilding", "Improv"],
+      "hero": "assets/showcase/faerun/hero.jpg",
+      "gallery": [],
+      "story": "A Faerûn that's been edited by the players for six years. I run a mix of homebrew arcs and heavily-modified prebuilt campaigns — modified to what my players actually want to do. Rules and story beats are improvised when the table demands it. Canon doesn't survive contact with the party.",
+      "milestones": [
+        "6+ years DM-ing",
+        "Mix of homebrew + edited prebuilts",
+        "Improvises rules and story beats",
+        "World evolves with the players"
+      ]
+    },
+    {
+      "id": "khora",
+      "title": "Khora — XR Work",
+      "tagline": "Lead XR Developer · 2021–2025 · SXSW-awarded",
+      "mood": "xr-lab",
+      "status": "shipped",
+      "tags": ["XR", "VR", "AR", "Unity", "C#", "Healthcare", "Award"],
+      "hero": "assets/showcase/khora/hero.jpg",
+      "gallery": [],
+      "story": "Spearheaded engineering on the studio's award-winning XR work — including an SXSW-recognized project. Built on-location AR with high-precision tracking, custom interaction systems for VR, and interactive training simulations for healthcare in Denmark and East Africa. Bridged visual fidelity with technical constraints in tight loops with artists and designers.",
+      "milestones": [
+        "SXSW award-winning project",
+        "On-location AR with high-precision tracking",
+        "Healthcare training simulations (Denmark + East Africa)",
+        "Studio-wide dev templates and asset standards"
+      ]
+    }
+  ]
+}

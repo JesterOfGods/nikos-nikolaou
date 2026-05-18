@@ -1,0 +1,10 @@
+{
+  "updated": "2026-05-18",
+  "items": [
+    { "label": "Day job",      "value": "Senior XR Developer at Novo Nordisk — building training simulations." },
+    { "label": "Side build",   "value": "My own TTRPG system. Rules + setting in parallel." },
+    { "label": "On the bench", "value": "Grey Knights — next squad in primer." },
+    { "label": "Current campaign", "value": "Homebrew Faerûn arc — players just broke the plot. Again." },
+    { "label": "This week",    "value": "Iterating on this very website." }
+  ]
+}

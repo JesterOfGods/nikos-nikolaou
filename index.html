@@ -1,0 +1,245 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta name="description" content="Nikos Nikolaou — Senior XR Developer, Tabletop DM, Maker. Portfolio and personal site." />
+  <meta name="theme-color" content="#0e0d0c" />
+  <title>Nikos Nikolaou</title>
+  <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'%3E%3Ctext y='26' font-size='28'%3E🎲%3C/text%3E%3C/svg%3E" />
+  <link rel="stylesheet" href="styles.css" />
+</head>
+<body class="boot">
+
+  <!-- ──────────────────────────── Intro overlay ──────────────────────────── -->
+  <div id="intro" class="intro">
+    <button id="skipIntro" class="skipIntro" aria-label="Skip intro">Skip intro →</button>
+
+    <div id="audioPrompt" class="introStep introStep--active" role="dialog" aria-labelledby="audioPromptTitle">
+      <div class="introCard">
+        <h2 id="audioPromptTitle">🔊 Hear the narrator?</h2>
+        <p class="introHint">Audio is optional. Text always shows.</p>
+        <div class="introChoices">
+          <button class="introBtn" data-audio="on">Yes — voice on</button>
+          <button class="introBtn" data-audio="off">No, just text</button>
+        </div>
+      </div>
+    </div>
+
+    <div id="coldOpenScreen" class="introStep" aria-hidden="true">
+      <div class="introCard introCard--wide">
+        <p id="coldOpenText" class="coldOpenText"></p>
+        <div id="doors" class="doors" aria-hidden="true">
+          <button class="door" data-view="adventurer">
+            <h3>Adventurer</h3>
+            <p>Take me through.</p>
+          </button>
+          <button class="door" data-view="patron">
+            <h3>Patron</h3>
+            <p>Get to the point.</p>
+          </button>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- ──────────────────────────── Narrator bubble ──────────────────────────── -->
+  <aside id="narrator" class="narrator" aria-live="polite" aria-atomic="true" hidden>
+    <div class="narratorInner">
+      <div class="narratorMeta">
+        <span class="narratorLabel">DM</span>
+        <button id="audioToggle" class="iconBtn" title="Toggle audio" aria-label="Toggle audio">🔊</button>
+        <button id="dismissNarrator" class="iconBtn" title="Dismiss" aria-label="Dismiss">×</button>
+      </div>
+      <p id="narratorText" class="narratorText"></p>
+    </div>
+  </aside>
+
+  <!-- ──────────────────────────── Main shell ──────────────────────────── -->
+  <main id="app" class="app" hidden>
+
+    <header class="topbar">
+      <div class="brand">
+        <span class="brandName"></span>
+        <span class="brandTag"></span>
+      </div>
+      <nav class="viewToggle" aria-label="View mode">
+        <button class="viewBtn" data-view="adventurer" aria-pressed="true">Adventurer</button>
+        <button class="viewBtn" data-view="patron" aria-pressed="false">Patron</button>
+      </nav>
+    </header>
+
+    <!-- ─────── Adventurer view ─────── -->
+    <section id="view-adventurer" class="view view--adventurer active" aria-label="Adventurer view — character sheet">
+
+      <!-- Header / hero -->
+      <div class="sheetHeader">
+        <div class="sheetHeaderTop">
+          <div>
+            <h1 class="charName"></h1>
+            <p class="classChain"></p>
+            <p class="raceLine"></p>
+          </div>
+          <div class="alignmentBlock">
+            <span class="alignmentLabel">Alignment</span>
+            <span class="alignmentValue"></span>
+            <button id="d20Btn" class="d20Btn" title="Roll for initiative">🎲 d20</button>
+            <span id="d20Result" class="d20Result"></span>
+          </div>
+        </div>
+        <p class="bio"></p>
+      </div>
+
+      <!-- Stats grid -->
+      <div class="card stats">
+        <h2 class="cardTitle">Stats</h2>
+        <div class="statsGrid" id="statsGrid"></div>
+      </div>
+
+      <!-- Saving throws -->
+      <div class="card">
+        <h2 class="cardTitle">Strengths & Weaknesses</h2>
+        <ul class="savingThrows" id="savingThrows"></ul>
+      </div>
+
+      <!-- Traits -->
+      <div class="card">
+        <h2 class="cardTitle">Traits</h2>
+        <ul class="traits" id="traits"></ul>
+      </div>
+
+      <!-- Skills -->
+      <div class="card">
+        <h2 class="cardTitle">Skills</h2>
+        <ul class="skills" id="skills"></ul>
+      </div>
+
+      <!-- Languages -->
+      <div class="card card--compact">
+        <h2 class="cardTitle">Languages</h2>
+        <ul class="languages" id="languages"></ul>
+      </div>
+
+      <!-- Quest log -->
+      <div class="card card--accent">
+        <h2 class="cardTitle">Quest Log <span class="cardSub">— what I'm doing right now</span></h2>
+        <ul class="quests" id="quests"></ul>
+      </div>
+
+      <!-- Companions / Projects -->
+      <div class="card card--wide">
+        <h2 class="cardTitle">Companions <span class="cardSub">— work & projects</span></h2>
+        <div class="companions" id="companions"></div>
+      </div>
+
+      <!-- Factions -->
+      <div class="card card--wide">
+        <h2 class="cardTitle">Factions & Allegiances</h2>
+        <div class="factions" id="factions"></div>
+      </div>
+
+      <!-- Showcases -->
+      <div class="card card--wide card--showcase">
+        <h2 class="cardTitle">Workshop <span class="cardSub">— things I'm building</span></h2>
+        <div class="showcases" id="showcases"></div>
+      </div>
+
+      <!-- Library -->
+      <div class="card card--wide">
+        <h2 class="cardTitle">Library</h2>
+        <div class="library" id="library"></div>
+      </div>
+
+      <!-- Backstory -->
+      <div class="card card--wide">
+        <h2 class="cardTitle">Backstory</h2>
+        <div class="backstory" id="backstory"></div>
+      </div>
+
+      <!-- Cursed button — easter egg -->
+      <button id="cursedButton" class="cursedButton" aria-label="Do not click">
+        <span>⚠ DO NOT CLICK</span>
+      </button>
+
+    </section>
+
+    <!-- ─────── Patron view ─────── -->
+    <section id="view-patron" class="view view--patron" aria-label="Patron view — portfolio" hidden>
+
+      <div class="patronHero">
+        <h1 class="patronName"></h1>
+        <p class="patronTag"></p>
+        <p class="patronBio"></p>
+        <div class="patronLinks">
+          <a class="patronLink" id="patronEmail"></a>
+          <a class="patronLink" id="patronLinkedin">LinkedIn</a>
+        </div>
+      </div>
+
+      <section class="patronSection">
+        <h2>Experience</h2>
+        <div id="patronWork"></div>
+      </section>
+
+      <section class="patronSection">
+        <h2>Skills</h2>
+        <div class="patronSkills" id="patronSkills"></div>
+      </section>
+
+      <section class="patronSection">
+        <h2>Selected Work</h2>
+        <div class="patronShowcases" id="patronShowcases"></div>
+      </section>
+
+      <section class="patronSection">
+        <h2>Education</h2>
+        <div id="patronEducation"></div>
+      </section>
+
+      <section class="patronSection">
+        <h2>Beyond Work</h2>
+        <p id="patronBeyond"></p>
+      </section>
+
+      <footer class="patronFooter">
+        <p>Designed for skim. There's a richer version one toggle away. ↑</p>
+      </footer>
+
+    </section>
+
+  </main>
+
+  <!-- ──────────────────────────── Showcase overlay ──────────────────────────── -->
+  <div id="showcase" class="showcase" hidden aria-hidden="true" role="dialog" aria-modal="true">
+    <button id="closeShowcase" class="closeShowcase" aria-label="Close showcase">← Back</button>
+    <div class="showcaseInner">
+      <header class="showcaseHeader">
+        <h2 id="showcaseTitle"></h2>
+        <p id="showcaseTagline"></p>
+        <div id="showcaseTags" class="showcaseTags"></div>
+      </header>
+      <div id="showcaseHero" class="showcaseHero"></div>
+      <div id="showcaseGallery" class="showcaseGallery"></div>
+      <div class="showcaseBody">
+        <p id="showcaseStory"></p>
+        <h3>Milestones</h3>
+        <ul id="showcaseMilestones"></ul>
+      </div>
+    </div>
+  </div>
+
+  <!-- ──────────────────────────── Console (~) ──────────────────────────── -->
+  <div id="console" class="console" hidden role="dialog" aria-label="Developer console">
+    <div id="consoleHistory" class="consoleHistory"></div>
+    <div class="consoleInputRow">
+      <span class="consolePrompt">nikos@dm:~$</span>
+      <input id="consoleInput" class="consoleInput" type="text" autocomplete="off" spellcheck="false" />
+    </div>
+  </div>
+
+  <!-- ──────────────────────────── Audio element ──────────────────────────── -->
+  <audio id="narratorAudio" preload="none"></audio>
+
+  <script src="app.js" defer></script>
+</body>
+</html>

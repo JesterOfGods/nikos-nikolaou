@@ -1,0 +1,139 @@
+{
+  "coldOpen": [
+    {
+      "id": "coldOpen_1",
+      "text": "Welcome. There are two doors. Adventurer means you have time and curiosity. Patron means you have neither — and that's not an insult. He built both versions. Pick whichever you actually are, not which one sounds cooler. He'll know."
+    }
+  ],
+  "returningVisitor": [
+    { "id": "return_1", "text": "Back again. You know the drill." },
+    { "id": "return_2", "text": "Back. Either he's hiring you or you're stalling on something at work. Probably both." }
+  ],
+  "pickAdventurer": [
+    { "id": "adv_1", "text": "Adventurer. He bet me you'd pick this. He doesn't like losing, so he won." }
+  ],
+  "pickPatron": [
+    { "id": "pat_1", "text": "Patron. Practical. The character sheet stays in the drawer for you. You're welcome." }
+  ],
+  "swapView_first": [
+    { "id": "swap_combo", "text": "Pick a lane. He didn't — he built both. You're welcome. He'd like that weekend back, though." }
+  ],
+  "swapView_second": [
+    { "id": "swap_a", "text": "Pick a lane. He didn't get to — he had to build both. You're welcome." }
+  ],
+  "swapView_third": [
+    { "id": "swap_b", "text": "You switched. No consequences for you. Usually it costs him a weekend you'll never see." }
+  ],
+  "swapView_fourth": [
+    { "id": "swap_c", "text": "Mid-scope flip. He's done this for clients — he shipped them. He'll ship you too." }
+  ],
+  "swapView_repeat": [
+    { "id": "swap_meta", "text": "Okay, you're doing this on purpose now. He respects it." }
+  ],
+  "clickStat_strength": [
+    { "id": "str_1", "text": "We don't talk about Strength. The character's never invested a single point." }
+  ],
+  "clickStat_caffeine": [
+    { "id": "caf_1", "text": "Caffeine Resistance. Negative modifier. He drinks coffee anyway. Calls it a superpower. We disagree." }
+  ],
+  "clickSkill_unity": [
+    { "id": "unity_1", "text": "Unity. Cast daily since 2019. Bonus damage vs. spaghetti code. Disadvantage on version-migration days." }
+  ],
+  "clickSkill_unreal": [
+    { "id": "ue_1", "text": "Unreal 5. He used this on a DFI-funded vertical slice. Solo programmer. It shipped. He's proud of it. He won't say that." }
+  ],
+  "clickSkill_csharp": [
+    { "id": "cs_1", "text": "C#. Six years deep. He has opinions about async. Don't ask unless you have time." }
+  ],
+  "clickFaction_rohan": [
+    { "id": "rohan_1", "text": "Rohan. Horse lords. He likes that the cool guys ride in late and turn the battle. Says a lot about him." }
+  ],
+  "clickFaction_greyknights": [
+    { "id": "gk_1", "text": "Grey Knights. Daemon hunters in silver armor. He paints them slowly. Nine years in, three hundred to go. He'll finish. Probably." }
+  ],
+  "clickFaction_ttrpg": [
+    { "id": "ttrpg_1", "text": "That's the system he's building. Don't ask when it's done. Polite answer: 'soon.' Real answer: 'when it's right.'" }
+  ],
+  "clickFaction_faerun": [
+    { "id": "faerun_1", "text": "Faerûn, but his. Six years of edits. The canon doesn't survive contact with his players." }
+  ],
+  "clickLibrary": [
+    { "id": "lib_1", "text": "Empty. He doesn't read books. He's mentioned it twice. He's going to mention it again." }
+  ],
+  "clickLibrary_film_beginnersGuide": [
+    { "id": "bg_1", "text": "Of course he likes that one. We're basically inside it right now." }
+  ],
+  "clickProject_novo": [
+    { "id": "proj_novo_1", "text": "Novo. The day job. Healthcare training simulations. He can't show you most of it. He'll tell you it's the most interesting NDA he's ever signed." }
+  ],
+  "clickProject_khora": [
+    { "id": "proj_khora_1", "text": "Khora. The SXSW one. He won't tell you which award, he'll tell you what the team built." }
+  ],
+  "clickProject_silkroad": [
+    { "id": "proj_silkroad_1", "text": "Silkroad. Sole programmer. Unreal 5. A vertical slice that shipped. He was CTO for two years and won't say the word 'CTO' out loud unless you ask him to." }
+  ],
+  "clickProject_ttrpg": [
+    { "id": "proj_ttrpg_1", "text": "His TTRPG. Rules. Setting. Stories. Slowly growing. He won't show you everything — some of it isn't ready. The rest he just hasn't decided you've earned yet." }
+  ],
+  "clickProject_3dprint": [
+    { "id": "proj_3d_1", "text": "Resin. FDM. Minis, statues, the occasional bracket that fixes something he should have just bought. He had a company for this. He doesn't talk about why it ended. Ask him over coffee." }
+  ],
+  "idle_30s": [
+    { "id": "idle_1", "text": "Still reading? Most people skim. Don't tell him you actually read it — he won't believe you." },
+    { "id": "idle_2", "text": "You're really reading this. He'd want to argue with you. About something. Probably this." }
+  ],
+  "fastSkim": [
+    { "id": "skim_1", "text": "Skimming. Bold. He'd respect you more if you slowed down. He's also doing the same thing in another tab right now." }
+  ],
+  "openDevTools": [
+    { "id": "dev_1", "text": "You opened the inspector. Looking for the seams. Good. He builds for that kind of audience." }
+  ],
+  "openConsole": [
+    { "id": "con_1", "text": "You found the terminal. He hoped you would. Type 'help' if you're stuck. Type 'cast fireball' if you're not." }
+  ],
+  "konami": [
+    { "id": "kon_1", "text": "He hoped someone would try that. Welcome to the back room." }
+  ],
+  "d20_nat20": [
+    { "id": "nat20_1", "text": "Nat 20. You got lucky. Take it. You only get one roll — he insisted on that." }
+  ],
+  "d20_nat1": [
+    { "id": "nat1_1", "text": "Nat 1. Embarrassing. The roll stands. He insisted." }
+  ],
+  "d20_normal": [
+    { "id": "d20_norm_1", "text": "A respectable roll. Nothing's going to happen because of it. He thought that was funnier." }
+  ],
+  "cursedButton_first": [
+    { "id": "cursed_1", "text": "There it is. I told him to label it 'do not click' and you'd press it harder. He bet me dinner." }
+  ],
+  "cursedButton_repeat": [
+    { "id": "cursed_2", "text": "You're really committed to breaking this. Fine. He admires the persistence." }
+  ],
+  "openShowcase_ttrpg": [
+    { "id": "show_ttrpg_1", "text": "He puts the sheet down. Behind it: the manuscript. The good stuff. Or the part he'll let you see." }
+  ],
+  "openShowcase_minis": [
+    { "id": "show_minis_1", "text": "The desk. Paints out of order. Wash drying. He'd apologize for the mess. He won't mean it." }
+  ],
+  "openShowcase_faerun": [
+    { "id": "show_faerun_1", "text": "He flips open the DM screen. Six years of notes. Most of them are the players' fault." }
+  ],
+  "openShowcase_khora": [
+    { "id": "show_khora_1", "text": "The XR work. Cleaner room, headset on the desk. The award's in a box somewhere. He moved twice." }
+  ],
+  "closeShowcase": [
+    { "id": "close_show_1", "text": "Back to the sheet. He picks it up. We continue." }
+  ],
+  "lateNight": [
+    { "id": "late_1", "text": "3 a.m.? He'd be up too. He'd tell you to sleep, then keep working." }
+  ],
+  "tabBlurred": [
+    { "id": "blur_1", "text": "You left. He's not offended. He left tabs open during his own honeymoon." }
+  ],
+  "audioOn": [
+    { "id": "audio_on_1", "text": "Voice on. Hello. You can hear me. That's still novel for both of us." }
+  ],
+  "audioOff": [
+    { "id": "audio_off_1", "text": "Muted. Probably for the best. You'll still see me. Like a subtitle. With opinions." }
+  ]
+}
