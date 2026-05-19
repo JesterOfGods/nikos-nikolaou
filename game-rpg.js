@@ -692,6 +692,26 @@ const RPG = {
     }
     this.help(true);
     this.describe();
+    this.enterImmersive();
+  },
+
+  /* Terminal fills the viewport while the dungeon is active. Browser
+     fullscreen is best-effort — fails silently if the gesture chain broke. */
+  enterImmersive() {
+    const cons = document.getElementById('console');
+    if (cons) cons.classList.add('console--immersive');
+    const root = document.documentElement;
+    const req = root.requestFullscreen || root.webkitRequestFullscreen || root.msRequestFullscreen;
+    if (req && !document.fullscreenElement) {
+      try { Promise.resolve(req.call(root)).catch(() => {}); } catch {}
+    }
+  },
+  exitImmersive() {
+    const cons = document.getElementById('console');
+    if (cons) cons.classList.remove('console--immersive');
+    if (document.fullscreenElement && document.exitFullscreen) {
+      document.exitFullscreen().catch(() => {});
+    }
   },
 
   /* Bridge to the bubble narrator */
@@ -1150,10 +1170,15 @@ const RPG = {
       this.state.inCombat = false;
       this.state.combat = null;
       this.state.flags.__cleared = (this.state.flags.__cleared || []);
-      this.state.flags.__cleared.push(this.state.dungeon);
-      saveState(this.state);
+      if (!this.state.flags.__cleared.includes(this.state.dungeon)) {
+        this.state.flags.__cleared.push(this.state.dungeon);
+      }
+
+      // Full heal between dungeons — boss falls, wounds knit, slate clears.
+      this.state.hp = this.state.maxHp;
+      this.state.mp = this.state.maxMp;
       this.out('', 'out');
-      this.out('▸ DUNGEON COMPLETE. Type `play` to start a new dungeon, or `quit` to exit.', 'narr');
+      this.out(`You feel whole again. HP ${this.state.hp}/${this.state.maxHp} · MP ${this.state.mp}/${this.state.maxMp}.`, 'narr');
 
       // First-ever clear → reveal the konami code as a clickable prompt in the console.
       // No explanation. Player figures out what to do with it.
@@ -1170,11 +1195,28 @@ const RPG = {
         }
       } catch {}
 
-      // Clear dungeon so a new `play` starts fresh
+      // Pick the next uncleared dungeon in canonical order. If all five are
+      // cleared, end the run; otherwise auto-advance without leaving the terminal.
+      const next = DUNGEON_ORDER.find(d => !this.state.flags.__cleared.includes(d));
+      if (next) {
+        this.state.dungeon = next;
+        this.state.room = 0;
+        saveState(this.state);
+        this.out('', 'out');
+        this.out(`▸ DUNGEON COMPLETE. A passage opens — ${DUNGEONS[next].name}.`, 'narr');
+        this.narrate(`rpg_start_${next}`);
+        setTimeout(() => this.describe(), 80);
+        return;
+      }
+
+      // All dungeons cleared — exit cleanly.
       this.state.dungeon = null;
       this.state.room = 0;
       saveState(this.state);
+      this.out('', 'out');
+      this.out('▸ ALL DUNGEONS CLEARED. Type `play` to start over, or `quit` to exit.', 'narr');
       this.active = false;
+      this.exitImmersive();
       return;
     }
     // Enemy turn
@@ -1197,6 +1239,7 @@ const RPG = {
   quit() {
     this.active = false;
     this.hideMenu();
+    this.exitImmersive();
     this.out('You step out of the dungeon. The console returns to normal. (Progress saved — `play` to continue.)', 'narr');
     this.narrate('rpg_quit');
   },
@@ -1205,6 +1248,7 @@ const RPG = {
     this.state = this.freshState();
     this.out('Game reset. Codes and unlocked spells preserved.', 'narr');
     this.active = false;
+    this.exitImmersive();
     this.narrate('rpg_restart');
   },
   help(short = false) {

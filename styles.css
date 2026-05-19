@@ -384,9 +384,11 @@ body.boot .app { display: none !important; }
 .secretsItem.found .secretsMark { color: var(--good); font-weight: 700; }
 .secretsName { color: var(--ink); font-weight: 600; font-size: 0.95rem; }
 .secretsItem.found .secretsName { color: var(--accent); }
-.secretsHint { font-family: var(--ff-mono); font-size: 0.78rem; color: var(--ink-dim); padding: 0.3rem 0.65rem; background: transparent; border: 1px solid #2c2517; border-radius: var(--rad); cursor: pointer; transition: all var(--t-fast) ease; }
+.secretsActions { display: flex; gap: 0.35rem; align-items: center; }
+.secretsHint { font-family: var(--ff-mono); font-size: 0.78rem; color: var(--ink-dim); padding: 0.3rem 0.65rem; background: transparent; border: 1px solid #2c2517; border-radius: var(--rad); cursor: pointer; transition: all var(--t-fast) ease; white-space: nowrap; }
 .secretsHint:hover:not(:disabled) { border-color: var(--accent); color: var(--accent); background: rgba(198,155,94,0.06); }
 .secretsHint:disabled { opacity: 0.4; cursor: not-allowed; }
+.secretsHint--replay { color: var(--ink-faint); border-color: #241e13; }
 .secretsFootnote { margin-top: 1rem; font-size: 0.75rem; color: var(--ink-faint); font-style: italic; line-height: 1.5; }
 .d20Result { font-size: 0.95rem; color: var(--accent); min-height: 1.2em; }
 .d20Result.nat20 { color: var(--gold); font-weight: 700; text-shadow: 0 0 12px rgba(217,184,122,0.5); }
@@ -477,6 +479,11 @@ body.boot .app { display: none !important; }
 .companion .bullets { margin-top: 0.55rem; display: grid; gap: 0.25rem; }
 .companion .bullets li { font-size: 0.82rem; color: var(--ink-dim); padding-left: 0.9em; position: relative; }
 .companion .bullets li::before { content: "▸"; color: var(--accent); position: absolute; left: 0; }
+.companion--linked { border-color: rgba(198,155,94,0.4); }
+.companion--linked:hover { box-shadow: 0 12px 30px -16px rgba(198,155,94,0.4); }
+.companion .role { display: flex; align-items: baseline; justify-content: space-between; gap: 0.6rem; }
+.companionMore { font-family: var(--ff-mono); font-size: 0.7rem; color: var(--accent); font-weight: 400; letter-spacing: 0.04em; opacity: 0.7; }
+.companion--linked:hover .companionMore { opacity: 1; }
 
 /* Factions */
 .factions { display: grid; grid-template-columns: repeat(auto-fit, minmax(220px, 1fr)); gap: 0.65rem; }
@@ -495,19 +502,19 @@ body.boot .app { display: none !important; }
 .showcaseTile:hover::after { transform: translateX(4px); }
 .showcaseTile .title { color: var(--accent); font-weight: 600; font-size: 1rem; }
 .showcaseTile .tagline { color: var(--ink-dim); font-size: 0.85rem; margin-top: 0.3rem; }
-.showcaseTile .tags { display: flex; flex-wrap: wrap; gap: 0.25rem; margin-top: 0.6rem; }
+.showcaseTile .tileFoot { display: flex; align-items: flex-end; justify-content: space-between; gap: 0.6rem; margin-top: 0.6rem; flex-wrap: wrap; }
+.showcaseTile .tags { display: flex; flex-wrap: wrap; gap: 0.25rem; flex: 1 1 auto; }
 .showcaseTile .tag { font-family: var(--ff-mono); font-size: 0.68rem; padding: 0.1rem 0.4rem; background: rgba(198,155,94,0.1); border-radius: 4px; color: var(--accent); }
-.showcaseTile .statusDot { position: absolute; bottom: 0.85rem; right: 1rem; font-family: var(--ff-mono); font-size: 0.7rem; color: var(--good); text-transform: uppercase; letter-spacing: 0.08em; }
+.showcaseTile .statusDot { flex-shrink: 0; font-family: var(--ff-mono); font-size: 0.7rem; color: var(--good); text-transform: uppercase; letter-spacing: 0.08em; white-space: nowrap; }
 
 /* Library */
-.library { display: grid; grid-template-columns: repeat(auto-fit, minmax(220px, 1fr)); gap: 0.85rem; }
-.libCategory { padding: 0.6rem; background: var(--surface); border-radius: var(--rad); border: 1px solid #2c2517; }
-.libCategory h3 { font-size: 0.85rem; color: var(--accent); margin-bottom: 0.4rem; font-family: var(--ff-mono); letter-spacing: 0.05em; text-transform: uppercase; }
-.libCategory .empty { color: var(--ink-faint); font-style: italic; font-size: 0.85rem; }
-.libItem { font-size: 0.85rem; color: var(--ink); padding: 0.25rem 0; border-bottom: 1px dashed rgba(198,155,94,0.1); cursor: pointer; transition: color var(--t-fast) ease; }
-.libItem:last-child { border-bottom: 0; }
-.libItem:hover { color: var(--accent); }
-.libNote { font-size: 0.75rem; color: var(--ink-faint); margin-left: 0.4rem; }
+.library { display: grid; grid-template-columns: repeat(auto-fit, minmax(260px, 1fr)); gap: 0.85rem; }
+.libEdu { padding: 0.75rem 0.85rem; background: var(--surface); border-radius: var(--rad); border: 1px solid #2c2517; display: grid; gap: 0.25rem; }
+.libDeg { color: var(--accent); font-weight: 600; font-size: 0.95rem; }
+.libInst { color: var(--ink-dim); font-size: 0.82rem; }
+.libThesis { color: var(--ink); font-size: 0.82rem; margin-top: 0.2rem; font-style: italic; }
+.libTags { display: flex; flex-wrap: wrap; gap: 0.25rem; margin-top: 0.4rem; }
+.libTags .tag { font-family: var(--ff-mono); font-size: 0.68rem; padding: 0.1rem 0.4rem; background: rgba(198,155,94,0.1); border-radius: 4px; color: var(--accent); }
 
 /* Backstory */
 .backstory { display: grid; gap: 0.75rem; }
@@ -640,6 +647,17 @@ body.boot .app { display: none !important; }
   animation: consoleIn var(--t-fast) var(--ease) both;
 }
 @keyframes consoleIn { from { transform: translateY(100%); } to { transform: none; } }
+
+/* Dungeon mode — terminal fills the viewport for immersion. */
+.console.console--immersive {
+  inset: 0;
+  max-height: 100vh;
+  border-top: 0;
+  padding: 1.25rem 1.5rem;
+  background: rgba(6, 5, 4, 0.985);
+}
+.console.console--immersive .consoleHistory { max-height: calc(100vh - 5rem); }
+
 .consoleHistory { max-height: 36vh; overflow-y: auto; line-height: 1.5; }
 .consoleHistory .row { white-space: pre-wrap; }
 .consoleHistory .out { color: var(--ink-dim); }
@@ -730,13 +748,8 @@ body.boot .app { display: none !important; }
   .bsod { padding: 5vh 6vw; }
 }
 
-/* Cursed button — original red-pulse seal. Lives inline at the bottom of
-   the Adventurer view (inside .cursedRow), not fixed-position. */
-.cursedRow {
-  grid-column: 1 / -1;
-  display: flex; justify-content: center;
-  padding: 1rem 0 2rem;
-}
+/* Cursed button — red-pulse seal that floats over the Adventurer view and
+   teleports to a new random position on each click. */
 .cursedButton {
   padding: 0.5rem 0.85rem;
   background: linear-gradient(180deg, #2a1612 0%, #1a0c0a 100%);
@@ -747,9 +760,15 @@ body.boot .app { display: none !important; }
   letter-spacing: 0.05em;
   text-transform: uppercase;
   box-shadow: 0 0 18px rgba(176,75,61,0.2), inset 0 1px 0 rgba(255,255,255,0.05);
-  transition: transform var(--t-fast) ease, color var(--t-fast) ease;
+  transition: transform var(--t-fast) ease, color var(--t-fast) ease, top 280ms cubic-bezier(0.5, 1.5, 0.5, 1), left 280ms cubic-bezier(0.5, 1.5, 0.5, 1);
   animation: cursedPulse 2.4s ease-in-out infinite;
   cursor: pointer;
+}
+.cursedButton--floating {
+  position: fixed;
+  right: 1.5rem;
+  bottom: 1.5rem;
+  z-index: 95;
 }
 @keyframes cursedPulse {
   0%, 100% { box-shadow: 0 0 18px rgba(176,75,61,0.2), inset 0 1px 0 rgba(255,255,255,0.05); }

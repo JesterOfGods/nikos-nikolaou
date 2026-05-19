@@ -18,7 +18,7 @@
     { "id": "advCha",     "label": "Adversarial CHA",      "value": 15, "blurb": "Will argue against a closed-and-done conclusion if it makes the conversation better." },
     { "id": "caffeine",   "label": "Caffeine Resistance",  "value": 6,  "blurb": "Drinks coffee anyway. Calls it a superpower." },
     { "id": "painting",   "label": "Painting",             "value": 12, "blurb": "Resin and FDM. Minis, statues, conversions." },
-    { "id": "strength",   "label": "Strength",             "value": 8,  "blurb": "The character has never invested a point here." }
+    { "id": "strength",   "label": "Fitness",              "value": 8,  "blurb": "The character has never invested a point here." }
   ],
 
   "savingThrows": [
@@ -54,7 +54,9 @@
     { "name": "Greek",   "level": "Native" },
     { "name": "English", "level": "Fluent" },
     { "name": "Code",    "level": "Native (C# primary)" },
-    { "name": "Dungeon Master", "level": "7 years at the table" }
+    { "name": "Corporate Jargon",  "level": "Passable — can translate 'synergy' into an actual action item" },
+    { "name": "Technical Jargon",  "level": "Fluent — speaks Engineer and Stakeholder, often in the same sentence" },
+    { "name": "Manager Talk",      "level": "Conversational — knows when 'let's circle back' means 'never'" }
   ],
 
   "work": [
@@ -132,24 +134,10 @@
     },
     {
       "id": "mtg",
-      "name": "Commander (EDH)",
-      "game": "Magic: The Gathering",
+      "name": "Planeswalkers",
+      "game": "Magic: The Gathering — Commander (EDH)",
       "blurb": "100-card singleton format. Long games, weird boards, longer arguments about politics.",
       "color": "#c89060"
-    },
-    {
-      "id": "faerun",
-      "name": "Homebrew Faerûn",
-      "game": "Dungeons & Dragons (DM, 6+ years)",
-      "blurb": "His Faerûn. Players bend the world; the world bends back.",
-      "color": "#9a6a3e"
-    },
-    {
-      "id": "ttrpg",
-      "name": "My TTRPG",
-      "game": "Original system — in development",
-      "blurb": "Rules, setting, stories. Slowly growing. When it's right.",
-      "color": "#c69b5e"
     }
   ],
 

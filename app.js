@@ -455,16 +455,22 @@ const Views = {
       el('span', { class: 'value' }, q.value),
     )));
 
-    // Companions (work)
-    $('#companions').replaceChildren(...d.work.map(w => el('div', {
-        class: 'companion',
-        onclick: () => Narrator.fire(`clickProject_${w.id}`, { priority: 'NORMAL', cooldown: 4000 })
-      },
-      el('div', { class: 'role' }, w.role),
-      el('div', { class: 'company' }, `${w.company} · ${w.location}`),
-      el('div', { class: 'period' }, w.period),
-      el('ul', { class: 'bullets' }, ...w.bullets.map(b => el('li', {}, b))),
-    )));
+    // Completed Quests (work) — Khora opens its showcase popup; others fire a narrator line.
+    $('#companions').replaceChildren(...d.work.map(w => {
+      const hasShowcase = d.showcases.some(s => s.id === w.id);
+      return el('div', {
+          class: 'companion' + (hasShowcase ? ' companion--linked' : ''),
+          onclick: () => {
+            if (hasShowcase) Showcase.open(w.id);
+            else Narrator.fire(`clickProject_${w.id}`, { priority: 'NORMAL', cooldown: 4000 });
+          },
+        },
+        el('div', { class: 'role' }, w.role, hasShowcase ? el('span', { class: 'companionMore' }, '↗ open') : null),
+        el('div', { class: 'company' }, `${w.company} · ${w.location}`),
+        el('div', { class: 'period' }, w.period),
+        el('ul', { class: 'bullets' }, ...w.bullets.map(b => el('li', {}, b))),
+      );
+    }));
 
     // Factions
     $('#factions').replaceChildren(...d.factions.map(f => el('div', {
@@ -477,8 +483,8 @@ const Views = {
       el('div', { class: 'blurb' }, f.blurb),
     )));
 
-    // Showcases (tiles in sheet)
-    $('#showcases').replaceChildren(...d.showcases.map(s => el('button', {
+    // Showcases (tiles in sheet) — Khora is shown via the Completed Quests card instead.
+    $('#showcases').replaceChildren(...d.showcases.filter(s => s.id !== 'khora').map(s => el('button', {
         class: 'showcaseTile', dataset: { id: s.id },
         onclick: () => Showcase.open(s.id)
       },
@@ -486,25 +492,25 @@ const Views = {
         el('div', { class: 'title' }, s.title),
         el('div', { class: 'tagline' }, s.tagline),
       ),
-      el('div', { class: 'tags' }, ...s.tags.slice(0, 4).map(t => el('span', { class: 'tag' }, t))),
-      el('div', { class: 'statusDot' }, '● ' + s.status),
+      el('div', { class: 'tileFoot' },
+        el('div', { class: 'tags' }, ...s.tags.slice(0, 4).map(t => el('span', { class: 'tag' }, t))),
+        el('div', { class: 'statusDot' }, '● ' + s.status),
+      ),
     )));
 
-    // Library
-    const lib = d.library;
-    $('#library').replaceChildren(
-      libCategory('Books', lib.books, lib.booksNote, 'lib_1'),
-      libCategory('Games', lib.games, null),
-      libCategory('Films', lib.films, null),
-      libCategory('Anime', lib.anime, null),
-      libCategory('Series', lib.series, null),
-    );
+    // Library — training & lore (formal education)
+    $('#library').replaceChildren(...d.education.map(e => el('div', { class: 'libEdu' },
+      el('div', { class: 'libDeg' }, e.degree),
+      el('div', { class: 'libInst' }, e.institution),
+      el('div', { class: 'libThesis' }, e.thesis),
+      e.tags && e.tags.length ? el('div', { class: 'libTags' }, ...e.tags.map(t => el('span', { class: 'tag' }, t))) : null,
+    )));
 
-    // Backstory + contact
+    // Backstory + contact — bio lives in the header above, so this card carries
+    // the colour and the contact info, no duplication.
     const bs = $('#backstory');
     bs.replaceChildren(
-      el('p', {}, d.identity.bio),
-      el('p', {}, 'Greek by birth, Copenhagen by choice. Twin MSc — Medialogy (Aalborg, "Comfort XR") and Products & Systems Design Engineering (Aegean, "Big Chimera" — location-based serious AR game). Currently building a TTRPG system on the side. Probably has more hobbies than fingers.'),
+      el('p', {}, 'Greek by birth, Copenhagen by choice. Currently building a TTRPG system on the side. Probably has more hobbies than fingers.'),
       el('div', { class: 'backstoryMeta' },
         el('a', { href: 'mailto:' + d.identity.email }, '✉ ' + d.identity.email),
         el('a', { href: d.identity.linkedin, target: '_blank', rel: 'noopener' }, '🔗 LinkedIn'),
@@ -512,15 +518,18 @@ const Views = {
       ),
     );
 
-    // Cursed seal — final element of the Adventurer view, centered.
+    // Cursed seal — floats over the Adventurer view and teleports on each click.
     // Hidden after BSOD fires for the rest of THIS session; reload restores.
     const view = $('#view-adventurer');
-    let cursedRow = view.querySelector('.cursedRow');
-    if (!cursedRow && !State.cursedTrolled) {
-      cursedRow = el('div', { class: 'cursedRow' },
-        el('button', { id: 'cursedButton', class: 'cursedButton', 'aria-label': 'Do not click', title: "don't" }, '⚠ DO NOT CLICK'),
-      );
-      view.append(cursedRow);
+    let cursed = view.querySelector('#cursedButton');
+    if (!cursed && !State.cursedTrolled) {
+      cursed = el('button', {
+        id: 'cursedButton',
+        class: 'cursedButton cursedButton--floating',
+        'aria-label': 'Do not click',
+        title: "don't",
+      }, '⚠ DO NOT CLICK');
+      view.append(cursed);
     }
 
     // Restore D20 result if visitor already rolled this visit (LS-backed).
@@ -724,7 +733,7 @@ const Console = {
     document.addEventListener('keydown', (e) => {
       // Ignore if typing in another input/textarea (unless it's our input)
       const inField = ['INPUT', 'TEXTAREA'].includes(document.activeElement?.tagName) && document.activeElement !== this.input;
-      if (e.key === '`' || e.key === '~') {
+      if (e.key === '`' || e.key === '~' || e.key === ';') {
         if (inField) return;
         e.preventDefault();
         this.toggle();
@@ -768,7 +777,8 @@ const Console = {
     Secrets.unlock('terminal');
     if (this.history.children.length === 0) {
       this.print('nikos@dm:~$ tilde to toggle. type "help" for commands. type `play` to enter the dungeon.', 'out');
-      Narrator.fire('openConsole', { priority: 'HIGH', cooldown: 5000 });
+      // Any "terminal" — DevTools or this in-page console — gets the same narrator response.
+      Narrator.fire('openDevTools', { priority: 'HIGH', cooldown: 5000 });
     }
   },
   hide() {
@@ -934,10 +944,31 @@ const Cursed = {
       const btn = e.target.closest && e.target.closest('#cursedButton');
       if (btn) this.click();
     });
+    window.addEventListener('resize', () => {
+      // Keep the button inside the viewport when the window changes size
+      const btn = document.getElementById('cursedButton');
+      if (btn && btn.style.left) this.moveButton();
+    });
+  },
+  /* Random-teleport the button somewhere else on screen. Classic "don't click
+     me, you can't catch me" gag. Stays inside a safe margin so the user can
+     always find it again. */
+  moveButton() {
+    const btn = document.getElementById('cursedButton');
+    if (!btn) return;
+    btn.style.right = 'auto';
+    btn.style.bottom = 'auto';
+    const margin = 24;
+    const w = btn.offsetWidth || 200;
+    const h = btn.offsetHeight || 40;
+    const maxLeft = Math.max(margin, window.innerWidth - w - margin);
+    const maxTop = Math.max(margin, window.innerHeight - h - margin);
+    btn.style.left = `${margin + Math.random() * (maxLeft - margin)}px`;
+    btn.style.top  = `${margin + Math.random() * (maxTop  - margin)}px`;
   },
   click() {
     // Hard-stop once the BSOD has been armed — buys ~2-3s of safety before the
-    // overlay actually covers the page and the button row is removed.
+    // overlay actually covers the page and the button is removed.
     if (this.locked) return;
 
     // Simple cumulative counter — no time window. Resets on refresh.
@@ -953,16 +984,17 @@ const Cursed = {
     setTimeout(() => app.classList.remove('glitching'), 900);
 
     if (count >= 13) {
+      // No voice line on click 13 — the crash SFX + BSOD speak for themselves.
       this.locked = true;
       Secrets.unlock('cursed_bsod');
       this.playCrashSfx();
-      Narrator.fire('cursedBSOD', { priority: 'HIGH', cooldown: 0 });
       setTimeout(() => {
         this.goFullscreen();
         setTimeout(() => BSOD.trigger(), 500);
       }, 600);
     } else {
-      // One unique line per click 1..12
+      // Teleport away. One unique line per click 1..12.
+      this.moveButton();
       const n = Math.min(count, 12);
       Narrator.fire(`cursedButton_${n}`, { priority: 'HIGH', cooldown: 0 });
     }
@@ -1021,6 +1053,9 @@ const BSOD = {
   },
   show() {
     if (this.el) this.el.remove();
+    // The narrator bubble (z-index 250) sits above the BSOD — dismiss it so
+    // the crash screen owns the viewport. cursedRecover re-opens it later.
+    Narrator.dismiss();
     this.el = el('div', { class: 'bsod', role: 'alert', 'aria-live': 'assertive' },
       el('div', { class: 'bsodInner' },
         el('div', { class: 'bsodFace' }, ':('),
@@ -1066,8 +1101,8 @@ const BSOD = {
     }
     // Hide the cursed button for the rest of this session (resets on reload).
     State.cursedTrolled = true;
-    const row = document.querySelector('.cursedRow');
-    if (row) row.remove();
+    const cursed = document.getElementById('cursedButton');
+    if (cursed) cursed.remove();
     setTimeout(() => {
       this.el?.remove();
       this.el = null;
@@ -1274,6 +1309,18 @@ const Secrets = {
     Narrator.fireLine(def.hint, line);
     this.render();
   },
+  /* Re-plays the most recently used hint without consuming another. Lets the
+     player re-hear a line they missed or want to chew on before advancing. */
+  replayHint(id) {
+    const def = SECRETS_DEF.find(s => s.id === id);
+    if (!def) return;
+    const used = this.hintsUsed[id] || 0;
+    if (used <= 0) return;
+    const bank = State.data?.voicelines?.[def.hint] || [];
+    const line = bank[used - 1];
+    if (!line) return;
+    Narrator.fireLine(def.hint, line);
+  },
   render() {
     const n = this.count();
     const total = SECRETS_DEF.length;
@@ -1296,12 +1343,20 @@ const Secrets = {
         el('span', { class: 'secretsName' }, found ? s.name : '???'),
       );
       if (!found) {
-        const btn = el('button', {
+        const actions = el('div', { class: 'secretsActions' });
+        if (used > 0) {
+          actions.append(el('button', {
+            class: 'secretsHint secretsHint--replay',
+            title: 'Replay the last hint without using another',
+            onclick: (e) => { e.stopPropagation(); this.replayHint(s.id); },
+          }, '↻ Replay'));
+        }
+        actions.append(el('button', {
           class: 'secretsHint',
           disabled: remaining === 0,
           onclick: (e) => { e.stopPropagation(); this.useHint(s.id); },
-        }, remaining > 0 ? `Hint (${remaining})` : 'No hints left');
-        li.append(btn);
+        }, remaining > 0 ? `Hint (${remaining})` : 'No hints left'));
+        li.append(actions);
       }
       return li;
     }));
@@ -1316,10 +1371,9 @@ const Ambient = {
   init() {
     const reset = () => {
       if (this.idleTimer) clearTimeout(this.idleTimer);
-      // Only schedule when the tab is visible; otherwise we'd fire into an empty room
+      // Only schedule when the tab is visible; otherwise we'd fire into an empty room.
       if (document.visibilityState !== 'visible') return;
       this.idleTimer = setTimeout(() => {
-        // Re-check visibility at fire time — the user might have switched tabs mid-countdown
         if (document.visibilityState === 'visible') {
           Narrator.fire('idle_30s', { priority: 'LOW', cooldown: 90000 });
         }
@@ -1328,7 +1382,7 @@ const Ambient = {
     ['mousemove','keydown','scroll','click','touchstart'].forEach(evt => window.addEventListener(evt, reset, { passive: true }));
     reset();
 
-    // Tab visibility — pause/resume the idle timer; ribbing when they return
+    // Tab visibility — pause the idle timer while hidden; reset it on return.
     document.addEventListener('visibilitychange', () => {
       if (document.visibilityState === 'visible') {
         Narrator.fire('tabBlurred', { priority: 'LOW', cooldown: 120000 });
