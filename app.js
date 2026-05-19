@@ -10,7 +10,7 @@ console.log('%c   He hoped you would. Press ~ to open the terminal.', 'color:#9a
      2. Data loading
      3. Narrator (queue, cooldowns, priorities, anti-repeat, audio)
      4. Intro flow (audio prompt → cold open → doors)
-     5. Views (adventurer + patron renderers)
+     5. Views (adventurer + commoner renderers)
      6. View switching + swap escalation
      7. Showcase overlay (CSS-mood scenes)
      8. Console (~)
@@ -51,7 +51,7 @@ function el(tag, attrs = {}, ...children) {
 const LS = {
   AUDIO:    'nikos.audio',         // 'on' | 'off'
   SEEN_INTRO: 'nikos.seenIntro',   // '1'
-  VIEW:     'nikos.view',          // 'adventurer' | 'patron'
+  VIEW:     'nikos.view',          // 'adventurer' | 'commoner'
   VISITS:   'nikos.visits',        // number
   D20_RESULT: 'nikos.d20Result',   // last roll, persists; one roll per visitor
   // The "trolled" flag is intentionally in-memory only (State.cursedTrolled)
@@ -63,6 +63,7 @@ const State = {
   view: 'adventurer',
   audioEnabled: false,
   swapCount: 0,        // mid-session view swaps
+  swapSilenced: false, // narrator has given up on swap commentary for this session
   cursedClicks: 0,
   cursedTrolled: false, // resets on reload — button reappears after refresh
 };
@@ -171,6 +172,17 @@ const Narrator = {
     }
   },
 
+  /* Deterministic version of fire() — plays one specific line from a bank by
+     index, skipping random pick and cooldown. Used by the secrets-modal hint
+     button where escalation order matters. */
+  fireLine(triggerId, line, opts = {}) {
+    const { onEnd = null } = opts;
+    if (!line) { if (onEnd) onEnd(); return; }
+    this.stopCurrent();
+    this._onEnd = onEnd;
+    this.playLine(triggerId, line);
+  },
+
   playAudio(id) {
     const src = `audio/${id}.mp3`;
     this.audioEl.src = src;
@@ -191,7 +203,7 @@ const Narrator = {
     this.current = null;
     const cb = this._onEnd; this._onEnd = null;
     if (cb) { try { cb(); } catch {} }
-    setTimeout(() => { if (!this.current) this.hideBubble(); }, 300);
+    // Bubble stays visible until the visitor dismisses it or another line plays.
   },
 
   stopCurrent() {
@@ -352,7 +364,7 @@ const Intro = {
 
     // Door-choice line
     setTimeout(() => {
-      Narrator.fire(view === 'adventurer' ? 'pickAdventurer' : 'pickPatron', { priority: 'HIGH' });
+      Narrator.fire(view === 'adventurer' ? 'pickAdventurer' : 'pickCommoner', { priority: 'HIGH' });
     }, 700);
   },
 };
@@ -361,7 +373,7 @@ const Intro = {
 /* ════ 5. Views ════ */
 
 const Views = {
-  built: { adventurer: false, patron: false },
+  built: { adventurer: false, commoner: false },
 
   activate(view) {
     State.view = view;
@@ -373,7 +385,7 @@ const Views = {
     });
     $$('.viewBtn').forEach(b => b.setAttribute('aria-pressed', b.dataset.view === view ? 'true' : 'false'));
     if (!this.built[view]) {
-      view === 'adventurer' ? this.renderAdventurer() : this.renderPatron();
+      view === 'adventurer' ? this.renderAdventurer() : this.renderCommoner();
       this.built[view] = true;
     }
   },
@@ -519,20 +531,20 @@ const Views = {
     }
   },
 
-  renderPatron() {
+  renderCommoner() {
     const d = State.data.content;
 
-    $('.patronName').textContent = d.identity.name;
-    $('.patronTag').textContent = d.identity.tagline;
-    $('.patronBio').textContent = d.identity.bio;
-    $('#patronEmail').textContent = '✉ ' + d.identity.email;
-    $('#patronEmail').setAttribute('href', 'mailto:' + d.identity.email);
-    $('#patronLinkedin').setAttribute('href', d.identity.linkedin);
-    $('#patronLinkedin').setAttribute('target', '_blank');
-    $('#patronLinkedin').setAttribute('rel', 'noopener');
+    $('.commonerName').textContent = d.identity.name;
+    $('.commonerTag').textContent = d.identity.tagline;
+    $('.commonerBio').textContent = d.identity.bio;
+    $('#commonerEmail').textContent = '✉ ' + d.identity.email;
+    $('#commonerEmail').setAttribute('href', 'mailto:' + d.identity.email);
+    $('#commonerLinkedin').setAttribute('href', d.identity.linkedin);
+    $('#commonerLinkedin').setAttribute('target', '_blank');
+    $('#commonerLinkedin').setAttribute('rel', 'noopener');
 
     // Work
-    $('#patronWork').replaceChildren(...d.work.map(w => el('div', { class: 'patronJob' },
+    $('#commonerWork').replaceChildren(...d.work.map(w => el('div', { class: 'commonerJob' },
       el('div', { class: 'row' },
         el('div', {},
           el('div', { class: 'roleLine' }, w.role),
@@ -544,14 +556,14 @@ const Views = {
     )));
 
     // Skills
-    $('#patronSkills').replaceChildren(...d.skills.map(s => el('div', { class: 'patronSkillChip' },
+    $('#commonerSkills').replaceChildren(...d.skills.map(s => el('div', { class: 'commonerSkillChip' },
       s.name,
       el('span', { class: 'y' }, `${s.years}y`),
     )));
 
     // Showcases (compact tile)
-    $('#patronShowcases').replaceChildren(...d.showcases.map(s => el('button', {
-        class: 'patronShowcase',
+    $('#commonerShowcases').replaceChildren(...d.showcases.map(s => el('button', {
+        class: 'commonerShowcase',
         onclick: () => Showcase.open(s.id)
       },
       el('div', { class: 't' }, s.title),
@@ -559,14 +571,14 @@ const Views = {
     )));
 
     // Education
-    $('#patronEducation').replaceChildren(...d.education.map(e => el('div', { class: 'patronEdu' },
+    $('#commonerEducation').replaceChildren(...d.education.map(e => el('div', { class: 'commonerEdu' },
       el('div', { class: 'deg' }, e.degree),
       el('div', { class: 'inst' }, e.institution),
       el('div', { class: 'thesis' }, e.thesis),
     )));
 
     // Beyond Work
-    $('#patronBeyond').textContent =
+    $('#commonerBeyond').textContent =
       'Tabletop DM for 6+ years (D&D, building my own TTRPG system). Mini painter (Grey Knights for 40k, Rohan for MESBG). 3D printing (resin + FDM — ran my own company for a while). MTG Commander. Adversarial communicator by sport. Will not be taking the Books proficiency.';
   },
 };
@@ -601,9 +613,18 @@ const ViewSwap = {
     if (view === State.view) return;
     Views.activate(view);
     State.swapCount += 1;
-    // Escalating swap lines
-    const triggers = ['swapView_first', 'swapView_second', 'swapView_third', 'swapView_fourth', 'swapView_repeat'];
-    const triggerId = triggers[Math.min(State.swapCount - 1, triggers.length - 1)];
+    if (State.swapSilenced) return;
+    // Escalating swap lines, then one "giving up" line, then silence.
+    let triggerId;
+    if (State.swapCount === 1)      triggerId = 'swapView_first';
+    else if (State.swapCount === 2) triggerId = 'swapView_second';
+    else if (State.swapCount === 3) triggerId = 'swapView_third';
+    else if (State.swapCount === 4) triggerId = 'swapView_fourth';
+    else if (State.swapCount < 8)   triggerId = 'swapView_repeat';
+    else {
+      triggerId = 'swapView_giveup';
+      State.swapSilenced = true;
+    }
     Narrator.fire(triggerId, { priority: 'HIGH', cooldown: 0 });
   },
 };
@@ -837,7 +858,7 @@ const Console = {
       this.printCmd('cast <spell>',      'cast a spell (try fireball)');
       this.printCmd('roll 1d20',         'roll dice');
       this.printCmd('view adventurer',   'switch view');
-      this.printCmd('view patron',       'switch view');
+      this.printCmd('view commoner',       'switch view');
       this.printCmd('contact',           'how to reach him');
       this.printCmd('play',              'enter the dungeon (RPG game)');
       this.printCmd('reset',             'wipe state, reload (testing)');
@@ -890,8 +911,8 @@ const Console = {
     },
     view(args) {
       const v = (args[0] || '').toLowerCase();
-      if (v === 'adventurer' || v === 'patron') ViewSwap.swap(v);
-      else this.print('view: adventurer | patron', 'err');
+      if (v === 'adventurer' || v === 'commoner') ViewSwap.swap(v);
+      else this.print('view: adventurer | commoner', 'err');
     },
     contact() {
       this.print('✉ ' + State.data.content.identity.email, 'out');
@@ -907,7 +928,6 @@ const Console = {
 /* ════ 9. Easter eggs ════ */
 
 const Cursed = {
-  clickTimes: [],   // recent click timestamps within the 20s window
   locked: false,    // true after click 13 — prevents accidental retrigger during the BSOD ramp
   init() {
     document.addEventListener('click', (e) => {
@@ -920,13 +940,9 @@ const Cursed = {
     // overlay actually covers the page and the button row is removed.
     if (this.locked) return;
 
-    // 13 clicks within 20 seconds → the troll fires. Counter is in-memory only
-    // (resets on refresh) — the gag is a fast-spam discovery, not a slow grind.
-    const now = Date.now();
-    this.clickTimes = this.clickTimes.filter(t => now - t < 20000);
-    this.clickTimes.push(now);
-    const count = this.clickTimes.length;
-    State.cursedClicks = count;
+    // Simple cumulative counter — no time window. Resets on refresh.
+    State.cursedClicks += 1;
+    const count = State.cursedClicks;
 
     Secrets.unlock('cursed_click');
 
@@ -938,7 +954,6 @@ const Cursed = {
 
     if (count >= 13) {
       this.locked = true;
-      this.clickTimes = [];
       Secrets.unlock('cursed_bsod');
       this.playCrashSfx();
       Narrator.fire('cursedBSOD', { priority: 'HIGH', cooldown: 0 });
@@ -1213,15 +1228,19 @@ const SECRETS_DEF = [
   { id: 'devtools',     name: 'Inspected the Page',    trigger: 'Open DevTools (F12 or Ctrl+Shift+I).',                   hint: 'secretHint_devtools' },
   { id: 'konami',       name: 'The Old Code',          trigger: '↑ ↑ ↓ ↓ ← → ← → B A — the Konami code.',                 hint: 'secretHint_konami' },
   { id: 'cursed_click', name: 'Heeded the Warning',    trigger: 'Press the "DO NOT CLICK" button.',                       hint: 'secretHint_cursed_click' },
-  { id: 'cursed_bsod',  name: 'Ignored the Warning',   trigger: 'Click the cursed button 13 times within 20 seconds.',    hint: 'secretHint_cursed_bsod' },
+  { id: 'cursed_bsod',  name: 'Ignored the Warning',   trigger: 'Click the cursed button 13 times.',                      hint: 'secretHint_cursed_bsod' },
   { id: 'late_night',   name: 'Burned the Midnight',   trigger: 'Visit between 3:00 and 3:59 AM local time.',             hint: 'secretHint_late_night' },
 ];
 const LS_SECRETS = 'nikos.secrets';
+const LS_SECRETS_HINTS = 'nikos.secrets.hints';
+const HINTS_PER_SECRET = 3;
 
 const Secrets = {
   state: {},
+  hintsUsed: {},   // secretId -> index of next hint to play (0..HINTS_PER_SECRET)
   init() {
     try { this.state = JSON.parse(localStorage.getItem(LS_SECRETS) || '{}'); } catch { this.state = {}; }
+    try { this.hintsUsed = JSON.parse(localStorage.getItem(LS_SECRETS_HINTS) || '{}'); } catch { this.hintsUsed = {}; }
     this.render();
     const counter = $('#secretsCounter');
     const close   = $('#secretsClose');
@@ -1240,6 +1259,21 @@ const Secrets = {
     this.render();
   },
   count() { return SECRETS_DEF.filter(s => this.state[s.id]).length; },
+  /* Plays the next hint for a secret in sequence (subtle → direct → explicit),
+     decrementing the visible counter. No-op once the bank is exhausted. */
+  useHint(id) {
+    const def = SECRETS_DEF.find(s => s.id === id);
+    if (!def) return;
+    const used = this.hintsUsed[id] || 0;
+    const bank = State.data?.voicelines?.[def.hint] || [];
+    const cap = Math.min(HINTS_PER_SECRET, bank.length);
+    if (used >= cap) return;
+    const line = bank[used];
+    this.hintsUsed[id] = used + 1;
+    try { localStorage.setItem(LS_SECRETS_HINTS, JSON.stringify(this.hintsUsed)); } catch {}
+    Narrator.fireLine(def.hint, line);
+    this.render();
+  },
   render() {
     const n = this.count();
     const total = SECRETS_DEF.length;
@@ -1252,16 +1286,24 @@ const Secrets = {
     if (!list) return;
     list.replaceChildren(...SECRETS_DEF.map(s => {
       const found = !!this.state[s.id];
+      const used = this.hintsUsed[s.id] || 0;
+      const remaining = Math.max(0, HINTS_PER_SECRET - used);
       const attrs = { class: 'secretsItem' + (found ? ' found' : '') };
-      if (!found && s.hint) {
-        // Per-trigger cooldown so rapid clicks on the same row don't re-fire mid-line.
-        attrs.onclick = () => Narrator.fire(s.hint, { cooldown: 10000 });
-      }
-      return el('li', attrs,
+      // Found rows put the trigger explanation in a native hover tooltip.
+      if (found) attrs.title = s.trigger;
+      const li = el('li', attrs,
         el('span', { class: 'secretsMark' }, found ? '✓' : '?'),
         el('span', { class: 'secretsName' }, found ? s.name : '???'),
-        el('span', { class: 'secretsHow' }, found ? s.trigger : ' '),
       );
+      if (!found) {
+        const btn = el('button', {
+          class: 'secretsHint',
+          disabled: remaining === 0,
+          onclick: (e) => { e.stopPropagation(); this.useHint(s.id); },
+        }, remaining > 0 ? `Hint (${remaining})` : 'No hints left');
+        li.append(btn);
+      }
+      return li;
     }));
   },
   openModal() { $('#secretsModal').hidden = false; this.render(); },

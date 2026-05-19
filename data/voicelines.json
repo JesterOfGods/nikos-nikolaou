@@ -2,7 +2,7 @@
   "coldOpen": [
     {
       "id": "coldOpen_1",
-      "text": "Welcome. There are two doors. Adventurer means you have time and curiosity. Patron means you have neither — and that's not an insult. He built both versions. Pick whichever you actually are, not which one sounds cooler. He'll know."
+      "text": "Welcome. There are two doors. Adventurer means you have time and curiosity. Commoner means you've got somewhere else to be — and that's not an insult. He built both versions. Pick whichever you actually are, not which one sounds cooler. He'll know."
     }
   ],
   "returningVisitor": [
@@ -12,8 +12,8 @@
   "pickAdventurer": [
     { "id": "adv_1", "text": "Adventurer. He bet me you'd pick this. He doesn't like losing, so he won." }
   ],
-  "pickPatron": [
-    { "id": "pat_1", "text": "Patron. Practical. The character sheet stays in the drawer for you. You're welcome." }
+  "pickCommoner": [
+    { "id": "com_1", "text": "Commoner. Practical. The character sheet stays in the drawer for you. You're welcome." }
   ],
   "swapView_first": [
     { "id": "swap_combo", "text": "Pick a lane. He didn't — he built both. You're welcome. He'd like that weekend back, though." }
@@ -29,6 +29,9 @@
   ],
   "swapView_repeat": [
     { "id": "swap_meta", "text": "Okay, you're doing this on purpose now. He respects it." }
+  ],
+  "swapView_giveup": [
+    { "id": "swap_giveup", "text": "Alright. I'm out. You had too much fun with the toggle — I'll stop narrating it. Switch freely. Silence from me." }
   ],
   "clickStat_strength": [
     { "id": "str_1", "text": "We don't talk about Strength. The character's never invested a single point." }
@@ -113,7 +116,7 @@
     { "id": "d20_norm_5", "text": "Statistics in motion. Expected value of a d20 is ten-point-five, in case you were keeping score." },
     { "id": "d20_norm_6", "text": "Still spinning. He left the die there because he likes seeing what people do with permission." }
   ],
-  "cursedButton_1":  [{ "id": "cursed_1",  "text": "There it is. I told him to label it 'do not click' and you'd press it harder. He bet me dinner. By the way — he hid more behind tilde." }],
+  "cursedButton_1":  [{ "id": "cursed_1",  "text": "There it is. The 'do not click' button. He bet me dinner you'd press it. Go on — press it again. Let's see what happens." }],
   "cursedButton_2":  [{ "id": "cursed_2",  "text": "Twice. That wasn't accident-curiosity. That was a decision." }],
   "cursedButton_3":  [{ "id": "cursed_3",  "text": "Three. He's started counting. Don't ask why." }],
   "cursedButton_4":  [{ "id": "cursed_4",  "text": "Four. Most people stop around here. He's wondering what kind of person you are." }],
@@ -126,7 +129,7 @@
   "cursedButton_11": [{ "id": "cursed_11", "text": "Eleven. You are deeply, deliberately ignoring the label. He respects the disrespect." }],
   "cursedButton_12": [{ "id": "cursed_12", "text": "Twelve. One more. We both know what you'll do." }],
   "cursedBSOD":      [{ "id": "cursed_bsod", "text": "Thirteen. He warned you twelve times. This is what comes after warnings." }],
-  "cursedRecover":   [{ "id": "cursed_recover", "text": "Got you there, didn't I? Nothing actually broke. Except your composure." }],
+  "cursedRecover":   [{ "id": "cursed_recover", "text": "I hope I got you on that. Did I get you on that? Nothing actually broke — he just wanted to see the look on your face." }],
   "openShowcase_ttrpg": [
     { "id": "show_ttrpg_1", "text": "He puts the sheet down. Behind it: the manuscript. The good stuff. Or the part he'll let you see." }
   ],
@@ -229,24 +232,38 @@
     { "id": "close_show_first_1", "text": "You came up for air. There's a terminal too — tilde opens it. He hid things in there." }
   ],
   "secretHint_terminal": [
-    { "id": "hint_term_1", "text": "He left a back door for people who type things they shouldn't have to. It's a key most people have never pressed on purpose." }
+    { "id": "hint_term_1", "text": "He left a back door for people who type things they shouldn't have to. It's a key most people have never pressed on purpose." },
+    { "id": "hint_term_2", "text": "Top-left of your keyboard. Below escape. The one with the squiggly line. He hid a whole console behind it." },
+    { "id": "hint_term_3", "text": "Press tilde — `~` or the backtick. A terminal opens. Type `help` once you're in." }
   ],
   "secretHint_d20": [
-    { "id": "hint_d20_1", "text": "Something on the sheet is asking to be touched. He's a programmer — he'd put a probability where a decoration could go." }
+    { "id": "hint_d20_1", "text": "Something on the sheet is asking to be touched. He's a programmer — he'd put a probability where a decoration could go." },
+    { "id": "hint_d20_2", "text": "Header of the character sheet. Twenty sides. He put it there to be rolled, not admired." },
+    { "id": "hint_d20_3", "text": "Switch to Adventurer. Click the d20 icon in the sheet header. One roll. Don't crit-fail." }
   ],
   "secretHint_devtools": [
-    { "id": "hint_dev_1", "text": "The seams are visible if you know where to look. Most browsers ship a tool for that exact kind of curiosity." }
+    { "id": "hint_dev_1", "text": "The seams are visible if you know where to look. Most browsers ship a tool for that exact kind of curiosity." },
+    { "id": "hint_dev_2", "text": "Inspector. Elements tab. Console. The thing developers spend half their day in. There's a key for it." },
+    { "id": "hint_dev_3", "text": "Press F12. Or Ctrl+Shift+I on Windows, Cmd+Option+I on a Mac. He left a note for whoever opens it." }
   ],
   "secretHint_konami": [
-    { "id": "hint_kon_1", "text": "There's a cheat code older than him. The kind of thing your thumbs remember from a couch in a room you don't live in anymore." }
+    { "id": "hint_kon_1", "text": "There's a cheat code older than him. The kind of thing your thumbs remember from a couch in a room you don't live in anymore." },
+    { "id": "hint_kon_2", "text": "Konami. NES era. Contra, thirty lives, the password every cousin knew. You probably know the move even if you can't quote it." },
+    { "id": "hint_kon_3", "text": "Up, up, down, down, left, right, left, right, B, A. Type it on your keyboard, anywhere on the page. Watch what happens next." }
   ],
   "secretHint_cursed_click": [
-    { "id": "hint_curse1_1", "text": "He labeled something so you wouldn't press it. He knew exactly what that would do." }
+    { "id": "hint_curse1_1", "text": "He labeled something so you wouldn't press it. He knew exactly what that would do." },
+    { "id": "hint_curse1_2", "text": "Bottom of the Adventurer sheet. The button practically begs you. Don't — or do, once." },
+    { "id": "hint_curse1_3", "text": "Switch to Adventurer, scroll to the bottom, find 'DO NOT CLICK'. Press it once. That's enough." }
   ],
   "secretHint_cursed_bsod": [
-    { "id": "hint_curse2_1", "text": "Once is a moment of weakness. Many, fast — that's a personality." }
+    { "id": "hint_curse2_1", "text": "Once is a moment of weakness. Many — that's a personality." },
+    { "id": "hint_curse2_2", "text": "The bad button isn't done with you after one click. He wrote a line for each press. He counted to thirteen." },
+    { "id": "hint_curse2_3", "text": "Press 'DO NOT CLICK' thirteen times. He warned you twelve. The thirteenth is what he was waiting for." }
   ],
   "secretHint_late_night": [
-    { "id": "hint_late_1", "text": "This one isn't a click. It's a clock. He keeps a particular hour. Visit then." }
+    { "id": "hint_late_1", "text": "This one isn't a click. It's a clock. He keeps a particular hour." },
+    { "id": "hint_late_2", "text": "The hour where the world's asleep and your judgment isn't great. He works then. He left a line for it." },
+    { "id": "hint_late_3", "text": "Visit the site between 3:00 and 3:59 AM, your local time. Refresh on the hour if you need to." }
   ]
 }

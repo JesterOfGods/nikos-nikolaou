@@ -34,8 +34,8 @@
             <h3>Adventurer</h3>
             <p>Take me through.</p>
           </button>
-          <button class="door" data-view="patron">
-            <h3>Patron</h3>
+          <button class="door" data-view="commoner">
+            <h3>Commoner</h3>
             <p>Get to the point.</p>
           </button>
         </div>
@@ -65,7 +65,7 @@
       </div>
       <nav class="viewToggle" aria-label="View mode">
         <button class="viewBtn" data-view="adventurer" aria-pressed="true">Adventurer</button>
-        <button class="viewBtn" data-view="patron" aria-pressed="false">Patron</button>
+        <button class="viewBtn" data-view="commoner" aria-pressed="false">Commoner</button>
       </nav>
     </header>
 
@@ -161,45 +161,45 @@
 
     </section>
 
-    <!-- ─────── Patron view ─────── -->
-    <section id="view-patron" class="view view--patron" aria-label="Patron view — portfolio" hidden>
+    <!-- ─────── Commoner view ─────── -->
+    <section id="view-commoner" class="view view--commoner" aria-label="Commoner view — portfolio" hidden>
 
-      <div class="patronHero">
-        <h1 class="patronName"></h1>
-        <p class="patronTag"></p>
-        <p class="patronBio"></p>
-        <div class="patronLinks">
-          <a class="patronLink" id="patronEmail"></a>
-          <a class="patronLink" id="patronLinkedin">LinkedIn</a>
+      <div class="commonerHero">
+        <h1 class="commonerName"></h1>
+        <p class="commonerTag"></p>
+        <p class="commonerBio"></p>
+        <div class="commonerLinks">
+          <a class="commonerLink" id="commonerEmail"></a>
+          <a class="commonerLink" id="commonerLinkedin">LinkedIn</a>
         </div>
       </div>
 
-      <section class="patronSection">
+      <section class="commonerSection">
         <h2>Experience</h2>
-        <div id="patronWork"></div>
+        <div id="commonerWork"></div>
       </section>
 
-      <section class="patronSection">
+      <section class="commonerSection">
         <h2>Skills</h2>
-        <div class="patronSkills" id="patronSkills"></div>
+        <div class="commonerSkills" id="commonerSkills"></div>
       </section>
 
-      <section class="patronSection">
+      <section class="commonerSection">
         <h2>Selected Work</h2>
-        <div class="patronShowcases" id="patronShowcases"></div>
+        <div class="commonerShowcases" id="commonerShowcases"></div>
       </section>
 
-      <section class="patronSection">
+      <section class="commonerSection">
         <h2>Education</h2>
-        <div id="patronEducation"></div>
+        <div id="commonerEducation"></div>
       </section>
 
-      <section class="patronSection">
+      <section class="commonerSection">
         <h2>Beyond Work</h2>
-        <p id="patronBeyond"></p>
+        <p id="commonerBeyond"></p>
       </section>
 
-      <footer class="patronFooter">
+      <footer class="commonerFooter">
         <p>Designed for skim. There's a richer version one toggle away. ↑</p>
       </footer>
 
@@ -245,7 +245,7 @@
         <button id="secretsClose" class="secretsClose" aria-label="Close">×</button>
       </header>
       <ul id="secretsList" class="secretsList"></ul>
-      <p class="secretsFootnote">Found ones reveal their name and how you triggered them. The rest stay hidden until you find them.</p>
+      <p class="secretsFootnote">Hover a found secret to see how you triggered it. For the rest — spend a hint when you want a nudge. Three per secret, escalating from oblique to obvious.</p>
     </div>
   </div>
 

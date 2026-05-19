@@ -5,7 +5,7 @@
 A personal site / portfolio with a game-experience overlay. Visitor enters, the **Narrator** (DM + Stanley Parable + clean Deadpool meta) introduces two doors:
 
 - **Adventurer** — full character-screen layout, lore, easter eggs, narrator active.
-- **Patron** — clean modern portfolio, narrator quiet, scannable in 20 seconds.
+- **Commoner** — clean modern portfolio, narrator quiet, scannable in 20 seconds.
 
 Same content, two skins. Visitor can swap any time. Narrator notices.
 

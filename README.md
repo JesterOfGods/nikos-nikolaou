@@ -3,7 +3,7 @@
 A personal portfolio + game-experience site. Two views:
 
 - **Adventurer** — character-screen layout with traits, factions, skills, showcases, easter eggs, narrator on.
-- **Patron** — clean modern portfolio, scannable in 20 seconds.
+- **Commoner** — clean modern portfolio, scannable in 20 seconds.
 
 Same content, two skins. Visitor can swap any time. The narrator notices.
 
@@ -114,7 +114,7 @@ Missing files fall back to placeholder boxes. Nothing breaks until you fill them
 
 ## Easter eggs
 
-- **`~` or `` ` ``** — open the in-page console. Try `help`, `cast fireball`, `roll 1d20`, `view patron`.
+- **`~` or `` ` ``** — open the in-page console. Try `help`, `cast fireball`, `roll 1d20`, `view commoner`.
 - **🎲 d20 button** in the Adventurer header — rolls a real d20, narrator riffs on nat 20 / nat 1.
 - **DO NOT CLICK button** (bottom-left in Adventurer view) — glitches the page and runs a custom line.
 - **Konami code** (↑↑↓↓←→←→ B A) — narrator acknowledges, screen shimmers.

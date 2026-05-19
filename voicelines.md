@@ -49,7 +49,7 @@ If ElevenLabs mispronounces, swap these in the audio script and regenerate:
 The most important line in the whole site. Every visitor hears this. If you only record one, record this.
 
 ### `coldOpen_1.mp3`
-> Welcome. There are two doors. Adventurer means you have time and curiosity. Patron means you have neither — and that's not an insult. He built both versions. Pick whichever you actually are, not which one sounds cooler. He'll know.
+> Welcome. There are two doors. Adventurer means you have time and curiosity. Commoner means you have neither — and that's not an insult. He built both versions. Pick whichever you actually are, not which one sounds cooler. He'll know.
 
 ---
 
@@ -68,8 +68,8 @@ The most important line in the whole site. Every visitor hears this. If you only
 ### `adv_1.mp3` — picked Adventurer
 > Adventurer. He bet me you'd pick this. He doesn't like losing, so he won.
 
-### `pat_1.mp3` — picked Patron
-> Patron. Practical. The character sheet stays in the drawer for you. You're welcome.
+### `com_1.mp3` — picked Commoner
+> Commoner. Practical. The character sheet stays in the drawer for you. You're welcome.
 
 ---
 
@@ -320,7 +320,7 @@ The same DM narrator runs the dungeon. The line fires from the bubble while the 
 
 # Quick batch suggestions
 
-**Tier 1 — record these first** (~7 lines): `coldOpen_1`, `adv_1`, `pat_1`, `swap_combo`, `cursed_1`, `nat20_1`, `kon_1`.
+**Tier 1 — record these first** (~7 lines): `coldOpen_1`, `adv_1`, `com_1`, `swap_combo`, `cursed_1`, `nat20_1`, `kon_1`.
 These cover the most impactful moments — first impression, door choice, easter egg payoffs.
 
 **Tier 2 — section riffs** (~12 lines): all the `clickFaction_*`, `clickSkill_*`, `clickProject_*`, `clickLibrary_*` lines. Lets visitors who browse the sheet get audio commentary.

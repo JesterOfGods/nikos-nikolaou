@@ -7,7 +7,7 @@
      4. Narrator bubble
      5. Topbar & view toggle
      6. Adventurer view (character sheet)
-     7. Patron view (clean portfolio)
+     7. Commoner view (clean portfolio)
      8. Showcase overlay
      9. Console (~)
      10. Easter eggs (cursed button, d20, glitch)
@@ -378,15 +378,15 @@ body.boot .app { display: none !important; }
 .secretsClose { font-size: 1.4rem; color: var(--ink-faint); padding: 0 0.5rem; line-height: 1; }
 .secretsClose:hover { color: var(--accent); }
 .secretsList { display: grid; gap: 0.5rem; }
-.secretsItem { display: grid; grid-template-columns: 1.6em 1fr; gap: 0.5rem; padding: 0.55rem 0.7rem; background: var(--surface); border: 1px solid #2c2517; border-radius: var(--rad); }
-.secretsItem:not(.found) { cursor: pointer; }
-.secretsItem:not(.found):hover { border-color: rgba(198,155,94,0.25); background: rgba(198,155,94,0.02); }
-.secretsItem.found { border-color: rgba(198,155,94,0.4); background: rgba(198,155,94,0.04); }
+.secretsItem { display: grid; grid-template-columns: 1.6em 1fr auto; align-items: center; gap: 0.5rem; padding: 0.55rem 0.7rem; background: var(--surface); border: 1px solid #2c2517; border-radius: var(--rad); }
+.secretsItem.found { grid-template-columns: 1.6em 1fr; border-color: rgba(198,155,94,0.4); background: rgba(198,155,94,0.04); cursor: help; }
 .secretsMark { font-family: var(--ff-mono); color: var(--ink-faint); text-align: center; }
 .secretsItem.found .secretsMark { color: var(--good); font-weight: 700; }
 .secretsName { color: var(--ink); font-weight: 600; font-size: 0.95rem; }
 .secretsItem.found .secretsName { color: var(--accent); }
-.secretsHow { grid-column: 2; font-size: 0.82rem; color: var(--ink-dim); margin-top: 0.2rem; line-height: 1.4; }
+.secretsHint { font-family: var(--ff-mono); font-size: 0.78rem; color: var(--ink-dim); padding: 0.3rem 0.65rem; background: transparent; border: 1px solid #2c2517; border-radius: var(--rad); cursor: pointer; transition: all var(--t-fast) ease; }
+.secretsHint:hover:not(:disabled) { border-color: var(--accent); color: var(--accent); background: rgba(198,155,94,0.06); }
+.secretsHint:disabled { opacity: 0.4; cursor: not-allowed; }
 .secretsFootnote { margin-top: 1rem; font-size: 0.75rem; color: var(--ink-faint); font-style: italic; line-height: 1.5; }
 .d20Result { font-size: 0.95rem; color: var(--accent); min-height: 1.2em; }
 .d20Result.nat20 { color: var(--gold); font-weight: 700; text-shadow: 0 0 12px rgba(217,184,122,0.5); }
@@ -516,48 +516,48 @@ body.boot .app { display: none !important; }
 .backstoryMeta a { color: var(--accent); text-decoration: none; }
 .backstoryMeta a:hover { text-decoration: underline; }
 
-/* ─────────────── 7. Patron view ─────────────── */
+/* ─────────────── 7. Commoner view ─────────────── */
 
-.view--patron { max-width: 760px; margin: 0 auto; }
-.patronHero { padding: 2rem 0 1.25rem; border-bottom: 1px solid #2a2418; margin-bottom: 1.5rem; }
-.patronName { color: var(--ink); }
-.patronTag { color: var(--accent); margin-top: 0.35rem; font-family: var(--ff-mono); font-size: 0.95rem; }
-.patronBio { margin-top: 1rem; color: var(--ink-dim); max-width: 65ch; }
-.patronLinks { display: flex; gap: 0.5rem; flex-wrap: wrap; margin-top: 1rem; }
-.patronLink { padding: 0.5rem 0.9rem; background: var(--surface); border: 1px solid #2c2517; border-radius: var(--rad); color: var(--ink); text-decoration: none; font-size: 0.88rem; transition: all var(--t-fast) ease; }
-.patronLink:hover { border-color: var(--accent); color: var(--accent); }
+.view--commoner { max-width: 760px; margin: 0 auto; }
+.commonerHero { padding: 2rem 0 1.25rem; border-bottom: 1px solid #2a2418; margin-bottom: 1.5rem; }
+.commonerName { color: var(--ink); }
+.commonerTag { color: var(--accent); margin-top: 0.35rem; font-family: var(--ff-mono); font-size: 0.95rem; }
+.commonerBio { margin-top: 1rem; color: var(--ink-dim); max-width: 65ch; }
+.commonerLinks { display: flex; gap: 0.5rem; flex-wrap: wrap; margin-top: 1rem; }
+.commonerLink { padding: 0.5rem 0.9rem; background: var(--surface); border: 1px solid #2c2517; border-radius: var(--rad); color: var(--ink); text-decoration: none; font-size: 0.88rem; transition: all var(--t-fast) ease; }
+.commonerLink:hover { border-color: var(--accent); color: var(--accent); }
 
-.patronSection { padding: 1.5rem 0; border-bottom: 1px solid #1d1a14; }
-.patronSection:last-of-type { border-bottom: 0; }
-.patronSection h2 { color: var(--accent); margin-bottom: 0.85rem; font-family: var(--ff-disp); }
+.commonerSection { padding: 1.5rem 0; border-bottom: 1px solid #1d1a14; }
+.commonerSection:last-of-type { border-bottom: 0; }
+.commonerSection h2 { color: var(--accent); margin-bottom: 0.85rem; font-family: var(--ff-disp); }
 
-.patronJob { padding: 0.85rem 0; }
-.patronJob + .patronJob { border-top: 1px dashed #2a2418; }
-.patronJob .row { display: flex; justify-content: space-between; gap: 1rem; flex-wrap: wrap; }
-.patronJob .roleLine { color: var(--ink); font-weight: 600; }
-.patronJob .companyLine { color: var(--ink-dim); font-size: 0.92rem; }
-.patronJob .period { font-family: var(--ff-mono); font-size: 0.8rem; color: var(--ink-faint); }
-.patronJob ul { margin-top: 0.5rem; display: grid; gap: 0.25rem; }
-.patronJob ul li { font-size: 0.88rem; color: var(--ink-dim); padding-left: 0.9em; position: relative; }
-.patronJob ul li::before { content: "·"; color: var(--accent); position: absolute; left: 0; font-weight: 700; }
+.commonerJob { padding: 0.85rem 0; }
+.commonerJob + .commonerJob { border-top: 1px dashed #2a2418; }
+.commonerJob .row { display: flex; justify-content: space-between; gap: 1rem; flex-wrap: wrap; }
+.commonerJob .roleLine { color: var(--ink); font-weight: 600; }
+.commonerJob .companyLine { color: var(--ink-dim); font-size: 0.92rem; }
+.commonerJob .period { font-family: var(--ff-mono); font-size: 0.8rem; color: var(--ink-faint); }
+.commonerJob ul { margin-top: 0.5rem; display: grid; gap: 0.25rem; }
+.commonerJob ul li { font-size: 0.88rem; color: var(--ink-dim); padding-left: 0.9em; position: relative; }
+.commonerJob ul li::before { content: "·"; color: var(--accent); position: absolute; left: 0; font-weight: 700; }
 
-.patronSkills { display: flex; flex-wrap: wrap; gap: 0.4rem; }
-.patronSkillChip { padding: 0.35rem 0.7rem; background: var(--surface); border: 1px solid #2c2517; border-radius: 999px; font-size: 0.82rem; color: var(--ink-dim); }
-.patronSkillChip .y { color: var(--accent); font-family: var(--ff-mono); margin-left: 0.35rem; font-size: 0.75rem; }
+.commonerSkills { display: flex; flex-wrap: wrap; gap: 0.4rem; }
+.commonerSkillChip { padding: 0.35rem 0.7rem; background: var(--surface); border: 1px solid #2c2517; border-radius: 999px; font-size: 0.82rem; color: var(--ink-dim); }
+.commonerSkillChip .y { color: var(--accent); font-family: var(--ff-mono); margin-left: 0.35rem; font-size: 0.75rem; }
 
-.patronShowcases { display: grid; grid-template-columns: repeat(auto-fit, minmax(240px, 1fr)); gap: 0.65rem; }
-.patronShowcase { padding: 0.85rem 1rem; background: var(--surface); border: 1px solid #2c2517; border-radius: var(--rad); cursor: pointer; transition: all var(--t-fast) ease; }
-.patronShowcase:hover { border-color: var(--accent); background: var(--surface-2); }
-.patronShowcase .t { color: var(--ink); font-weight: 600; font-size: 0.92rem; }
-.patronShowcase .s { color: var(--ink-dim); font-size: 0.82rem; margin-top: 0.25rem; }
+.commonerShowcases { display: grid; grid-template-columns: repeat(auto-fit, minmax(240px, 1fr)); gap: 0.65rem; }
+.commonerShowcase { padding: 0.85rem 1rem; background: var(--surface); border: 1px solid #2c2517; border-radius: var(--rad); cursor: pointer; transition: all var(--t-fast) ease; }
+.commonerShowcase:hover { border-color: var(--accent); background: var(--surface-2); }
+.commonerShowcase .t { color: var(--ink); font-weight: 600; font-size: 0.92rem; }
+.commonerShowcase .s { color: var(--ink-dim); font-size: 0.82rem; margin-top: 0.25rem; }
 
-.patronEdu { padding: 0.6rem 0; }
-.patronEdu + .patronEdu { border-top: 1px dashed #2a2418; }
-.patronEdu .deg { color: var(--ink); font-weight: 600; }
-.patronEdu .inst { color: var(--ink-dim); font-size: 0.9rem; }
-.patronEdu .thesis { color: var(--ink-faint); font-size: 0.85rem; margin-top: 0.2rem; font-style: italic; }
+.commonerEdu { padding: 0.6rem 0; }
+.commonerEdu + .commonerEdu { border-top: 1px dashed #2a2418; }
+.commonerEdu .deg { color: var(--ink); font-weight: 600; }
+.commonerEdu .inst { color: var(--ink-dim); font-size: 0.9rem; }
+.commonerEdu .thesis { color: var(--ink-faint); font-size: 0.85rem; margin-top: 0.2rem; font-style: italic; }
 
-.patronFooter { padding-top: 2rem; text-align: center; color: var(--ink-faint); font-family: var(--ff-mono); font-size: 0.78rem; }
+.commonerFooter { padding-top: 2rem; text-align: center; color: var(--ink-faint); font-family: var(--ff-mono); font-size: 0.78rem; }
 
 /* ─────────────── 8. Showcase overlay ─────────────── */
 
