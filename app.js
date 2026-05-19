@@ -509,16 +509,13 @@ const Views = {
       e.tags && e.tags.length ? el('div', { class: 'libTags' }, ...e.tags.map(t => el('span', { class: 'tag' }, t))) : null,
     )));
 
-    // Backstory + contact — bio lives in the header above, so this card carries
-    // the colour and the contact info, no duplication.
-    const bs = $('#backstory');
-    bs.replaceChildren(
-      el('p', {}, 'Greek by birth, Copenhagen by choice. Currently building a TTRPG system on the side. Probably has more hobbies than fingers.'),
-      el('div', { class: 'backstoryMeta' },
-        el('a', { href: 'mailto:' + d.identity.email }, '✉ ' + d.identity.email),
-        el('a', { href: d.identity.linkedin, target: '_blank', rel: 'noopener' }, '🔗 LinkedIn'),
-        el('span', {}, '📍 ' + d.identity.location),
-      ),
+    // Background + contact, merged into the top sheet header. Backstory paragraph
+    // sits under the bio; links live at the bottom of the same header block.
+    $('.sheetBackstory').textContent = 'Greek by birth, Copenhagen by choice. Currently building a TTRPG system on the side. Probably has more hobbies than fingers.';
+    $('#sheetMeta').replaceChildren(
+      el('a', { href: 'mailto:' + d.identity.email }, '✉ ' + d.identity.email),
+      el('a', { href: d.identity.linkedin, target: '_blank', rel: 'noopener' }, '🔗 LinkedIn'),
+      el('span', {}, '📍 ' + d.identity.location),
     );
 
     // Cursed seal — lives in a bottom-of-page "zone" and teleports inside it on

@@ -517,11 +517,10 @@ body.boot .app { display: none !important; }
 .libTags .tag { font-family: var(--ff-mono); font-size: 0.68rem; padding: 0.1rem 0.4rem; background: rgba(198,155,94,0.1); border-radius: 4px; color: var(--accent); }
 
 /* Backstory */
-.backstory { display: grid; gap: 0.75rem; }
-.backstory p { color: var(--ink-dim); }
-.backstoryMeta { display: flex; flex-wrap: wrap; gap: 0.65rem; padding-top: 0.5rem; border-top: 1px dashed #2c2517; font-family: var(--ff-mono); font-size: 0.82rem; }
-.backstoryMeta a { color: var(--accent); text-decoration: none; }
-.backstoryMeta a:hover { text-decoration: underline; }
+.sheetBackstory { margin-top: 0.75rem; max-width: 70ch; color: var(--ink-dim); }
+.sheetMeta { display: flex; flex-wrap: wrap; gap: 0.65rem 1.1rem; margin-top: 1rem; padding-top: 0.75rem; border-top: 1px dashed #2c2517; font-family: var(--ff-mono); font-size: 0.82rem; color: var(--ink-dim); }
+.sheetMeta a { color: var(--accent); text-decoration: none; }
+.sheetMeta a:hover { text-decoration: underline; }
 
 /* ─────────────── 7. Commoner view ─────────────── */
 
