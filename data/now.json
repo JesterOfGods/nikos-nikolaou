@@ -1,10 +1,10 @@
 {
   "updated": "2026-05-19",
   "items": [
-    { "label": "Between gigs", "value": "Working on a secret project. Big things coming... more when it's time." },
-    { "label": "Side build",   "value": "My own TTRPG system. Rules + setting in parallel." },
-    { "label": "On the bench", "value": "Grey Knights — next squad in primer." },
-    { "label": "Current campaign", "value": "Homebrew Faerûn arc — players just broke the plot. Again." },
-    { "label": "This week",    "value": "Iterating on this very website." }
+    { "label": "This week",    "value": "Iterating on this very website." },
+    { "label": "Between gigs", "value": "Working on something big... if you know, congrats... you are one of the lucky few. If not, you will learn soon..." },
+    { "label": "G&G",          "value": "My own TTRPG system. Rules and setting are built in parallel." },
+    { "label": "On the desk", "value": "Grey Knights — next squad already primed and ready for paint. He might even play this time." },
+    { "label": "Homebrew Ravenloft arc", "value": "The players broke the plot. Again. Just concluded and already thinking what's next." }
   ]
 }

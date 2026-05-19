@@ -26,9 +26,9 @@
 
   "savingThrows": [
     { "label": "Impossible Problems",        "modifier": "+5", "type": "advantage" },
-    { "label": "Scope Creep",                "modifier": "+3", "type": "advantage" },
+    { "label": "Untangling Legacy Code",     "modifier": "+3", "type": "advantage" },
     { "label": "Imposter Syndrome",          "modifier": "+1", "type": "proficient" },
-    { "label": "Leaving Working Code Alone", "modifier": "-2", "type": "disadvantage" },
+    { "label": "Tolerating Brittle Code",    "modifier": "-2", "type": "disadvantage" },
     { "label": "Remembering to Eat",         "modifier": "-3", "type": "disadvantage" }
   ],
 
@@ -37,28 +37,28 @@
     { "name": "Break-and-Repurpose",   "desc": "Uses tools against their design. Often it works. Sometimes it works better." },
     { "name": "Think Fast",            "desc": "Reasons through what'll work before building. Rejects 'fail fast' as wasteful." },
     { "name": "Anticipate Failure",    "desc": "Names the failure modes before they fail. The future thanks him." },
-    { "name": "Adversarial Communicator", "desc": "Defends the non-obvious. Challenges the consensus. Makes meetings worth having." },
-    { "name": "ADHD-Probably",         "desc": "Multiple hobbies, multiple obsessions, one extremely tidy git history." }
+    { "name": "Adversarial Communicator", "desc": "Defends the non-obvious. Challenges the consensus. Makes features fight for their right to be built." },
+    { "name": "ADHD (Probably)",       "desc": "Multiple hobbies, multiple obsessions, one extremely tidy git history." }
   ],
 
   "skills": [
-    { "id": "unity",      "name": "Unity 3D",       "level": "Expert",    "years": 6, "tags": ["Daily"] },
-    { "id": "csharp",     "name": "C#",             "level": "Expert",    "years": 6, "tags": ["Daily"] },
+    { "id": "unity",      "name": "Unity 3D",       "level": "Expert",    "years": 8, "tags": ["Daily"] },
+    { "id": "csharp",     "name": "C#",             "level": "Expert",    "years": 8, "tags": ["Daily"] },
     { "id": "unreal",     "name": "Unreal Engine 5", "level": "Strong",    "years": 2, "tags": ["Past"] },
-    { "id": "math",       "name": "3D Math & Physics", "level": "Strong", "years": 6, "tags": ["Bread & butter"] },
+    { "id": "math",       "name": "3D Math & Physics", "level": "Strong", "years": 8, "tags": ["Bread & butter"] },
     { "id": "optim",      "name": "Performance Optimization", "level": "Expert", "years": 6, "tags": ["Mobile XR"] },
     { "id": "arch",       "name": "Code Architecture", "level": "Expert", "years": 6, "tags": ["Modular, decoupled"] },
-    { "id": "design",     "name": "Systemic Game Design", "level": "Strong", "years": 8, "tags": ["DM-trained"] },
+    { "id": "design",     "name": "Systemic Game Design", "level": "Strong", "years": 12, "tags": ["DM-trained"] },
     { "id": "mentor",     "name": "Mentoring & Leadership", "level": "Strong", "years": 4, "tags": ["Code review, juniors"] }
   ],
 
   "languages": [
-    { "id": "greek",     "name": "Greek",            "level": "Native" },
-    { "id": "english",   "name": "English",          "level": "Fluent" },
     { "id": "code",      "name": "Code",             "level": "Native" },
     { "id": "corporate", "name": "Corporate Jargon", "level": "Passable" },
     { "id": "technical", "name": "Technical Jargon", "level": "Fluent" },
-    { "id": "manager",   "name": "Manager Talk",     "level": "Conversational" }
+    { "id": "manager",   "name": "Manager Talk",     "level": "Conversational" },
+    { "id": "english",   "name": "English",          "level": "Fluent" },
+    { "id": "greek",     "name": "Greek",            "level": "Native" }
   ],
 
   "work": [

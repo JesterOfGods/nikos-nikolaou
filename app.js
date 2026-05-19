@@ -417,7 +417,6 @@ const Views = {
           class: 'stat', dataset: { id: s.id },
           onclick: () => {
             Narrator.fire(`clickStat_${s.id}`, { cooldown: 4000 });
-            Hints.noteStatClick();
           }
         },
         el('div', { class: 'statLabel' }, s.label),
@@ -494,8 +493,9 @@ const Views = {
       el('div', { class: 'blurb' }, f.blurb),
     )));
 
-    // Showcases (tiles in sheet) — Khora is shown via the Completed Quests card instead.
-    $('#showcases').replaceChildren(...d.showcases.filter(s => s.id !== 'khora').map(s => el('button', {
+    // Showcases (tiles in sheet) — job showcases are shown via the Completed Quests card instead.
+    const workIds = new Set(d.work.map(w => w.id));
+    $('#showcases').replaceChildren(...d.showcases.filter(s => !workIds.has(s.id)).map(s => el('button', {
         class: 'showcaseTile', dataset: { id: s.id },
         onclick: () => Showcase.open(s.id)
       },
@@ -1311,11 +1311,6 @@ const Hints = {
     if (this.fired.has(narratorTrigger)) return;
     this.fired.add(narratorTrigger);
     Narrator.fire(narratorTrigger, { cooldown: 0 });
-  },
-  statClicks: 0,
-  noteStatClick() {
-    this.statClicks += 1;
-    if (this.statClicks >= 3) this.fireOnce('hintTerminal_stats');
   },
 };
 

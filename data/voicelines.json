@@ -40,7 +40,7 @@
     { "id": "sys_1", "text": "Systems Thinking. Highest stat on the sheet. He sees the second-order effects before the first ones ship. It's a curse at standups." }
   ],
   "clickStat_advCha": [
-    { "id": "adv_1", "text": "Adversarial CHA. He'll argue against a settled conclusion if the conversation gets better for it. He calls it 'making meetings worth having.' Most people call it 'Nikos again.'" }
+    { "id": "adv_1", "text": "Adversarial CHA. You will not have a boring conversation with him. Consensus is where he starts — the interesting part is what nobody said yet." }
   ],
   "clickStat_painting": [
     { "id": "paint_1", "text": "Painting. Resin printer, FDM, brushes, more primer than is reasonable. He's been mid-squad of Grey Knights for months. He'll finish. Probably." }
@@ -268,9 +268,6 @@
   ],
   "hacker_vpn": [
     { "id": "hacker_vpn_1", "text": "You should have used a V P N. Don't worry — I won't track this. Much." }
-  ],
-  "hintTerminal_stats": [
-    { "id": "hint_stats_1", "text": "You're poking. Good. There's a key for poking deeper — tilde. Try it." }
   ],
   "closeShowcase_first": [
     { "id": "close_show_first_1", "text": "You came up for air. There's a terminal too — tilde opens it. He hid things in there." }
