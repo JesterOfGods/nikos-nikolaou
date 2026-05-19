@@ -465,7 +465,8 @@ const Views = {
       el('span', { class: 'value' }, q.value),
     )));
 
-    // Completed Quests (work) — Khora opens its showcase popup; others fire a narrator line.
+    // Completed Quests (work) — timeline layout. Date column anchors each job
+    // on a left rail; click opens a showcase (or fires a narrator line if none).
     $('#companions').replaceChildren(...d.work.map(w => {
       const hasShowcase = d.showcases.some(s => s.id === w.id);
       return el('div', {
@@ -475,10 +476,13 @@ const Views = {
             else Narrator.fire(`clickProject_${w.id}`, { priority: 'NORMAL', cooldown: 4000 });
           },
         },
-        el('div', { class: 'role' }, w.role, hasShowcase ? el('span', { class: 'companionMore' }, '↗ open') : null),
-        el('div', { class: 'company' }, `${w.company} · ${w.location}`),
-        el('div', { class: 'period' }, w.period),
-        el('ul', { class: 'bullets' }, ...w.bullets.map(b => el('li', {}, b))),
+        el('div', { class: 'companionDate' }, w.period),
+        el('div', { class: 'companionDot' }),
+        el('div', { class: 'companionBody' },
+          el('div', { class: 'role' }, w.role, hasShowcase ? el('span', { class: 'companionMore' }, '↗ open') : null),
+          el('div', { class: 'company' }, `${w.company} · ${w.location}`),
+          el('ul', { class: 'bullets' }, ...w.bullets.map(b => el('li', {}, b))),
+        ),
       );
     }));
 
@@ -596,7 +600,7 @@ const Views = {
 
     // Beyond Work
     $('#commonerBeyond').textContent =
-      'Tabletop DM for 6+ years (D&D, building my own TTRPG system). Mini painter (Grey Knights for 40k, Rohan for MESBG). 3D printing (resin + FDM — ran my own company for a while). MTG Commander. Adversarial communicator by sport. Will not be taking the Books proficiency.';
+      'Game Master for 6+ years (D&D, building my own TTRPG system). Mini painter (Grey Knights for 40k, Rohan for MESBG). 3D printing (resin + FDM — ran my own company for a while). MTG Commander. Adversarial communicator by sport. Will not be taking the Books proficiency.';
   },
 };
 
@@ -901,7 +905,7 @@ const Console = {
     ls(args) {
       const what = (args[0] || '').toLowerCase();
       if (what === 'hobbies') {
-        this.print('MTG Commander · 3D printing (resin + FDM) · mini painting (40k Grey Knights, MESBG Rohan) · D&D DM · building own TTRPG · adversarial conversation', 'out');
+        this.print('MTG Commander · 3D printing (resin + FDM) · mini painting (40k Grey Knights, MESBG Rohan) · D&D GM · building own TTRPG · adversarial conversation', 'out');
       } else if (what === 'work') {
         State.data.content.work.forEach(w => this.print(`${w.period}  ${w.role} @ ${w.company}`, 'out'));
       } else this.print('ls: try "hobbies" or "work"', 'err');
@@ -1164,30 +1168,93 @@ const BSOD = {
   },
 };
 
+const D20_SHAPE_SVG = `
+  <polygon points="0,-45 39,-22.5 39,22.5 0,45 -39,22.5 -39,-22.5"
+           fill="rgba(0,0,0,0.35)" stroke="currentColor" stroke-width="2.2"
+           stroke-linejoin="round"/>
+  <polygon points="0,-23 20,11 -20,11"
+           fill="rgba(198,155,94,0.12)" stroke="currentColor" stroke-width="1.6"
+           stroke-linejoin="round"/>
+  <line x1="0"   y1="-45"   x2="0"   y2="-23" stroke="currentColor" stroke-width="1.1" opacity="0.55"/>
+  <line x1="39"  y1="-22.5" x2="20"  y2="11"  stroke="currentColor" stroke-width="1.1" opacity="0.55"/>
+  <line x1="39"  y1="22.5"  x2="20"  y2="11"  stroke="currentColor" stroke-width="1.1" opacity="0.55"/>
+  <line x1="0"   y1="45"    x2="0"   y2="-23" stroke="currentColor" stroke-width="1.1" opacity="0.55"/>
+  <line x1="-39" y1="22.5"  x2="-20" y2="11"  stroke="currentColor" stroke-width="1.1" opacity="0.55"/>
+  <line x1="-39" y1="-22.5" x2="-20" y2="11"  stroke="currentColor" stroke-width="1.1" opacity="0.55"/>
+`;
+
 const D20 = {
   locked: false,
+  rolling: false,
   firstNat20Seen: false,
   init() {
     // Restore "first nat 20 seen" flag — drives the special konami hint line
     this.firstNat20Seen = Storage.get('nikos.d20.firstNat20Seen') === '1';
     const btn = $('#d20Btn');
     btn.addEventListener('click', () => {
-      if (this.locked) return;
+      if (this.locked || this.rolling) return;
       this.roll();
     });
   },
   roll() {
     const value = 1 + Math.floor(Math.random() * 20);
     Storage.set(LS.D20_RESULT, String(value));
-    this.applyResult(value, { restoring: false });
+    this.animateRoll(value);
+  },
+  /* Tumble an SVG d20 in 3D CSS while cycling the number on its visible face.
+     Slows toward the end for a settling feel; applies the real result via
+     applyResult once the animation lands. */
+  animateRoll(finalValue) {
+    this.rolling = true;
+    const btn = $('#d20Btn');
+    const result = $('#d20Result');
+    btn.classList.add('d20Btn--rolling');
+    result.classList.remove('nat20', 'nat1', 'd20Result--landed');
+    result.innerHTML = `
+      <svg class="d20Svg d20Svg--rolling" viewBox="-50 -50 100 100" aria-hidden="true">
+        ${D20_SHAPE_SVG}
+        <text class="d20SvgNumber" x="0" y="0" text-anchor="middle" dominant-baseline="central"
+              font-family="var(--ff-mono)" font-size="20" font-weight="700" fill="currentColor">?</text>
+      </svg>
+    `;
+    const numEl = result.querySelector('.d20SvgNumber');
+
+    const totalDuration = 850;
+    const startTime = performance.now();
+    let tickMs = 50;
+
+    const tick = () => {
+      const elapsed = performance.now() - startTime;
+      if (elapsed >= totalDuration) {
+        btn.classList.remove('d20Btn--rolling');
+        result.classList.add('d20Result--landed');
+        setTimeout(() => result.classList.remove('d20Result--landed'), 360);
+        this.rolling = false;
+        this.applyResult(finalValue, { restoring: false });
+        return;
+      }
+      const rand = 1 + Math.floor(Math.random() * 20);
+      if (numEl) numEl.textContent = String(rand);
+      if (elapsed > totalDuration * 0.55) tickMs = Math.min(tickMs + 8, 140);
+      setTimeout(tick, tickMs);
+    };
+    tick();
   },
   applyResult(value, { restoring = false } = {}) {
     const btn = $('#d20Btn');
     const result = $('#d20Result');
     result.classList.remove('nat20', 'nat1');
-    if (value === 20) { result.classList.add('nat20'); result.textContent = `🎯 NAT 20 — ${value}`; }
-    else if (value === 1) { result.classList.add('nat1'); result.textContent = `💀 NAT 1 — ${value}`; }
-    else { result.textContent = `Rolled ${value}`; }
+    let verdict = '';
+    if (value === 20) { result.classList.add('nat20'); verdict = '🎯 NAT 20'; }
+    else if (value === 1) { result.classList.add('nat1'); verdict = '💀 NAT 1'; }
+    result.innerHTML = `
+      <svg class="d20Svg" viewBox="-50 -50 100 100" aria-label="d20 result ${value}">
+        ${D20_SHAPE_SVG}
+        <text class="d20SvgNumber" x="0" y="0" text-anchor="middle" dominant-baseline="central"
+              font-family="var(--ff-mono)" font-size="20" font-weight="700" fill="currentColor">${value}</text>
+      </svg>
+      ${verdict ? `<span class="d20Verdict">${verdict}</span>` : ''}
+    `;
 
     // Only a nat 1 locks the die — everyone else can keep rolling
     if (value === 1) {

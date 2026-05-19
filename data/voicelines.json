@@ -58,7 +58,22 @@
     { "id": "ue_1", "text": "Unreal 5. He used this on a DFI-funded vertical slice. Solo programmer. It shipped. He's proud of it. He won't say that." }
   ],
   "clickSkill_csharp": [
-    { "id": "cs_1", "text": "C#. Six years deep. He has opinions about async. Don't ask unless you have time." }
+    { "id": "cs_1", "text": "C#. Eight years deep. He has opinions about async. Don't ask unless you have time." }
+  ],
+  "clickSkill_math": [
+    { "id": "math_1", "text": "3D Math and Physics. Eight years of dot products, cross products, and explaining quaternions to people who already know what quaternions are." }
+  ],
+  "clickSkill_optim": [
+    { "id": "optim_1", "text": "Performance Optimization. Mobile XR — every millisecond is a moral issue. He'll profile your scene before you finish saying 'feels fine.'" }
+  ],
+  "clickSkill_arch": [
+    { "id": "arch_1", "text": "Code Architecture. Modular and decoupled — the kind of system where you can swap a renderer without crying. He has opinions. Many opinions." }
+  ],
+  "clickSkill_design": [
+    { "id": "design_1", "text": "Systemic Game Design. Twelve years counting the GM hours, which he absolutely counts. The line between 'fun on paper' and 'fun at the table' is thinner than you think." }
+  ],
+  "clickSkill_mentor": [
+    { "id": "mentor_1", "text": "Mentoring and Leadership. He runs code reviews like a GM runs a session — looking for the broken combo before it breaks the party. Juniors learn fast." }
   ],
   "clickLang_greek": [
     { "id": "lang_greek_1", "text": "Greek. Native. The accent comes back when he's tired or arguing — usually both." }
@@ -124,7 +139,8 @@
   "openTrivia": [
     { "id": "trivia_open_1", "text": "Trivia. Ten of his fandoms, ten questions each. Pick order is your difficulty curve — go cocky on the way in, lose points on the way out." },
     { "id": "trivia_open_2", "text": "Roll for Lore. He'll judge your answers from afar. Quietly. While painting Grey Knights." },
-    { "id": "trivia_open_3", "text": "Trivia mode. He built this to argue with you about Hogwarts houses and Storm counts. Pick a category. He's watching." }
+    { "id": "trivia_open_3", "text": "Trivia mode. He built this to argue with you about Hogwarts houses and Storm counts. Pick a category. He's watching." },
+    { "id": "trivia_open_4", "text": "Oh! A challenger. Can you top the highscore and beat him at his own game? Here's the stuff he likes — let's test your taste and knowledge. I'm sure you'll disappoint..." }
   ],
   "openDevTools": [
     { "id": "dev_1", "text": "You opened the inspector. Looking for the seams. Good. He builds for that kind of audience." }
@@ -175,7 +191,7 @@
     { "id": "show_minis_1", "text": "The desk. Paints out of order. Wash drying. He'd apologize for the mess. He won't mean it." }
   ],
   "openShowcase_faerun": [
-    { "id": "show_faerun_1", "text": "He flips open the DM screen. Six years of notes. Most of them are the players' fault." }
+    { "id": "show_faerun_1", "text": "He flips open the GM screen. Six years of notes. Most of them are the players' fault." }
   ],
   "openShowcase_khora": [
     { "id": "show_khora_1", "text": "The XR work. Cleaner room, headset on the desk. The award's in a box somewhere. He moved twice." }
@@ -203,7 +219,7 @@
   ],
 
   "rpg_firstPlay": [
-    { "id": "rpg_firstPlay_1", "text": "You typed 'play'. He hoped you would. The console isn't just a console — it's a table. Pull up a chair. I'll DM this one too." }
+    { "id": "rpg_firstPlay_1", "text": "You typed 'play'. He hoped you would. The console isn't just a console — it's a table. Pull up a chair. I'll GM this one too." }
   ],
   "rpg_start": [
     { "id": "rpg_start_1", "text": "New session. Rolled the dungeon for you — he likes randomness more than he admits." }
@@ -218,7 +234,7 @@
     { "id": "rpg_start_cavern_1", "text": "Dragons. Of course. He paints these for fun. Don't tell him the dragon is also a mini in a box at his apartment." }
   ],
   "rpg_start_library": [
-    { "id": "rpg_start_library_1", "text": "A library. Joke's on him — he doesn't read books. He'll DM this one harder out of spite." }
+    { "id": "rpg_start_library_1", "text": "A library. Joke's on him — he doesn't read books. He'll GM this one harder out of spite." }
   ],
   "rpg_start_throne": [
     { "id": "rpg_start_throne_1", "text": "A pharaoh. He has opinions about historical accuracy. He will not air them. He will simply judge you." }

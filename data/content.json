@@ -2,17 +2,17 @@
   "identity": {
     "name": "Nikolaos Nikolaou",
     "shortName": "Nikos",
-    "tagline": "Senior XR Developer · Tabletop DM · Maker",
-    "classChain": "Senior XR Developer 6 / Tabletop DM 7 / Maker 5 / Painter 3",
+    "tagline": "Senior XR Developer · Game Master · Maker",
+    "classChain": "Senior XR Developer 6 / Game Master 7 / Maker 5 / Painter 3",
     "race": "Greek (Living in Denmark)",
     "alignment": "Chaotic Constructive",
     "location": "Copenhagen, Denmark",
     "email": "N.nikolaou@mail.com",
     "linkedin": "https://www.linkedin.com/in/nikosnikolaou/",
     "bio": "Senior Unity gameplay programmer with 6+ years of high-performance C# architecture and polished player interactions. Master of strict VR/XR technical requirements — spatial UI, 3D math, optimization for mobile. I build modular, decoupled systems that support rapid iteration and large-scale content delivery. I turn complex requirements into intuitive, responsive gameplay. Self-driven collaborator committed to technical excellence and meticulous refinement of the player experience.",
-    "adventurerIntro": "Builds gameplay systems for a living, runs tabletop campaigns for the love of it, and finishes Grey Knights one model at a time. He'll out-argue you about three things at once and somehow still ship the fourth.",
+    "adventurerIntro": "Builds gameplay systems for a living, runs tabletop campaigns for the love of it, and finishes Grey Knights one model at a time. He'll out-argue you about three things at once and somehow still ship four.",
     "backstory": "Greek by birth, Copenhagen by choice. Currently building a TTRPG system on the side. Probably has more hobbies than fingers.",
-    "sheetInvite": "This is an interactive site — poke around, press things, see what happens. Probably the only time you'll get to look behind the GM's screen, or be encouraged to break a stranger's website. Take it."
+    "sheetInvite": "This is an interactive site — poke around, press things, see what happens. Probably your only chance to get a look behind the GM's screen, or be encouraged to break a stranger's website. Take it."
   },
 
   "stats": [
@@ -48,7 +48,7 @@
     { "id": "math",       "name": "3D Math & Physics", "level": "Strong", "years": 8, "tags": ["Bread & butter"] },
     { "id": "optim",      "name": "Performance Optimization", "level": "Expert", "years": 6, "tags": ["Mobile XR"] },
     { "id": "arch",       "name": "Code Architecture", "level": "Expert", "years": 6, "tags": ["Modular, decoupled"] },
-    { "id": "design",     "name": "Systemic Game Design", "level": "Strong", "years": 12, "tags": ["DM-trained"] },
+    { "id": "design",     "name": "Systemic Game Design", "level": "Strong", "years": 12, "tags": ["GM-trained"] },
     { "id": "mentor",     "name": "Mentoring & Leadership", "level": "Strong", "years": 4, "tags": ["Code review, juniors"] }
   ],
 
@@ -191,9 +191,9 @@
       "tags": ["TTRPG", "Worldbuilding", "Game Design", "Original IP"],
       "hero": "assets/showcase/ttrpg/hero.jpg",
       "gallery": [],
-      "story": "A custom TTRPG system, born from years of DM-ing D&D and a homebrew Faerûn that kept outgrowing its borrowed bones. Rules, setting, and stories — built together so the mechanics serve the world and the world earns its mechanics. Currently in active development.",
+      "story": "A custom TTRPG system, born from years of GM-ing D&D and a homebrew Faerûn that kept outgrowing its borrowed bones. Rules, setting, and stories — built together so the mechanics serve the world and the world earns its mechanics. Currently in active development.",
       "milestones": [
-        "6+ years DM-ing D&D",
+        "6+ years GM-ing D&D",
         "Custom Faerûn that kept outgrowing canon",
         "Started building my own system in 2024",
         "Rules and setting growing in parallel"
@@ -219,15 +219,15 @@
     {
       "id": "faerun",
       "title": "Homebrew Faerûn",
-      "tagline": "Six years of DM notes — the players' fault, mostly",
+      "tagline": "Six years of GM notes — the players' fault, mostly",
       "mood": "dm-screen",
       "status": "active-campaign",
-      "tags": ["D&D", "DM", "Worldbuilding", "Improv"],
+      "tags": ["D&D", "GM", "Worldbuilding", "Improv"],
       "hero": "assets/showcase/faerun/hero.jpg",
       "gallery": [],
       "story": "A Faerûn that's been edited by the players for six years. I run a mix of homebrew arcs and heavily-modified prebuilt campaigns — modified to what my players actually want to do. Rules and story beats are improvised when the table demands it. Canon doesn't survive contact with the party.",
       "milestones": [
-        "6+ years DM-ing",
+        "6+ years GM-ing",
         "Mix of homebrew + edited prebuilts",
         "Improvises rules and story beats",
         "World evolves with the players"
