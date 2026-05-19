@@ -331,6 +331,14 @@ body.boot .app { display: none !important; }
   font-family: var(--ff-mono); font-size: 0.78rem;
   text-align: right; min-width: 140px;
 }
+@media (min-width: 881px) {
+  .alignmentBlock {
+    position: absolute;
+    top: clamp(1.25rem, 2.5vw, 2rem);
+    right: clamp(1.25rem, 2.5vw, 2rem);
+    z-index: 1;
+  }
+}
 .alignmentLabel { color: var(--ink-faint); letter-spacing: 0.1em; text-transform: uppercase; }
 .alignmentValue { color: var(--accent); font-size: 0.95rem; }
 .d20Btn, .triviaBtn {
@@ -450,7 +458,7 @@ body.boot .app { display: none !important; }
 .trait .desc { color: var(--ink-dim); font-size: 0.85rem; margin-top: 0.15rem; }
 
 /* Skills */
-.skills { display: grid; gap: 0.45rem; }
+.skills { display: grid; gap: 0.45rem; grid-template-columns: repeat(auto-fit, minmax(180px, 1fr)); }
 .skill { display: flex; align-items: center; gap: 0.6rem; padding: 0.5rem 0.7rem; background: var(--surface); border-radius: var(--rad); border: 1px solid #2c2517; cursor: pointer; transition: border-color var(--t-fast) ease; }
 .skill:hover { border-color: var(--accent); }
 .skill .name { color: var(--ink); font-weight: 600; font-size: 0.92rem; flex: 1; }
@@ -459,7 +467,21 @@ body.boot .app { display: none !important; }
 
 /* Languages */
 .languages { display: grid; gap: 0.35rem; }
-.language { display: flex; justify-content: space-between; padding: 0.4rem 0.6rem; background: var(--surface); border-radius: var(--rad); border: 1px solid #2c2517; }
+.language { padding: 0; background: transparent; border: 0; }
+.languageBtn {
+  width: 100%;
+  display: flex; justify-content: space-between; align-items: center; gap: 0.6rem;
+  padding: 0.4rem 0.6rem;
+  background: var(--surface);
+  border-radius: var(--rad);
+  border: 1px solid #2c2517;
+  color: var(--ink);
+  font-family: inherit;
+  cursor: pointer;
+  text-align: left;
+  transition: border-color var(--t-fast) ease, background var(--t-fast) ease;
+}
+.languageBtn:hover, .languageBtn:focus-visible { border-color: var(--accent); background: rgba(198,155,94,0.04); }
 .language .name { color: var(--ink); font-size: 0.9rem; }
 .language .level { font-family: var(--ff-mono); font-size: 0.78rem; color: var(--accent); }
 

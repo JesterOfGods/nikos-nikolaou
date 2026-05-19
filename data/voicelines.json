@@ -46,7 +46,7 @@
     { "id": "paint_1", "text": "Painting. Resin printer, FDM, brushes, more primer than is reasonable. He's been mid-squad of Grey Knights for months. He'll finish. Probably." }
   ],
   "clickStat_strength": [
-    { "id": "str_1", "text": "We don't talk about Strength. The character's never invested a single point." }
+    { "id": "str_1", "text": "We don't talk about Fitness. The character's never invested a single point." }
   ],
   "clickStat_caffeine": [
     { "id": "caf_1", "text": "Caffeine Resistance. Negative modifier. He drinks coffee anyway. Calls it a superpower. We disagree." }
@@ -60,11 +60,32 @@
   "clickSkill_csharp": [
     { "id": "cs_1", "text": "C#. Six years deep. He has opinions about async. Don't ask unless you have time." }
   ],
+  "clickLang_greek": [
+    { "id": "lang_greek_1", "text": "Greek. Native. The accent comes back when he's tired or arguing — usually both." }
+  ],
+  "clickLang_english": [
+    { "id": "lang_english_1", "text": "English. Fluent. Daily driver since Copenhagen. He thinks in English now. Mostly." }
+  ],
+  "clickLang_code": [
+    { "id": "lang_code_1", "text": "Code. C# primary. He'll read whatever you put in front of him, but he writes Unity-flavored C# in his sleep." }
+  ],
+  "clickLang_corporate": [
+    { "id": "lang_corporate_1", "text": "Corporate Jargon. Passable. He can translate 'synergy' into an actual action item — which is more than most." }
+  ],
+  "clickLang_technical": [
+    { "id": "lang_technical_1", "text": "Technical Jargon. Fluent. Speaks Engineer and Stakeholder, often in the same sentence." }
+  ],
+  "clickLang_manager": [
+    { "id": "lang_manager_1", "text": "Manager Talk. Conversational. He knows when 'let's circle back' means 'never.'" }
+  ],
   "clickFaction_rohan": [
     { "id": "rohan_1", "text": "Rohan. Horse lords. He likes that the cool guys ride in late and turn the battle. Says a lot about him." }
   ],
   "clickFaction_greyknights": [
     { "id": "gk_1", "text": "Grey Knights. Daemon hunters in silver armor. He paints them slowly. Nine years in, three hundred to go. He'll finish. Probably." }
+  ],
+  "clickFaction_mtg": [
+    { "id": "mtg_1", "text": "Planeswalkers. Commander format. Eighteen decks built, three more on the way. He'll play... probably none. Building is the game." }
   ],
   "clickFaction_ttrpg": [
     { "id": "ttrpg_1", "text": "That's the system he's building. Don't ask when it's done. Polite answer: 'soon.' Real answer: 'when it's right.'" }

@@ -28,7 +28,7 @@
     { "label": "Impossible Problems",        "modifier": "+5", "type": "advantage" },
     { "label": "Scope Creep",                "modifier": "+3", "type": "advantage" },
     { "label": "Imposter Syndrome",          "modifier": "+1", "type": "proficient" },
-    { "label": "\"If it works don't touch it\"", "modifier": "-2", "type": "disadvantage" },
+    { "label": "Leaving Working Code Alone", "modifier": "-2", "type": "disadvantage" },
     { "label": "Remembering to Eat",         "modifier": "-3", "type": "disadvantage" }
   ],
 
@@ -49,17 +49,16 @@
     { "id": "optim",      "name": "Performance Optimization", "level": "Expert", "years": 6, "tags": ["Mobile XR"] },
     { "id": "arch",       "name": "Code Architecture", "level": "Expert", "years": 6, "tags": ["Modular, decoupled"] },
     { "id": "design",     "name": "Systemic Game Design", "level": "Strong", "years": 8, "tags": ["DM-trained"] },
-    { "id": "mentor",     "name": "Mentoring & Leadership", "level": "Strong", "years": 4, "tags": ["Code review, juniors"] },
-    { "id": "vcs",        "name": "Git / Version Control", "level": "Strong", "years": 8, "tags": [] }
+    { "id": "mentor",     "name": "Mentoring & Leadership", "level": "Strong", "years": 4, "tags": ["Code review, juniors"] }
   ],
 
   "languages": [
-    { "name": "Greek",   "level": "Native" },
-    { "name": "English", "level": "Fluent" },
-    { "name": "Code",    "level": "Native (C# primary)" },
-    { "name": "Corporate Jargon",  "level": "Passable — can translate 'synergy' into an actual action item" },
-    { "name": "Technical Jargon",  "level": "Fluent — speaks Engineer and Stakeholder, often in the same sentence" },
-    { "name": "Manager Talk",      "level": "Conversational — knows when 'let's circle back' means 'never'" }
+    { "id": "greek",     "name": "Greek",            "level": "Native" },
+    { "id": "english",   "name": "English",          "level": "Fluent" },
+    { "id": "code",      "name": "Code",             "level": "Native" },
+    { "id": "corporate", "name": "Corporate Jargon", "level": "Passable" },
+    { "id": "technical", "name": "Technical Jargon", "level": "Fluent" },
+    { "id": "manager",   "name": "Manager Talk",     "level": "Conversational" }
   ],
 
   "work": [

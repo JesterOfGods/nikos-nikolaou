@@ -221,6 +221,9 @@ const Narrator = {
     this.bubbleEl.hidden = false;
     this.bubbleEl.classList.remove('leaving');
     this.textEl.textContent = text;
+    // If the cursed button is parked under where the bubble just appeared,
+    // shove it out of the way now that the bubble's rect is known.
+    requestAnimationFrame(() => Cursed?.moveIfOverlapping?.());
   },
 
   hideBubble() {
@@ -448,8 +451,14 @@ const Views = {
 
     // Languages
     $('#languages').replaceChildren(...d.languages.map(l => el('li', { class: 'language' },
-      el('span', { class: 'name' }, l.name),
-      el('span', { class: 'level' }, l.level),
+      el('button', {
+        class: 'languageBtn',
+        type: 'button',
+        onclick: () => Narrator.fire(`clickLang_${l.id}`, { priority: 'NORMAL', cooldown: 4000 })
+      },
+        el('span', { class: 'name' }, l.name),
+        el('span', { class: 'level' }, l.level),
+      ),
     )));
 
     // Quests (from now.json)
@@ -994,6 +1003,21 @@ const Cursed = {
 
     btn.style.left = `${left}px`;
     btn.style.top  = `${top}px`;
+  },
+  /* Called when the narrator bubble appears — reposition only if the button
+     is currently sitting under the freshly-shown bubble. */
+  moveIfOverlapping() {
+    const btn = document.getElementById('cursedButton');
+    if (!btn || !btn.style.left) return;
+    const narrator = document.getElementById('narrator');
+    if (!narrator || narrator.hidden) return;
+    const br = btn.getBoundingClientRect();
+    const nr = narrator.getBoundingClientRect();
+    const pad = 12;
+    if (br.left < nr.right + pad && br.right > nr.left - pad &&
+        br.top < nr.bottom + pad && br.bottom > nr.top - pad) {
+      this.moveButton();
+    }
   },
   click() {
     // Hard-stop once the BSOD has been armed — buys ~2-3s of safety before the
