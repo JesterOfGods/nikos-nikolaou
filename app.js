@@ -510,9 +510,7 @@ const Views = {
     )));
 
     $('.sheetBackstory').textContent = d.identity.backstory;
-    $('#howToPlay').replaceChildren(
-      ...(d.identity.howToPlay || []).map(item => el('li', {}, item))
-    );
+    $('#sheetInvite').textContent = d.identity.sheetInvite || '';
     $('#sheetMeta').replaceChildren(
       el('a', { href: 'mailto:' + d.identity.email }, '✉ ' + d.identity.email),
       el('a', { href: d.identity.linkedin, target: '_blank', rel: 'noopener' }, '🔗 LinkedIn'),

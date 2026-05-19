@@ -217,12 +217,12 @@ function ensureTriviaUI() {
     <div class="triviaInner">
       <header class="triviaBar">
         <span class="triviaBarDot"></span>
-        <span class="triviaBarLabel">trivia.exe — pursuit of points</span>
-        <button class="triviaClose" aria-label="Close">[ exit ]</button>
+        <span class="triviaBarLabel">Trivia · Pursuit of Points</span>
+        <button class="triviaClose" aria-label="Close">×</button>
       </header>
       <div class="triviaScreen" id="triviaScreen"></div>
       <div class="triviaInputRow">
-        <span class="triviaPrompt">trivia@nikos:~#</span>
+        <span class="triviaPrompt">▸</span>
         <input class="triviaInput" id="triviaInput" type="text" autocomplete="off" spellcheck="false" />
       </div>
     </div>
@@ -264,6 +264,67 @@ const Trivia = {
     if (this._screenEl) this._screenEl.innerHTML = '';
   },
 
+  setInputVisible(visible) {
+    const row = this._el?.querySelector('.triviaInputRow');
+    if (row) row.style.display = visible ? '' : 'none';
+  },
+
+  printActions(buttons) {
+    if (!this._screenEl) return;
+    const row = document.createElement('div');
+    row.className = 'triviaActions';
+    buttons.forEach(b => {
+      const btn = document.createElement('button');
+      btn.type = 'button';
+      btn.className = 'triviaActionBtn' + (b.variant ? ' triviaActionBtn--' + b.variant : '');
+      btn.textContent = b.label;
+      btn.addEventListener('click', b.onClick);
+      row.appendChild(btn);
+    });
+    this._screenEl.appendChild(row);
+    this._screenEl.scrollTop = this._screenEl.scrollHeight;
+  },
+
+  printCategoryGrid(categoryIds, onPick) {
+    if (!this._screenEl) return;
+    const grid = document.createElement('div');
+    grid.className = 'triviaCategoryGrid';
+    categoryIds.forEach(id => {
+      const cat = CATEGORIES.find(c => c.id === id);
+      const btn = document.createElement('button');
+      btn.type = 'button';
+      btn.className = 'triviaCategoryBtn';
+      btn.textContent = cat.name;
+      btn.addEventListener('click', () => onPick(id));
+      grid.appendChild(btn);
+    });
+    this._screenEl.appendChild(grid);
+    this._screenEl.scrollTop = this._screenEl.scrollHeight;
+  },
+
+  printOptions(options, onPick) {
+    if (!this._screenEl) return;
+    const grid = document.createElement('div');
+    grid.className = 'triviaOptions';
+    options.forEach((opt, i) => {
+      const btn = document.createElement('button');
+      btn.type = 'button';
+      btn.className = 'triviaOptionBtn';
+      const letter = document.createElement('span');
+      letter.className = 'triviaOptionLetter';
+      letter.textContent = 'ABCD'[i];
+      const text = document.createElement('span');
+      text.className = 'triviaOptionText';
+      text.textContent = opt;
+      btn.appendChild(letter);
+      btn.appendChild(text);
+      btn.addEventListener('click', () => onPick(i));
+      grid.appendChild(btn);
+    });
+    this._screenEl.appendChild(grid);
+    this._screenEl.scrollTop = this._screenEl.scrollHeight;
+  },
+
   _loadGamertag() {
     if (window.Hacker?._getGamertag) {
       const t = window.Hacker._getGamertag();
@@ -279,6 +340,7 @@ const Trivia = {
   },
 
   promptGamertag() {
+    this.setInputVisible(true);
     this.print('  Pick a gamertag for the leaderboard (2–12 letters, digits, or _).', 'narr');
     this.print('  Leave blank for Anon.', 'narr');
     this.print('', 'out');
@@ -349,82 +411,54 @@ const Trivia = {
 
   process(input) {
     const cmd = (input || '').trim().toLowerCase();
-    if (cmd === 'quit' || cmd === 'exit' || cmd === 'q') return this.quit();
     if (this.phase === 'gamertag') return this.handleGamertagInput(input);
-    if (this.phase === 'rules')    return this.handleRulesInput(cmd);
-    if (this.phase === 'category') return this.handleCategoryInput(cmd);
-    if (this.phase === 'question') return this.handleAnswerInput(cmd);
-    if (this.phase === 'between')  {
-      const h = this._continueHandler; this._continueHandler = null;
-      if (h) h();
-      return;
-    }
-    if (this.phase === 'gameover') return this.handleGameOverInput(cmd);
+    if (cmd === 'quit' || cmd === 'exit' || cmd === 'q') return this.quit();
+    // All other phases are click-driven; ignore stray input.
   },
 
   showRules() {
+    this.setInputVisible(false);
     const p = (t, c = 'out') => this.print(t, c);
-    p('═══ TRIVIA — RULES ═══════════════════════════════', 'narr');
+    p('Trivia — Rules', 'narr');
     p('');
     p('  10 categories. 10 questions. One per category.');
     p('');
-    p("  The ORDER you PICK a category is the DIFFICULTY of that");
-    p("  category's question:");
+    p('  The order you pick a category sets that category\'s difficulty:');
     p('     1st pick → difficulty 1  →  100 pts if correct', 'ok');
     p('     2nd pick → difficulty 2  →  200 pts if correct', 'ok');
     p('     ...');
-    p('     10th pick → difficulty 10 → 1000 pts if correct', 'ok');
+    p('    10th pick → difficulty 10 → 1000 pts if correct', 'ok');
     p('');
-    p('  Strategy: save your strongest categories for LAST.');
+    p('  Strategy: save your strongest categories for last.');
     p('  Max possible score: 5,500.');
     p('');
-    p('  Each question is multiple-choice: A / B / C / D.');
-    p('  Wrong answer = 0 points. No partial credit.');
+    p('  Each question is multiple choice. Wrong = 0 points. No partial credit.');
     p('');
-    p('  Type `begin` to start, or `quit` to back out.');
-    p('');
-  },
-
-  handleRulesInput(cmd) {
-    if (cmd === 'begin' || cmd === 'start' || cmd === 'go' || cmd === '') {
-      this.phase = 'category';
-      this.clearScreen();
-      this.showCategoryPicker();
-    } else {
-      this.print('Type `begin` to start (or `quit`).', 'err');
-    }
+    this.printActions([
+      { label: 'Begin', variant: 'primary', onClick: () => { this.phase = 'category'; this.clearScreen(); this.showCategoryPicker(); } },
+      { label: 'Cancel', onClick: () => this.quit() },
+    ]);
   },
 
   showCategoryPicker() {
+    this.setInputVisible(false);
     const p = (t, c = 'out') => this.print(t, c);
     const pickNumber = this.picked.length + 1;
     const difficulty = pickNumber;
     const pts = difficulty * 100;
-    p(`═══ PICK #${pickNumber}  ·  DIFFICULTY ${difficulty}  ·  ${pts} pts ═══`, 'narr');
+    p(`Pick #${pickNumber}  ·  Difficulty ${difficulty}  ·  ${pts} pts`, 'narr');
     p('');
     if (this.picked.length > 0) {
       p(`  Score so far: ${this.score} pts`);
       p('');
     }
-    p('  Pick a category by letter:');
-    p('');
-    const letters = 'ABCDEFGHIJ';
-    this.picksRemaining.forEach((id, i) => {
-      const cat = CATEGORIES.find(c => c.id === id);
-      p(`    [${letters[i]}]  ${cat.name}`);
-    });
-    p('');
+    p('  Pick a category:');
+    this.printCategoryGrid(this.picksRemaining, (id) => this.handleCategoryPick(id));
   },
 
-  handleCategoryInput(cmd) {
-    const letters = 'abcdefghij';
-    const idx = letters.indexOf(cmd);
-    if (idx < 0 || idx >= this.picksRemaining.length) {
-      const lastLetter = 'ABCDEFGHIJ'[this.picksRemaining.length - 1];
-      this.print(`Pick a letter A–${lastLetter}.`, 'err');
-      return;
-    }
-    const categoryId = this.picksRemaining[idx];
+  handleCategoryPick(categoryId) {
+    const idx = this.picksRemaining.indexOf(categoryId);
+    if (idx < 0) return;
     this.picksRemaining.splice(idx, 1);
     this.picked.push(categoryId);
     this.currentCategory = categoryId;
@@ -437,28 +471,19 @@ const Trivia = {
   },
 
   showQuestion() {
+    this.setInputVisible(false);
     const p = (t, c = 'out') => this.print(t, c);
     const cat = CATEGORIES.find(c => c.id === this.currentCategory);
     const q = this.currentQuestion;
     const pts = this.currentDifficulty * 100;
-    p(`═══ ${cat.name.toUpperCase()}  ·  D${q.d}  ·  ${pts} pts ═══`, 'narr');
+    p(`${cat.name}  ·  D${q.d}  ·  ${pts} pts`, 'narr');
     p('');
     p('  ' + q.q);
     p('');
-    const letters = 'ABCD';
-    q.o.forEach((option, i) => {
-      p(`    [${letters[i]}]  ${option}`);
-    });
-    p('');
-    p('  Type your answer (A/B/C/D):');
+    this.printOptions(q.o, (i) => this.handleAnswerPick(i));
   },
 
-  handleAnswerInput(cmd) {
-    const idx = 'abcd'.indexOf(cmd);
-    if (idx < 0) {
-      this.print('Type A, B, C, or D.', 'err');
-      return;
-    }
+  handleAnswerPick(idx) {
     const q = this.currentQuestion;
     const cat = CATEGORIES.find(c => c.id === this.currentCategory);
     const correct = idx === q.a;
@@ -475,7 +500,7 @@ const Trivia = {
     });
     this.clearScreen();
     const p = (t, c = 'out') => this.print(t, c);
-    p(`═══ ${cat.name.toUpperCase()}  ·  D${q.d} ═══`, 'narr');
+    p(`${cat.name}  ·  D${q.d}`, 'narr');
     p('');
     p('  ' + q.q);
     p('');
@@ -490,18 +515,16 @@ const Trivia = {
     if (this.picked.length >= 10) {
       setTimeout(() => this.gameOver(), 1400);
     } else {
-      p('  Press Enter to continue.');
       this.phase = 'between';
-      this._continueHandler = () => {
-        this.phase = 'category';
-        this.clearScreen();
-        this.showCategoryPicker();
-      };
+      this.printActions([
+        { label: 'Continue →', variant: 'primary', onClick: () => { this.phase = 'category'; this.clearScreen(); this.showCategoryPicker(); } },
+      ]);
     }
   },
 
   async gameOver() {
     this.phase = 'gameover';
+    this.setInputVisible(false);
     const gamertag = this._gamertag || 'Anon';
     const entry = {
       gamertag,
@@ -514,7 +537,7 @@ const Trivia = {
 
     this.clearScreen();
     const p = (t, c = 'out') => this.print(t, c);
-    p('═══ GAME OVER ════════════════════════════════════', 'narr');
+    p('Game Over', 'narr');
     p('');
     p(`  ${gamertag}  —  ${this.score} / 5500`, 'ok');
     p('');
@@ -524,7 +547,7 @@ const Trivia = {
     else if (placement > 0)   p(`  ▸  Made the leaderboard at #${placement}.`, 'ok');
     else                      p('  Not in the top 10 this time.', 'out');
     p('');
-    p('  ─── LEADERBOARD ───');
+    p('  Leaderboard', 'narr');
     p('');
     top.forEach((e, i) => {
       const isYou = e.uuid === entry.uuid && e.score === entry.score && e.date === entry.date;
@@ -533,7 +556,7 @@ const Trivia = {
         isYou ? 'ok' : 'out');
     });
     p('');
-    p('  ─── PER-CATEGORY ───');
+    p('  Per category', 'narr');
     p('');
     this.results.forEach((r) => {
       const icon = r.correct ? '✓' : '✗';
@@ -542,13 +565,10 @@ const Trivia = {
       p(`    ${icon}  D${String(r.difficulty).padStart(2)}  ${r.category.padEnd(22)}  ${pts} pts`, cls);
     });
     p('');
-    p('  Type `again` to play again, or `back` to close.');
-  },
-
-  handleGameOverInput(cmd) {
-    if (cmd === 'again' || cmd === 'replay' || cmd === 'restart') return this.open();
-    if (cmd === 'back' || cmd === '' || cmd === 'menu') return this.quit();
-    this.print('Type `again` or `back`.', 'err');
+    this.printActions([
+      { label: 'Play Again', variant: 'primary', onClick: () => this.open() },
+      { label: 'Close', onClick: () => this.quit() },
+    ]);
   },
 
   quit() {
