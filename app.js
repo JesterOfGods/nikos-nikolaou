@@ -388,6 +388,9 @@ const Views = {
       view === 'adventurer' ? this.renderAdventurer() : this.renderCommoner();
       this.built[view] = true;
     }
+    // Cursed zone lives on <body>; toggle its visibility per view.
+    const zone = document.getElementById('cursedZone');
+    if (zone) zone.style.display = view === 'adventurer' ? '' : 'none';
   },
 
   renderAdventurer() {
@@ -518,18 +521,19 @@ const Views = {
       ),
     );
 
-    // Cursed seal — floats over the Adventurer view and teleports on each click.
-    // Hidden after BSOD fires for the rest of THIS session; reload restores.
-    const view = $('#view-adventurer');
-    let cursed = view.querySelector('#cursedButton');
-    if (!cursed && !State.cursedTrolled) {
-      cursed = el('button', {
-        id: 'cursedButton',
-        class: 'cursedButton cursedButton--floating',
-        'aria-label': 'Do not click',
-        title: "don't",
-      }, '⚠ DO NOT CLICK');
-      view.append(cursed);
+    // Cursed seal — lives in a bottom-of-page "zone" and teleports inside it on
+    // each click. Zone is appended to <body> so .app's glitch transform can't
+    // capture the containing block. Visibility gated per-view in Views.activate.
+    if (!document.getElementById('cursedZone') && !State.cursedTrolled) {
+      const zone = el('div', { id: 'cursedZone', class: 'cursedZone' },
+        el('button', {
+          id: 'cursedButton',
+          class: 'cursedButton cursedButton--floating',
+          'aria-label': 'Do not click',
+          title: "don't",
+        }, '⚠ DO NOT CLICK'),
+      );
+      document.body.append(zone);
     }
 
     // Restore D20 result if visitor already rolled this visit (LS-backed).
@@ -950,19 +954,19 @@ const Cursed = {
       if (btn && btn.style.left) this.moveButton();
     });
   },
-  /* Random-teleport the button somewhere else on screen. Classic "don't click
-     me, you can't catch me" gag. Stays inside a safe margin so the user can
-     always find it again. */
+  /* Random-teleport the button inside its zone. Classic "don't click me, you
+     can't catch me" gag, but constrained so it never disappears off-screen. */
   moveButton() {
     const btn = document.getElementById('cursedButton');
-    if (!btn) return;
+    const zone = document.getElementById('cursedZone');
+    if (!btn || !zone) return;
     btn.style.right = 'auto';
     btn.style.bottom = 'auto';
-    const margin = 24;
+    const margin = 12;
     const w = btn.offsetWidth || 200;
     const h = btn.offsetHeight || 40;
-    const maxLeft = Math.max(margin, window.innerWidth - w - margin);
-    const maxTop = Math.max(margin, window.innerHeight - h - margin);
+    const maxLeft = Math.max(margin, zone.clientWidth - w - margin);
+    const maxTop  = Math.max(margin, zone.clientHeight - h - margin);
     btn.style.left = `${margin + Math.random() * (maxLeft - margin)}px`;
     btn.style.top  = `${margin + Math.random() * (maxTop  - margin)}px`;
   },
@@ -1101,8 +1105,8 @@ const BSOD = {
     }
     // Hide the cursed button for the rest of this session (resets on reload).
     State.cursedTrolled = true;
-    const cursed = document.getElementById('cursedButton');
-    if (cursed) cursed.remove();
+    const zone = document.getElementById('cursedZone');
+    if (zone) zone.remove();
     setTimeout(() => {
       this.el?.remove();
       this.el = null;

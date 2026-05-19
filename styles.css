@@ -764,11 +764,18 @@ body.boot .app { display: none !important; }
   animation: cursedPulse 2.4s ease-in-out infinite;
   cursor: pointer;
 }
-.cursedButton--floating {
+.cursedZone {
   position: fixed;
+  left: 0; right: 0; bottom: 0;
+  height: 180px;
+  z-index: 95;
+  pointer-events: none;
+}
+.cursedButton--floating {
+  position: absolute;
   right: 1.5rem;
   bottom: 1.5rem;
-  z-index: 95;
+  pointer-events: auto;
 }
 @keyframes cursedPulse {
   0%, 100% { box-shadow: 0 0 18px rgba(176,75,61,0.2), inset 0 1px 0 rgba(255,255,255,0.05); }
