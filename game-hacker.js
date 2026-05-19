@@ -313,10 +313,7 @@ const Hacker = {
       this.print(`    ${mark}  ${c.id.padEnd(9)}  ${c.label.padEnd(15)}  →  ${c.rewardType}`);
     }
     this.print('');
-    this.print('  MINI-GAMES:');
-    this.print('    ▸    trivia     TRIVIAL PURSUIT   →  Leaderboard score');
-    this.print('');
-    this.print('  commands:  run <id>   trivia   list   codes   help   exit');
+    this.print('  commands:  run <id>   list   codes   help   exit');
     this.print('');
   },
 
@@ -352,9 +349,6 @@ const Hacker = {
     // Gamertag entry takes over input entirely until set
     if (this.mode === 'gamertag') return this.handleGamertagInput(input);
 
-    // If trivia is running, delegate everything to it
-    if (window.Trivia?.active) return window.Trivia.process(input);
-
     // Global commands
     if (lower === 'exit' || lower === 'quit' || lower === 'q') return this.close();
     if (lower === 'help' || lower === '?') return this.showHelp();
@@ -365,10 +359,6 @@ const Hacker = {
     // Mode-specific
     if (this.mode === 'menu') {
       if (lower === 'back') return;
-      if (lower === 'trivia' || lower === 'run trivia') {
-        if (window.Trivia?.open) return window.Trivia.open();
-        return this.print('Trivia module not loaded.', 'err');
-      }
       const m = lower.match(/^run\s+(\w+)$/) || [null, lower];
       const id = m[1];
       if (CHALLENGES[id]) return this.openChallenge(id);

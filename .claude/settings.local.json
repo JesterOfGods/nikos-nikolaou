@@ -1,0 +1,11 @@
+{
+  "permissions": {
+    "allow": [
+      "Bash(node -e \"const c=require\\('c:/Projects/my-website/data/content.json'\\); console.log\\(JSON.stringify\\(c.factions, null, 2\\)\\);\")",
+      "Bash(node -e \"JSON.parse\\(require\\('fs'\\).readFileSync\\('c:/Projects/my-website/data/content.json','utf8'\\)\\); JSON.parse\\(require\\('fs'\\).readFileSync\\('c:/Projects/my-website/data/voicelines.json','utf8'\\)\\); JSON.parse\\(require\\('fs'\\).readFileSync\\('c:/Projects/my-website/data/now.json','utf8'\\)\\); console.log\\('OK'\\)\")",
+      "Bash(node --check c:/Projects/my-website/app.js)",
+      "Bash(node --check c:/Projects/my-website/game-trivia.js)",
+      "Bash(node --check c:/Projects/my-website/game-hacker.js)"
+    ]
+  }
+}

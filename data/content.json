@@ -9,7 +9,15 @@
     "location": "Copenhagen, Denmark",
     "email": "N.nikolaou@mail.com",
     "linkedin": "https://www.linkedin.com/in/nikosnikolaou/",
-    "bio": "Senior Unity gameplay programmer with 6+ years of high-performance C# architecture and polished player interactions. Master of strict VR/XR technical requirements — spatial UI, 3D math, optimization for mobile. I build modular, decoupled systems that support rapid iteration and large-scale content delivery. I turn complex requirements into intuitive, responsive gameplay. Self-driven collaborator committed to technical excellence and meticulous refinement of the player experience."
+    "bio": "Senior Unity gameplay programmer with 6+ years of high-performance C# architecture and polished player interactions. Master of strict VR/XR technical requirements — spatial UI, 3D math, optimization for mobile. I build modular, decoupled systems that support rapid iteration and large-scale content delivery. I turn complex requirements into intuitive, responsive gameplay. Self-driven collaborator committed to technical excellence and meticulous refinement of the player experience.",
+    "adventurerIntro": "Builds gameplay systems for a living, runs tabletop campaigns for the love of it, and finishes Grey Knights one model at a time. He'll out-argue you about three things at once and somehow still ship the fourth.",
+    "backstory": "Greek by birth, Copenhagen by choice. Currently building a TTRPG system on the side. Probably has more hobbies than fingers.",
+    "howToPlay": [
+      "Click stats, skills, factions — most things react.",
+      "Seven secrets are hidden across the site. The 🔍 counter keeps score.",
+      "Turn on voice for narrator commentary — toggle in the corner. Text always shows.",
+      "Anything labeled \"do not click\" is, of course, asking to be clicked."
+    ]
   },
 
   "stats": [
@@ -65,7 +73,7 @@
       "role": "Senior XR Developer",
       "company": "Novo Nordisk",
       "location": "Copenhagen",
-      "period": "2025–Present",
+      "period": "2025–2026",
       "bullets": [
         "Designed custom Unity tools that accelerated prototyping and shortened design-feedback loops.",
         "Led high-fidelity training simulations with strict modular architecture and performance budgets.",

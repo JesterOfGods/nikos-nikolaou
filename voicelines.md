@@ -145,8 +145,8 @@ These play in order as the visitor swaps repeatedly.
 
 ## 9. Clicking projects / work positions
 
-### `proj_novo_1.mp3` — Novo Nordisk (current day job)
-> Novo. The day job. Healthcare training simulations. He can't show you most of it. He'll tell you it's the most interesting N D A he's ever signed.
+### `proj_novo_1.mp3` — Novo Nordisk (former day job)
+> Novo. The day job, until February. Healthcare training simulations. He still can't show you most of it — the N D A outlasted the role.
 
 ### `proj_khora_1.mp3` — Khora (workplace + SXSW project)
 > Khora. The south-by-southwest one. He won't tell you which award, he'll tell you what the team built.

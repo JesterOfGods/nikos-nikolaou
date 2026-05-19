@@ -248,6 +248,8 @@ const Trivia = {
   currentDifficulty: 0,
   _continueHandler: null,
   _el: null, _screenEl: null, _inputEl: null, _bound: false,
+  _gamertag: '',
+  _wasHackerActive: false,
 
   print(text, cls = 'out') {
     if (!this._screenEl) return;
@@ -262,11 +264,44 @@ const Trivia = {
     if (this._screenEl) this._screenEl.innerHTML = '';
   },
 
-  open() {
-    if (!window.Hacker?._getGamertag || !window.Hacker._getGamertag()) {
-      if (window.Hacker?.print) window.Hacker.print('You need a gamertag before playing.', 'err');
-      return;
+  _loadGamertag() {
+    if (window.Hacker?._getGamertag) {
+      const t = window.Hacker._getGamertag();
+      if (t) return t;
     }
+    try { return localStorage.getItem('nikos.gamertag') || ''; } catch { return ''; }
+  },
+
+  _saveGamertag(tag) {
+    this._gamertag = tag;
+    try { localStorage.setItem('nikos.gamertag', tag); } catch {}
+    if (window.Hacker) window.Hacker._gamertag = tag;
+  },
+
+  promptGamertag() {
+    this.print('  Pick a gamertag for the leaderboard (2–12 letters, digits, or _).', 'narr');
+    this.print('  Leave blank for Anon.', 'narr');
+    this.print('', 'out');
+  },
+
+  handleGamertagInput(input) {
+    const tag = (input || '').trim();
+    if (!tag) {
+      this._saveGamertag('Anon');
+      this.print('  gamertag set: Anon', 'ok');
+    } else if (!/^[A-Za-z0-9_]{2,12}$/.test(tag)) {
+      this.print('  Invalid. 2–12 letters, digits, or underscore. Or leave blank for Anon.', 'err');
+      return;
+    } else {
+      this._saveGamertag(tag);
+      this.print(`  gamertag set: ${tag}`, 'ok');
+    }
+    this.print('', 'out');
+    this.phase = 'rules';
+    this.showRules();
+  },
+
+  open() {
     this._el = ensureTriviaUI();
     this._screenEl = document.getElementById('triviaScreen');
     this._inputEl  = document.getElementById('triviaInput');
@@ -286,12 +321,12 @@ const Trivia = {
       });
     }
 
-    // Disable the underlying hacker input so typing goes to the popup
-    if (window.Hacker?.inputEl) window.Hacker.inputEl.disabled = true;
+    // Only disable the hacker input when it's actually live underneath.
+    this._wasHackerActive = !!(window.Hacker?.active && window.Hacker.inputEl);
+    if (this._wasHackerActive) window.Hacker.inputEl.disabled = true;
 
     this._el.hidden = false;
     this.active = true;
-    this.phase = 'rules';
     this.picked = [];
     this.picksRemaining = CATEGORIES.map(c => c.id);
     this.score = 0;
@@ -300,13 +335,22 @@ const Trivia = {
     this.currentQuestion = null;
     this.currentDifficulty = 0;
     this.clearScreen();
-    this.showRules();
+
+    this._gamertag = this._loadGamertag();
+    if (this._gamertag) {
+      this.phase = 'rules';
+      this.showRules();
+    } else {
+      this.phase = 'gamertag';
+      this.promptGamertag();
+    }
     setTimeout(() => this._inputEl?.focus(), 220);
   },
 
   process(input) {
     const cmd = (input || '').trim().toLowerCase();
     if (cmd === 'quit' || cmd === 'exit' || cmd === 'q') return this.quit();
+    if (this.phase === 'gamertag') return this.handleGamertagInput(input);
     if (this.phase === 'rules')    return this.handleRulesInput(cmd);
     if (this.phase === 'category') return this.handleCategoryInput(cmd);
     if (this.phase === 'question') return this.handleAnswerInput(cmd);
@@ -458,7 +502,7 @@ const Trivia = {
 
   async gameOver() {
     this.phase = 'gameover';
-    const gamertag = (window.Hacker._getGamertag && window.Hacker._getGamertag()) || 'ANON';
+    const gamertag = this._gamertag || 'Anon';
     const entry = {
       gamertag,
       uuid: getUuid(),
@@ -498,7 +542,7 @@ const Trivia = {
       p(`    ${icon}  D${String(r.difficulty).padStart(2)}  ${r.category.padEnd(22)}  ${pts} pts`, cls);
     });
     p('');
-    p('  Type `again` to play again, or `back` to return to the hacker menu.');
+    p('  Type `again` to play again, or `back` to close.');
   },
 
   handleGameOverInput(cmd) {
@@ -511,10 +555,11 @@ const Trivia = {
     this.active = false;
     this.phase = null;
     if (this._el) this._el.hidden = true;
-    if (window.Hacker?.inputEl) {
+    if (this._wasHackerActive && window.Hacker?.inputEl) {
       window.Hacker.inputEl.disabled = false;
       setTimeout(() => window.Hacker.inputEl?.focus(), 80);
     }
+    this._wasHackerActive = false;
   },
 };
 

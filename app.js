@@ -401,7 +401,7 @@ const Views = {
     $('.classChain').textContent = d.identity.classChain;
     $('.raceLine').textContent = `${d.identity.race} · ${d.identity.location}`;
     $('.alignmentValue').textContent = d.identity.alignment;
-    $('.bio').textContent = d.identity.bio;
+    $('.sheetIntro').textContent = d.identity.adventurerIntro;
     $('.brandName').textContent = d.identity.shortName + ' Nikolaou';
     $('.brandTag').textContent = d.identity.tagline;
 
@@ -509,9 +509,10 @@ const Views = {
       e.tags && e.tags.length ? el('div', { class: 'libTags' }, ...e.tags.map(t => el('span', { class: 'tag' }, t))) : null,
     )));
 
-    // Background + contact, merged into the top sheet header. Backstory paragraph
-    // sits under the bio; links live at the bottom of the same header block.
-    $('.sheetBackstory').textContent = 'Greek by birth, Copenhagen by choice. Currently building a TTRPG system on the side. Probably has more hobbies than fingers.';
+    $('.sheetBackstory').textContent = d.identity.backstory;
+    $('#howToPlay').replaceChildren(
+      ...(d.identity.howToPlay || []).map(item => el('li', {}, item))
+    );
     $('#sheetMeta').replaceChildren(
       el('a', { href: 'mailto:' + d.identity.email }, '✉ ' + d.identity.email),
       el('a', { href: d.identity.linkedin, target: '_blank', rel: 'noopener' }, '🔗 LinkedIn'),
@@ -1189,6 +1190,18 @@ const D20 = {
   },
 };
 
+const TriviaBtn = {
+  init() {
+    const btn = $('#triviaBtn');
+    if (!btn) return;
+    btn.addEventListener('click', () => {
+      if (!window.Trivia?.open) return;
+      Narrator.fire('openTrivia');
+      window.Trivia.open();
+    });
+  },
+};
+
 const Konami = {
   seq: ['ArrowUp','ArrowUp','ArrowDown','ArrowDown','ArrowLeft','ArrowRight','ArrowLeft','ArrowRight','b','a'],
   idx: 0,
@@ -1486,6 +1499,7 @@ async function boot() {
   Console.init();
   Cursed.init();
   D20.init();
+  TriviaBtn.init();
   Konami.init();
   DevTools.init();
   Ambient.init();

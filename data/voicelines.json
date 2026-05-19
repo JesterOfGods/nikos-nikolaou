@@ -67,7 +67,7 @@
     { "id": "bg_1", "text": "Of course he likes that one. We're basically inside it right now." }
   ],
   "clickProject_novo": [
-    { "id": "proj_novo_1", "text": "Novo. The day job. Healthcare training simulations. He can't show you most of it. He'll tell you it's the most interesting NDA he's ever signed." }
+    { "id": "proj_novo_1", "text": "Novo. The day job, until February. Healthcare training simulations. He still can't show you most of it — the NDA outlasted the role." }
   ],
   "clickProject_khora": [
     { "id": "proj_khora_1", "text": "Khora. The SXSW one. He won't tell you which award, he'll tell you what the team built." }
@@ -87,6 +87,11 @@
   ],
   "fastSkim": [
     { "id": "skim_1", "text": "Skimming. Bold. He'd respect you more if you slowed down. He's also doing the same thing in another tab right now." }
+  ],
+  "openTrivia": [
+    { "id": "trivia_open_1", "text": "Trivia. Ten of his fandoms, ten questions each. Pick order is your difficulty curve — go cocky on the way in, lose points on the way out." },
+    { "id": "trivia_open_2", "text": "Roll for Lore. He'll judge your answers from afar. Quietly. While painting Grey Knights." },
+    { "id": "trivia_open_3", "text": "Trivia mode. He built this to argue with you about Hogwarts houses and Storm counts. Pick a category. He's watching." }
   ],
   "openDevTools": [
     { "id": "dev_1", "text": "You opened the inspector. Looking for the seams. Good. He builds for that kind of audience." }

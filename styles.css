@@ -325,7 +325,7 @@ body.boot .app { display: none !important; }
 .charName { color: var(--ink); }
 .classChain { color: var(--accent); font-family: var(--ff-mono); font-size: 0.92rem; margin-top: 0.35rem; letter-spacing: 0.02em; }
 .raceLine { color: var(--ink-faint); font-family: var(--ff-mono); font-size: 0.82rem; margin-top: 0.15rem; }
-.bio { margin-top: 1rem; max-width: 70ch; }
+.sheetIntro { margin-top: 1rem; max-width: 70ch; }
 .alignmentBlock {
   display: grid; gap: 0.3rem;
   font-family: var(--ff-mono); font-size: 0.78rem;
@@ -333,7 +333,7 @@ body.boot .app { display: none !important; }
 }
 .alignmentLabel { color: var(--ink-faint); letter-spacing: 0.1em; text-transform: uppercase; }
 .alignmentValue { color: var(--accent); font-size: 0.95rem; }
-.d20Btn {
+.d20Btn, .triviaBtn {
   margin-top: 0.4rem;
   padding: 0.45rem 0.8rem;
   background: var(--surface);
@@ -342,7 +342,7 @@ body.boot .app { display: none !important; }
   color: var(--ink); font-size: 0.85rem;
   transition: all var(--t-fast) ease;
 }
-.d20Btn:hover { border-color: var(--accent); color: var(--accent); transform: translateY(-1px); }
+.d20Btn:hover, .triviaBtn:hover { border-color: var(--accent); color: var(--accent); transform: translateY(-1px); }
 .d20Btn:disabled, .d20Btn.used { opacity: 0.45; cursor: not-allowed; transform: none; border-style: dashed; }
 .d20Btn:disabled:hover, .d20Btn.used:hover { border-color: #3a3122; color: var(--ink); transform: none; }
 
@@ -518,6 +518,19 @@ body.boot .app { display: none !important; }
 
 /* Backstory */
 .sheetBackstory { margin-top: 0.75rem; max-width: 70ch; color: var(--ink-dim); }
+.howToPlay {
+  margin: 0.85rem 0 0;
+  padding: 0.65rem 0.9rem 0.65rem 1rem;
+  list-style: none;
+  max-width: 70ch;
+  border-left: 2px solid #3a3122;
+  font-family: var(--ff-mono);
+  font-size: 0.82rem;
+  color: var(--ink-dim);
+  line-height: 1.55;
+}
+.howToPlay li { margin: 0.15rem 0; }
+.howToPlay li::before { content: "▸ "; color: var(--accent); }
 .sheetMeta { display: flex; flex-wrap: wrap; gap: 0.65rem 1.1rem; margin-top: 1rem; padding-top: 0.75rem; border-top: 1px dashed #2c2517; font-family: var(--ff-mono); font-size: 0.82rem; color: var(--ink-dim); }
 .sheetMeta a { color: var(--accent); text-decoration: none; }
 .sheetMeta a:hover { text-decoration: underline; }
