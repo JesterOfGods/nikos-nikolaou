@@ -952,7 +952,8 @@ const Cursed = {
     });
   },
   /* Random-teleport the button inside its zone. Classic "don't click me, you
-     can't catch me" gag, but constrained so it never disappears off-screen. */
+     can't catch me" gag, but constrained so it never disappears off-screen.
+     Avoids landing under the narrator bubble when it's on screen. */
   moveButton() {
     const btn = document.getElementById('cursedButton');
     const zone = document.getElementById('cursedZone');
@@ -964,8 +965,36 @@ const Cursed = {
     const h = btn.offsetHeight || 40;
     const maxLeft = Math.max(margin, zone.clientWidth - w - margin);
     const maxTop  = Math.max(margin, zone.clientHeight - h - margin);
-    btn.style.left = `${margin + Math.random() * (maxLeft - margin)}px`;
-    btn.style.top  = `${margin + Math.random() * (maxTop  - margin)}px`;
+
+    // Translate the narrator bubble's viewport rect into zone-local coords
+    // with a small pad — that becomes a no-go area for the button.
+    let avoid = null;
+    const narrator = document.getElementById('narrator');
+    if (narrator && !narrator.hidden) {
+      const nr = narrator.getBoundingClientRect();
+      const zr = zone.getBoundingClientRect();
+      const pad = 12;
+      avoid = {
+        left: nr.left - zr.left - pad,
+        top: nr.top - zr.top - pad,
+        right: nr.right - zr.left + pad,
+        bottom: nr.bottom - zr.top + pad,
+      };
+    }
+    const overlaps = (l, t) => avoid &&
+      l < avoid.right && l + w > avoid.left &&
+      t < avoid.bottom && t + h > avoid.top;
+
+    let left = margin, top = margin, tries = 16;
+    do {
+      left = margin + Math.random() * (maxLeft - margin);
+      top  = margin + Math.random() * (maxTop  - margin);
+      tries -= 1;
+    } while (tries > 0 && overlaps(left, top));
+    if (overlaps(left, top)) { left = margin; top = margin; }
+
+    btn.style.left = `${left}px`;
+    btn.style.top  = `${top}px`;
   },
   click() {
     // Hard-stop once the BSOD has been armed — buys ~2-3s of safety before the
@@ -994,8 +1023,8 @@ const Cursed = {
         setTimeout(() => BSOD.trigger(), 500);
       }, 600);
     } else {
-      // Teleport away. One unique line per click 1..12.
-      this.moveButton();
+      // First click stays put — the joke only lands once they try a second time.
+      if (count > 1) this.moveButton();
       const n = Math.min(count, 12);
       Narrator.fire(`cursedButton_${n}`, { priority: 'HIGH', cooldown: 0 });
     }
