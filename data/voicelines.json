@@ -33,6 +33,18 @@
   "swapView_giveup": [
     { "id": "swap_giveup", "text": "Alright. I'm out. You had too much fun with the toggle — I'll stop narrating it. Switch freely. Silence from me." }
   ],
+  "clickStat_xrArch": [
+    { "id": "xr_1", "text": "XR Architecture. His main weapon. Strict VR budgets, spatial UI, mobile constraints — he draws the diagram before anyone asks for one." }
+  ],
+  "clickStat_systems": [
+    { "id": "sys_1", "text": "Systems Thinking. Highest stat on the sheet. He sees the second-order effects before the first ones ship. It's a curse at standups." }
+  ],
+  "clickStat_advCha": [
+    { "id": "adv_1", "text": "Adversarial CHA. He'll argue against a settled conclusion if the conversation gets better for it. He calls it 'making meetings worth having.' Most people call it 'Nikos again.'" }
+  ],
+  "clickStat_painting": [
+    { "id": "paint_1", "text": "Painting. Resin printer, FDM, brushes, more primer than is reasonable. He's been mid-squad of Grey Knights for months. He'll finish. Probably." }
+  ],
   "clickStat_strength": [
     { "id": "str_1", "text": "We don't talk about Strength. The character's never invested a single point." }
   ],

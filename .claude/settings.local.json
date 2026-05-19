@@ -6,7 +6,8 @@
       "Bash(node --check c:/Projects/my-website/app.js)",
       "Bash(node --check c:/Projects/my-website/game-trivia.js)",
       "Bash(node --check c:/Projects/my-website/game-hacker.js)",
-      "Bash(node -e \"JSON.parse\\(require\\('fs'\\).readFileSync\\('c:/Projects/my-website/data/content.json','utf8'\\)\\); console.log\\('content.json OK'\\)\")"
+      "Bash(node -e \"JSON.parse\\(require\\('fs'\\).readFileSync\\('c:/Projects/my-website/data/content.json','utf8'\\)\\); console.log\\('content.json OK'\\)\")",
+      "Bash(node -e \"JSON.parse\\(require\\('fs'\\).readFileSync\\('c:/Projects/my-website/data/voicelines.json','utf8'\\)\\); console.log\\('OK'\\)\")"
     ]
   }
 }
