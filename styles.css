@@ -440,7 +440,6 @@ body.boot .app { display: none !important; }
 .statLabel { font-family: var(--ff-mono); font-size: 0.7rem; color: var(--ink-faint); letter-spacing: 0.08em; text-transform: uppercase; }
 .statValue { font-family: var(--ff-disp); font-size: 1.65rem; color: var(--ink); margin-top: 0.2rem; }
 .statMod { font-family: var(--ff-mono); font-size: 0.75rem; color: var(--accent); }
-.statBlurb { font-size: 0.78rem; color: var(--ink-dim); margin-top: 0.4rem; line-height: 1.35; min-height: 2.6em; }
 
 /* Saving throws */
 .savingThrows { display: grid; gap: 0.4rem; }

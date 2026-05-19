@@ -423,7 +423,6 @@ const Views = {
         el('div', { class: 'statLabel' }, s.label),
         el('div', { class: 'statValue' }, String(s.value)),
         el('div', { class: 'statMod' }, modStr),
-        el('div', { class: 'statBlurb' }, s.blurb),
       );
     }));
 

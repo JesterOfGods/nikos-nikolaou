@@ -249,6 +249,40 @@
         "Healthcare training simulations (Denmark + East Africa)",
         "Studio-wide dev templates and asset standards"
       ]
+    },
+    {
+      "id": "novo",
+      "title": "Novo — XR for Healthcare",
+      "tagline": "Senior XR Developer · 2025–2026 · Training simulations",
+      "mood": "xr-lab",
+      "status": "shipped",
+      "tags": ["XR", "VR", "Unity", "C#", "Healthcare", "Training", "Performance"],
+      "hero": "assets/showcase/novo/hero.jpg",
+      "gallery": [],
+      "story": "Senior XR developer on high-fidelity VR training simulations for healthcare. Most of the work lives under NDA, so specifics stay quiet — but the shape of it: custom Unity tooling that shortened design-feedback loops, performance profiling and debugging passes that kept heavy scenes smooth, and modular architecture under strict performance budgets. Also reviewed code and mentored junior developers so the team's output kept rising.",
+      "milestones": [
+        "Custom Unity tooling that accelerated prototyping",
+        "Performance profiling + debugging on heavy VR scenes",
+        "Modular architecture under strict perf budgets",
+        "Mentored juniors and led code review"
+      ]
+    },
+    {
+      "id": "silkroad",
+      "title": "Silkroad — Unreal Vertical Slice",
+      "tagline": "Sole Programmer / CTO · Unreal 5 · 2019–2021 · DFI-funded",
+      "mood": "manuscript",
+      "status": "shipped",
+      "tags": ["Unreal 5", "Gameplay", "Narrative", "DFI", "CTO"],
+      "hero": "assets/showcase/silkroad/hero.jpg",
+      "gallery": [],
+      "story": "Sole programmer on a narrative game demo in Unreal 5 — a DFI-funded vertical slice, taken from concept to shipped. Owned every gameplay system: character controller, interaction, game state. Collaborated tightly with design on what was fun AND technically feasible. Two years carrying the engineering side of a small studio while wearing the CTO title on the side — one he still won't say out loud unless you ask twice.",
+      "milestones": [
+        "Sole programmer — concept to vertical slice",
+        "DFI-funded narrative demo in Unreal 5",
+        "Owned character controller, interaction, game state",
+        "CTO for two years (don't ask him to say it out loud)"
+      ]
     }
   ]
 }

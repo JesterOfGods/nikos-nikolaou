@@ -180,6 +180,12 @@
   "openShowcase_khora": [
     { "id": "show_khora_1", "text": "The XR work. Cleaner room, headset on the desk. The award's in a box somewhere. He moved twice." }
   ],
+  "openShowcase_novo": [
+    { "id": "show_novo_1", "text": "Novo. Sterile-bright room, headset on a cleaned-down desk. Most of what you'd see here is under NDA. He'll show you the shape, not the contents." }
+  ],
+  "openShowcase_silkroad": [
+    { "id": "show_silkroad_1", "text": "Silkroad. Unreal 5 vertical slice. Sole programmer, CTO on the org chart, alone in the trenches in practice. He'll narrate the demo if you make him." }
+  ],
   "closeShowcase": [
     { "id": "close_show_1", "text": "Back to the sheet. He picks it up. We continue." }
   ],
