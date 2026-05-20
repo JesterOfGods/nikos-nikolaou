@@ -21,7 +21,7 @@ const STARTING_KIT = {
   mp: 15, maxMp: 15,
   inventory: [
     { id: 'staff', count: 1 },
-    { id: 'eldritch_potion', count: 3 },
+    { id: 'mana_potion', count: 3 },
   ],
   spells: ['eldritch_blast'],
   codes: [],          // codes from the hacker game
@@ -35,8 +35,8 @@ const ITEMS = {
     desc: 'A worn oak staff. Reliable. Deals 4 damage in melee, no mana cost.',
     weapon: true, dmg: 4, mp: 0,
   },
-  eldritch_potion: {
-    name: 'Eldritch Blast potion',
+  mana_potion: {
+    name: 'Mana Potion',
     desc: 'Bitter violet liquid. Drinking restores 5 mana.',
     consume: { mp: 5 },
   },
@@ -175,10 +175,9 @@ const DUNGEONS = {
         description:
           'Iron-bound doors yawn shut behind you. A single torch flickers in a sconce. ' +
           'Steps descend into darkness ahead. Carved into the wall: a warning in a dead language.',
-        hints: 'Try: read warning · take torch · go down · examine sconce',
+        hints: 'Try: read warning · examine sconce · go down',
         actions: {
-          'read warning': { text: 'Letters writhe — slowly — into meaning: "The first to enter is the first to lie." You shiver and decide to lie about something, just in case.', flag: 'crypt_lied' },
-          'take torch': { text: 'You lift the torch. The flame leans away from you, as if reading your intentions.', give: 'torch_crypt', once: true },
+          'read warning': { text: 'Letters writhe — slowly — into meaning: "The first to enter is the first to lie." You shiver and decide to lie about something, just in case.' },
           'examine sconce': { text: 'Wax, soot, fingerprints. Someone was here recently. Or always. Hard to tell with this lighting.' },
           'go down': { goto: 1 },
         },
@@ -189,7 +188,7 @@ const DUNGEONS = {
         description:
           'Bones in patterns: ribs as fans, skulls as tiles. A bone choir hums on a wavelength your teeth can feel. ' +
           'Three openings — a low arch (north), a stairwell (down), a cracked door (east).',
-        hints: 'Try: listen · examine bones · disturb bones · sing along · go north / down / east',
+        hints: 'Try: listen · examine bones · disturb bones · sing along · go north / east',
         actions: {
           'listen': { text: 'A funeral hymn in a key that does not exist. You recognize three words. None of them are nice.', flag: 'crypt_listened' },
           'examine bones': { text: 'Arranged by someone who cared about composition. Not someone alive.' },
@@ -198,10 +197,9 @@ const DUNGEONS = {
             ifFlag: 'crypt_listened',
             text: 'You hum the three words you caught. The choir warms. A panel of bone slides aside, revealing a bone key.',
             elseText: 'You hum a guess. The choir falls silent in a way that feels judgmental.',
-            giveIfFlag: 'rune_key', giveFlag: 'crypt_listened',
+            giveIfFlag: 'rune_key',
           },
           'go north': { goto: 2 },
-          'go down':  { needFlag: 'crypt_descended', text: 'The stairs only lead down when something has gone down them first. (Try the north door for now.)' },
           'go east':  { goto: 3 },
         },
       },
@@ -221,7 +219,6 @@ const DUNGEONS = {
           },
           'take herb': { text: 'Pluck. The herb shivers and goes still in your hand.', give: 'herb', once: true },
           'go back':  { goto: 1 },
-          'go south': { goto: 1 },
         },
       },
       // Room 3 — sealed door
@@ -243,7 +240,7 @@ const DUNGEONS = {
             text: 'The ice splits the runes mid-syllable. The door, mid-NO, becomes mid-OPEN.',
             goto: 4,
           },
-          'go back': { goto: 1 }, 'go west': { goto: 1 },
+          'go back': { goto: 1 },
         },
       },
       // Room 4 — boss
@@ -273,7 +270,7 @@ const DUNGEONS = {
         description:
           'The cave breathes. Inhale: cold. Exhale: hot. Each breath shifts the floor by an inch. ' +
           'A narrow ledge leads down. A scorched skeleton sits cross-legged, waiting politely.',
-        hints: 'Try: examine skeleton · talk to skeleton · search skeleton · descend',
+        hints: 'Try: examine skeleton · talk to skeleton · search skeleton · go down',
         actions: {
           'examine skeleton': { text: 'It died holding a pose. Knee on knee, palms up, like a yoga teacher who got committed.' },
           'talk to skeleton': { text: 'You greet it. It does not respond. You feel rude. You feel less rude when you realize it had this coming.', flag: 'cavern_talked' },
@@ -282,7 +279,7 @@ const DUNGEONS = {
             text: 'Polite first. You search. In its hand: a folded note. It says "do not go down." You will.',
             elseText: 'You rifle through bones. They clatter accusingly. You take 2 damage from a sharp femur of judgment.', dmg: 2,
           },
-          'descend': { goto: 1 }, 'go down': { goto: 1 },
+          'go down': { goto: 1 },
         },
       },
       {
@@ -316,12 +313,12 @@ const DUNGEONS = {
         description:
           'The walls are warm and shed scales the size of plates. A single fresh one rests at your feet. ' +
           'Ahead: a vast opening. A snore so loud you feel it in your sternum.',
-        hints: 'Try: take scale · listen · approach quietly · sing',
+        hints: 'Try: take scale · listen · sing · go forward',
         actions: {
-          'take scale': { text: 'A black scale. It is cold despite the heat. You feel ready and unprepared, simultaneously.', give: 'scale_shard', once: true, flag: 'cavern_has_scale' },
+          'take scale': { text: 'A black scale. It is cold despite the heat. You feel ready and unprepared, simultaneously.', give: 'scale_shard', once: true },
           'listen': { text: 'A heartbeat older than your country, slower than your patience.' },
           'sing': { text: 'You hum a lullaby. Somewhere ahead the snoring deepens. You buy yourself time you will not need.', flag: 'cavern_lullaby' },
-          'approach quietly': { goto: 4 }, 'go forward': { goto: 4 },
+          'go forward': { goto: 4 },
         },
       },
       fight({
@@ -351,12 +348,12 @@ const DUNGEONS = {
         description:
           'Water laps at your ankles. Bookshelves rise out of it like masts. A reading desk floats nearby, ' +
           'still set with an open book and a long-cold cup of tea.',
-        hints: 'Try: read book · drink tea · examine shelves · wade north',
+        hints: 'Try: read book · drink tea · examine shelves · go north',
         actions: {
           'read book': { text: 'The page describes you, doing exactly what you are doing. You stop reading. The page stops describing.', flag: 'lib_self_read' },
           'drink tea': { text: 'Cold. Steeped too long. Restores 2 HP — the kind of HP only nostalgia can give.', heal: 2 },
           'examine shelves': { text: 'The spines all face inward. Of course they do.' },
-          'wade north': { goto: 1 }, 'go north': { goto: 1 },
+          'go north': { goto: 1 },
         },
       },
       {
@@ -385,7 +382,7 @@ const DUNGEONS = {
         hints: 'Try: examine mirror · step through mirror · catch page · speak to librarian',
         actions: {
           'examine mirror': { text: 'The librarian glances up. She has been waiting for you. The room around her is dry.' },
-          'step through mirror': { text: 'You press the glass. It accepts you the way water accepts a stone. You arrive somewhere drier.', flag: 'lib_dry', goto: 3 },
+          'step through mirror': { text: 'You press the glass. It accepts you the way water accepts a stone. You arrive somewhere drier.', goto: 3 },
           'catch page': { text: 'A page lands in your palm and dries. It is a recipe for tea, with a note in the margin: "drink cold for grief."' },
           'speak to librarian': { text: 'She mouths a word through the glass. It is the title of a book you have not read. (Of course it is.)' },
           'go forward': { goto: 3 }, 'go back': { goto: 1 },
@@ -431,12 +428,16 @@ const DUNGEONS = {
         description:
           'A long hall of statues, each holding a different gesture: invitation, refusal, mourning, a thumbs-up. ' +
           'The floor is patterned in tiles that hum when stepped on.',
-        hints: 'Try: examine thumbs-up · step on tiles · avoid tiles · go forward',
+        hints: 'Try: examine thumbs-up · step on tiles · avoid tiles',
         actions: {
           'examine thumbs-up': { text: 'The statue holds a thumbs-up. The other hand: a small note. It says: "the way through is approval."', flag: 'throne_approve' },
           'step on tiles': { text: 'The tiles light in your wake. A statue tilts its head. You take 2 damage from the sheer scrutiny.', dmg: 2 },
-          'avoid tiles': { ifFlag: 'throne_approve', text: 'You walk only on un-lit tiles, the path of approval. The hall warms to you.', goto: 1, elseText: 'You sidle along the wall. The statues do not approve. The hall remains cold but lets you pass.', goto: 1 },
-          'go forward': { goto: 1 },
+          'avoid tiles': {
+            ifFlag: 'throne_approve',
+            text: 'You walk only on un-lit tiles, the path of approval. The hall warms to you.',
+            elseText: 'You sidle along the wall. The statues do not approve. The hall remains cold but lets you pass.',
+            goto: 1,
+          },
         },
       },
       {
@@ -460,7 +461,7 @@ const DUNGEONS = {
           'A herb floats on the water.',
         hints: 'Try: drink · take herb · refuse · examine figure',
         actions: {
-          'drink': { text: 'You sip. The water tastes of dates and dry summer. Restores 6 HP.', heal: 6, flag: 'throne_drank' },
+          'drink': { text: 'You sip. The water tastes of dates and dry summer. Restores 6 HP.', heal: 6 },
           'take herb': { text: 'Plucked from the pool, dripping. It rises to body warmth in your palm.', give: 'herb', once: true },
           'refuse': { text: 'You decline. The figure shrugs. It has all the time in the world. You have less.' },
           'examine figure': { text: 'Beneath the wrappings: smiling. Patient. He is not the boss, but he knows him.' },
@@ -475,7 +476,7 @@ const DUNGEONS = {
         actions: {
           'present name': { ifFlag: 'throne_truth', text: 'You speak your true name aloud. The line dims and lets you pass.', goto: 4, elseText: 'You speak a name. The line stays bright. The voice waits.' },
           'present amulet': { needItem: 'pharaoh_amulet', text: 'You hold up the amulet. The voice says, "ah," with great courtesy, and the gold line dims.', goto: 4 },
-          'step across': { text: 'You step. The gold line burns. 6 damage. You retreat.', dmg: 6 },
+          'step across': { text: 'You step. The gold line burns. 6 damage. You retreat.', dmg: 6, goto: 2 },
           'go back': { goto: 2 },
         },
       },
@@ -511,7 +512,7 @@ const DUNGEONS = {
           'examine glass': { text: 'The missing star is where you are standing.', flag: 'temple_centered' },
           'examine robes': { text: 'Wool. Moth-eaten. One pocket bulges. You take a herb from it.', give: 'herb', once: true },
           'sit': { text: 'You sit. The bench creaks. Restores 3 HP — the kind only being still gives.', heal: 3 },
-          'pray': { text: 'You attempt prayer. A reply comes from much closer than expected.', flag: 'temple_prayed' },
+          'pray': { text: 'You attempt prayer. A reply comes from much closer than expected.' },
           'go forward': { goto: 1 },
         },
       },
@@ -520,12 +521,11 @@ const DUNGEONS = {
         description:
           'A rope, frayed but functional. A bell whose tongue has been carefully removed and replaced with a wooden one. ' +
           'A ladder up to a small door.',
-        hints: 'Try: pull rope · ring bell · climb ladder · examine tongue',
+        hints: 'Try: pull rope · examine tongue · go forward',
         actions: {
           'pull rope': { text: 'The bell makes a dull wooden knock. It is more pleasing than you expected. Something below shifts.', flag: 'temple_rung' },
-          'ring bell': { text: 'See: pull rope.', flag: 'temple_rung' },
           'examine tongue': { text: 'Olive wood. Recently carved. The original bronze tongue lies in a velvet-lined case beside it.' },
-          'climb ladder': { goto: 2 }, 'go forward': { goto: 2 },
+          'go forward': { goto: 2 },
         },
       },
       {
@@ -548,8 +548,8 @@ const DUNGEONS = {
           'His prayer beads are not made of stone.',
         hints: 'Try: cough · speak · examine beads · attack now',
         actions: {
-          'cough': { ifFlag: 'temple_rung', text: 'The priest turns at the courtesy. He bows. "You rang. I came." He stands, ready.', flag: 'temple_announced', goto: 4, elseText: 'He does not turn. He does not turn. He does not turn.' },
-          'speak': { text: '"Hello," you say. The priest does not stop praying. The room gets a little cooler.', flag: 'temple_announced' },
+          'cough': { ifFlag: 'temple_rung', text: 'The priest turns at the courtesy. He bows. "You rang. I came." He stands, ready.', goto: 4, elseText: 'He does not turn. He does not turn. He does not turn.' },
+          'speak': { text: '"Hello," you say. The priest does not stop praying. The room gets a little cooler.' },
           'examine beads': { text: 'Closer: each bead has a small mouth, all closed. You step back politely.' },
           'attack now': { text: 'You strike at him from behind. The robe collapses. He stands behind you. 5 damage.', dmg: 5, goto: 4 },
           'go forward': { goto: 4 }, 'go back': { goto: 2 },
@@ -1052,6 +1052,7 @@ const RPG = {
     if (it.consume?.hp) { this.heal(it.consume.hp); }
     if (it.consume) this.removeItem(slot.id);
     saveState(this.state);
+    if (this.state.inCombat) this.afterPlayerAction();
   },
 
   /* ─── Stats / health / mana ─── */
@@ -1111,9 +1112,11 @@ const RPG = {
       this.afterPlayerAction();
     } else if (s.heal) {
       this.heal(s.heal);
+      if (this.state.inCombat) this.afterPlayerAction();
     } else if (s.shield) {
       this.state.flags.__shield = (this.state.flags.__shield || 0) + s.shield;
       this.out(`Shield: ${this.state.flags.__shield} HP next hit.`, 'out');
+      if (this.state.inCombat) this.afterPlayerAction();
     }
     saveState(this.state);
   },
