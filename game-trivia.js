@@ -583,7 +583,215 @@ const Trivia = {
   },
 };
 
+/* ════════════════════════════════════════════════════════════════════════
+   IMPOSSIBLE MODE — 20 deep-cut One Piece questions.
+   Single-category gauntlet. Score = correct count out of 20. No partial credit.
+   Reuses the Trivia modal/UI; separate phase + state to keep both modes simple.
+   ════════════════════════════════════════════════════════════════════════ */
+
+const IMPOSSIBLE_QUESTIONS = [
+  { q: "Who was the captain of the legendary Rocks Pirates that fought Roger and Garp at God Valley?",
+    o: ["Silvers Rayleigh", "Rocks D. Xebec", "Edward Newgate", "Shiki the Golden Lion"], a: 1 },
+  { q: "On what island did the God Valley Incident take place?",
+    o: ["Hachinosu", "Sphinx", "God Valley", "Lulusia"], a: 2 },
+  { q: "What is the canonical name of Luffy's Devil Fruit, revealed in Wano?",
+    o: ["Gomu Gomu no Mi", "Nika Nika no Mi", "Hito Hito no Mi, Model: Joy Boy", "Hito Hito no Mi, Model: Nika"], a: 3 },
+  { q: "What is the model of Kaido's Mythical Zoan Devil Fruit?",
+    o: ["Uo Uo no Mi, Model: Seiryu", "Ryu Ryu no Mi, Model: Pteranodon", "Hebi Hebi no Mi, Model: Yamata no Orochi", "Ryu Ryu no Mi, Model: Allosaurus"], a: 0 },
+  { q: "Which of Vegapunk's six satellites is revealed to be the traitor on Egghead Island?",
+    o: ["Shaka", "Lilith", "Atlas", "York"], a: 3 },
+  { q: "Who is the hidden monarch seated on the Empty Throne in Mary Geoise?",
+    o: ["Saint Jaygarcia Saturn", "Im", "Saint Topman Warcury", "Saint Marcus Mars"], a: 1 },
+  { q: "Which planet is the Gorosei elder 'Saint Jaygarcia ___' named after?",
+    o: ["Mars", "Jupiter", "Saturn", "Pluto"], a: 2 },
+  { q: "What is the name of the orphanage where Charlotte Linlin (Big Mom) was raised by Mother Carmel?",
+    o: ["Sheep's House", "Goat's Den", "Elbaf Orphanage", "Carmel's Hearth"], a: 0 },
+  { q: "What is the birth name of Marine Fleet Admiral 'Akainu'?",
+    o: ["Borsalino", "Kuzan", "Issho", "Sakazuki"], a: 3 },
+  { q: "Who forged Zoro's sword Wado Ichimonji generations before the story begins?",
+    o: ["Shimotsuki Ushimaru", "Shimotsuki Kozaburo", "Kawamatsu the Kappa", "Tenguyama Kotetsu"], a: 1 },
+  { q: "What is the name of Sanji's biological mother?",
+    o: ["Reiju", "Stussy", "Sora", "Bell-mère"], a: 2 },
+  { q: "What is the name of Portgas D. Ace's biological mother?",
+    o: ["Portgas D. Rouge", "Nico Olvia", "Kozuki Toki", "Bell-mère"], a: 0 },
+  { q: "What was the name of Gol D. Roger's pirate ship?",
+    o: ["Moby Dick", "Red Force", "Victoria Punk", "Oro Jackson"], a: 3 },
+  { q: "Who served as the 1st Division Commander (de facto right hand) of the Whitebeard Pirates?",
+    o: ["Marco the Phoenix", "Jozu the Diamond", "Vista the Flower Sword", "Portgas D. Ace"], a: 0 },
+  { q: "What is the name of Kaido's biological daughter?",
+    o: ["O-Tama", "Hiyori", "Yamato", "O-Lin"], a: 2 },
+  { q: "Who is Jewelry Bonney's biological father?",
+    o: ["Marshall D. Teach", "Silvers Rayleigh", "Crocodile", "Bartholomew Kuma"], a: 3 },
+  { q: "What is Trafalgar Law's full real name, revealed to Doflamingo at Dressrosa?",
+    o: ["Trafalgar D. North Law", "Trafalgar D. Water Law", "Trafalgar D. Cora Law", "Trafalgar D. Sea Law"], a: 1 },
+  { q: "What is the model of Sengoku's Mythical Zoan Devil Fruit?",
+    o: ["Hito Hito no Mi, Model: Daibutsu", "Hito Hito no Mi, Model: Tengu", "Hito Hito no Mi, Model: Kannon", "Hito Hito no Mi, Model: Nika"], a: 0 },
+  { q: "Who is Donquixote Doflamingo's deceased younger brother, the undercover Marine known as 'Corazon'?",
+    o: ["Donquixote Homing", "Donquixote Rosinante", "Donquixote Mjosgard", "Donquixote Doffy"], a: 1 },
+  { q: "Which Vegapunk body is the original, oldest 'Punk-00' / Stella designation?",
+    o: ["Shaka", "Edison", "The old man Vegapunk (Stella)", "Pythagoras"], a: 2 },
+];
+
+const Impossible = {
+  active: false,
+  phase: null,
+  idx: 0,
+  results: [],
+  _wasHackerActive: false,
+
+  open() {
+    Trivia._el = ensureTriviaUI();
+    Trivia._screenEl = document.getElementById('triviaScreen');
+    Trivia._inputEl  = document.getElementById('triviaInput');
+
+    const label = Trivia._el.querySelector('.triviaBarLabel');
+    if (label) label.textContent = 'Impossible · One Piece · Deep Cuts';
+
+    if (!Trivia._bound) {
+      Trivia._bound = true;
+      Trivia._inputEl.addEventListener('keydown', (e) => {
+        if (e.key === 'Enter') {
+          const val = Trivia._inputEl.value;
+          Trivia._inputEl.value = '';
+          if (val.trim()) Trivia.print(`trivia@nikos:~# ${val}`, 'echo');
+          Trivia.process(val);
+        }
+      });
+      document.addEventListener('keydown', (e) => {
+        if ((Trivia.active || Impossible.active) && e.key === 'Escape') {
+          if (Impossible.active) Impossible.quit();
+          else Trivia.quit();
+        }
+      });
+    }
+
+    this._wasHackerActive = !!(window.Hacker?.active && window.Hacker.inputEl);
+    if (this._wasHackerActive) window.Hacker.inputEl.disabled = true;
+
+    Trivia._el.hidden = false;
+    this.active = true;
+    Trivia.active = false;
+    this.idx = 0;
+    this.results = [];
+    Trivia.clearScreen();
+    this.phase = 'rules';
+    this.showRules();
+    setTimeout(() => Trivia._inputEl?.focus(), 220);
+  },
+
+  showRules() {
+    Trivia.setInputVisible(false);
+    const p = (t, c = 'out') => Trivia.print(t, c);
+    p('Impossible — One Piece, deep cuts', 'narr');
+    p('');
+    p('  20 questions. One Piece only. The obscure stuff.');
+    p('  Void Century, Vegapunk satellites, who-was-whose-mother, sword forgers,');
+    p('  the names behind the epithets.');
+    p('');
+    p('  Each correct answer = 1 point. Max score: 20 / 20.', 'ok');
+    p('  Wrong = 0. No partial credit. No second chances.', 'err');
+    p('');
+    p('  If you score 15+, you have read the manga. Twice.');
+    p('');
+    Trivia.printActions([
+      { label: 'Begin', variant: 'primary', onClick: () => { this.phase = 'question'; Trivia.clearScreen(); this.showQuestion(); } },
+      { label: 'Cancel', onClick: () => this.quit() },
+    ]);
+  },
+
+  showQuestion() {
+    Trivia.setInputVisible(false);
+    const p = (t, c = 'out') => Trivia.print(t, c);
+    const q = IMPOSSIBLE_QUESTIONS[this.idx];
+    p(`Question ${this.idx + 1} / 20  ·  One Piece`, 'narr');
+    p('');
+    p('  ' + q.q);
+    p('');
+    Trivia.printOptions(q.o, (i) => this.handleAnswerPick(i));
+  },
+
+  handleAnswerPick(idx) {
+    const q = IMPOSSIBLE_QUESTIONS[this.idx];
+    const correct = idx === q.a;
+    this.results.push({
+      n: this.idx + 1,
+      asked: q.q,
+      yourAnswer: q.o[idx],
+      correctAnswer: q.o[q.a],
+      correct,
+    });
+    Trivia.clearScreen();
+    const p = (t, c = 'out') => Trivia.print(t, c);
+    p(`Question ${this.idx + 1} / 20`, 'narr');
+    p('');
+    p('  ' + q.q);
+    p('');
+    if (correct) p('  ✓ Correct.', 'ok');
+    else         p(`  ✗ Wrong.  The answer was: ${q.o[q.a]}`, 'err');
+    const score = this.results.filter(r => r.correct).length;
+    p('');
+    p(`  Score: ${score} / ${this.idx + 1}`);
+    p('');
+    this.idx++;
+    if (this.idx >= IMPOSSIBLE_QUESTIONS.length) {
+      setTimeout(() => this.gameOver(), 1200);
+    } else {
+      this.phase = 'between';
+      Trivia.printActions([
+        { label: 'Next →', variant: 'primary', onClick: () => { this.phase = 'question'; Trivia.clearScreen(); this.showQuestion(); } },
+      ]);
+    }
+  },
+
+  gameOver() {
+    this.phase = 'gameover';
+    Trivia.setInputVisible(false);
+    const score = this.results.filter(r => r.correct).length;
+    Trivia.clearScreen();
+    const p = (t, c = 'out') => Trivia.print(t, c);
+    p('Impossible — Result', 'narr');
+    p('');
+    p(`  ${score} / 20`, score >= 15 ? 'ok' : score >= 8 ? 'out' : 'err');
+    p('');
+    if (score === 20)      p('  Perfect. You are Oda in disguise.', 'ok');
+    else if (score >= 17)  p('  Elite. You read the SBS columns.', 'ok');
+    else if (score >= 13)  p('  Strong. You\'ve been keeping up with Egghead.', 'ok');
+    else if (score >= 8)   p('  Respectable. Anime-only, but well-watched.');
+    else if (score >= 4)   p('  Surface level. The crew names alone are not enough here.', 'err');
+    else                   p('  Did you mean to click Trivia instead?', 'err');
+    p('');
+    p('  Answers', 'narr');
+    p('');
+    this.results.forEach((r) => {
+      const icon = r.correct ? '✓' : '✗';
+      const cls = r.correct ? 'ok' : 'err';
+      p(`    ${icon}  Q${String(r.n).padStart(2)}  ${r.correctAnswer}`, cls);
+    });
+    p('');
+    Trivia.printActions([
+      { label: 'Play Again', variant: 'primary', onClick: () => this.open() },
+      { label: 'Close', onClick: () => this.quit() },
+    ]);
+  },
+
+  quit() {
+    this.active = false;
+    this.phase = null;
+    if (Trivia._el) {
+      Trivia._el.hidden = true;
+      const label = Trivia._el.querySelector('.triviaBarLabel');
+      if (label) label.textContent = 'Trivia · Pursuit of Points';
+    }
+    if (this._wasHackerActive && window.Hacker?.inputEl) {
+      window.Hacker.inputEl.disabled = false;
+      setTimeout(() => window.Hacker.inputEl?.focus(), 80);
+    }
+    this._wasHackerActive = false;
+  },
+};
+
 window.Trivia = Trivia;
+window.Impossible = Impossible;
 window.TriviaAdapter = LeaderboardAdapter;  // for swapping backend
 window.getUuid = getUuid;
 

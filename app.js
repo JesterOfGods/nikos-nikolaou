@@ -1300,6 +1300,14 @@ const TriviaBtn = {
       Narrator.fire('openTrivia');
       window.Trivia.open();
     });
+
+    const impBtn = $('#impossibleBtn');
+    if (!impBtn) return;
+    impBtn.addEventListener('click', () => {
+      if (!window.Impossible?.open) return;
+      Narrator.fire('openImpossible');
+      window.Impossible.open();
+    });
   },
 };
 

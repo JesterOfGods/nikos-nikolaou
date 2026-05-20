@@ -385,6 +385,10 @@ body.boot .app { display: none !important; }
 }
 .triviaBtn:hover { border-color: var(--accent); color: var(--accent); transform: translateY(-1px); }
 
+/* Impossible mode — slightly more menacing red-tinted variant of triviaBtn */
+.triviaBtn--impossible { border-color: #5a2a2a; color: #d8b0a8; }
+.triviaBtn--impossible:hover { border-color: #c44; color: #ffb0a0; }
+
 /* The d20 SVG itself — colored via currentColor, tumbles on roll. */
 .d20Svg {
   width: 100%;

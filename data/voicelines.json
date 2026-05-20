@@ -142,6 +142,11 @@
     { "id": "trivia_open_3", "text": "Trivia mode. He built this to argue with you about Hogwarts houses and Storm counts. Pick a category. He's watching." },
     { "id": "trivia_open_4", "text": "Oh! A challenger. Can you top the highscore and beat him at his own game? Here's the stuff he likes — let's test your taste and knowledge. I'm sure you'll disappoint..." }
   ],
+  "openImpossible": [
+    { "id": "impossible_open_1", "text": "Impossible. Twenty questions, One Piece only, the deep cuts. He warned you. He didn't write 'impossible' on the button for fun." },
+    { "id": "impossible_open_2", "text": "Ah. The button labeled with a skull. You read it and clicked anyway. Bold. He's been waiting two arcs for someone to try this." },
+    { "id": "impossible_open_3", "text": "Twenty obscure One Piece questions. If you can't name three Vegapunk satellites, turn back now. He'll respect it more than the wrong answers." }
+  ],
   "openDevTools": [
     { "id": "dev_1", "text": "You opened the inspector. Looking for the seams. Good. He builds for that kind of audience." }
   ],
