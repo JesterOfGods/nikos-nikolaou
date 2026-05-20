@@ -13,7 +13,8 @@
       "Bash(node -e \"JSON.parse\\(require\\('fs'\\).readFileSync\\('c:/Projects/my-website/data/now.json','utf8'\\)\\); console.log\\('OK'\\)\")",
       "Bash(node -c c:/Projects/my-website/game-trivia.js)",
       "Bash(node -c c:/Projects/my-website/app.js)",
-      "Bash(node -e \"const fs = require\\('fs'\\); const code = fs.readFileSync\\('c:/Projects/my-website/game-trivia.js', 'utf8'\\); const m = code.match\\(/const IMPOSSIBLE_BANKS = \\\\{\\([\\\\s\\\\S]*?\\)\\\\n\\\\};/\\); if\\(!m\\){console.log\\('NOT FOUND'\\); process.exit\\(1\\);} const body = m[1]; const keys = [...body.matchAll\\(/^\\\\s\\\\s\\([a-z]+\\):\\\\s\\\\[/gm\\)].map\\(x=>x[1]\\); console.log\\('Banks found:', keys\\);\")"
+      "Bash(node -e \"const fs = require\\('fs'\\); const code = fs.readFileSync\\('c:/Projects/my-website/game-trivia.js', 'utf8'\\); const m = code.match\\(/const IMPOSSIBLE_BANKS = \\\\{\\([\\\\s\\\\S]*?\\)\\\\n\\\\};/\\); if\\(!m\\){console.log\\('NOT FOUND'\\); process.exit\\(1\\);} const body = m[1]; const keys = [...body.matchAll\\(/^\\\\s\\\\s\\([a-z]+\\):\\\\s\\\\[/gm\\)].map\\(x=>x[1]\\); console.log\\('Banks found:', keys\\);\")",
+      "Bash(node -e \"const fs = require\\('fs'\\); const code = fs.readFileSync\\('c:/Projects/my-website/game-trivia.js', 'utf8'\\); const m = code.match\\(/const IMPOSSIBLE_BANKS = \\\\{\\([\\\\s\\\\S]*?\\)\\\\n\\\\};/\\); const body = m[1]; const keys = [...body.matchAll\\(/^\\\\s\\\\s\\([a-z]+\\):\\\\s\\\\[/gm\\)].map\\(x=>x[1]\\); console.log\\('Banks:', keys.length, '→', keys.join\\(', '\\)\\);\")"
     ]
   }
 }
