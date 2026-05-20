@@ -348,7 +348,9 @@ body.boot .app { display: none !important; }
   background: transparent;
   border: 0;
   cursor: pointer;
-  display: inline-block;
+  display: block;
+  width: 100%;
+  text-align: center;
   line-height: 0;
   transition: transform var(--t-fast) ease, filter var(--t-fast) ease;
 }
@@ -385,11 +387,13 @@ body.boot .app { display: none !important; }
 
 /* The d20 SVG itself — colored via currentColor, tumbles on roll. */
 .d20Svg {
-  width: 72px;
-  height: 72px;
+  width: 100%;
+  height: auto;
+  max-width: 160px;
   color: var(--accent);
   transform-style: preserve-3d;
   display: block;
+  margin: 0 auto;
 }
 .d20Svg--rolling { animation: d20Tumble 850ms cubic-bezier(0.25, 0.46, 0.45, 0.94); }
 @keyframes d20Tumble {
