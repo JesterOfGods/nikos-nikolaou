@@ -1306,7 +1306,7 @@ const TriviaBtn = {
     impBtn.addEventListener('click', () => {
       if (!window.Impossible?.open) return;
       Narrator.fire('openImpossible');
-      window.Impossible.open();
+      window.Impossible.open('onepiece');
     });
   },
 };
