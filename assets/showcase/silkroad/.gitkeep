@@ -1,0 +1,4 @@
+# Silkroad Studios — Sole Programmer / CTO, Unreal 5 (2019–2021)
+# Hero:    hero.jpg|.png|.webp (~1600px wide, 16:9 or 2:1 works well)
+# Gallery: any .jpg, .png, or .webp — list paths in data/content.json → showcases[id=silkroad].gallery
+# Notes:   the DFI-funded vertical slice screenshots/trailer stills go here.

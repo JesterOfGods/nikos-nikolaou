@@ -1,2 +1,2 @@
-# Hero: hero.jpg (~1600px, 16:9)
-# Gallery: any .jpg/.png — reference paths from content.json showcases[].gallery
+# Hero: hero.jpg|.png|.webp (~1600px, 16:9)
+# Gallery: any .jpg, .png, or .webp — reference paths from content.json showcases[].gallery

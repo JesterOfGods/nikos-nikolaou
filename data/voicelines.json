@@ -7,7 +7,7 @@
   ],
   "returningVisitor": [
     { "id": "return_1", "text": "Back again. You know the drill." },
-    { "id": "return_2", "text": "Back. Either he's hiring you or you're stalling on something at work. Probably both." }
+    { "id": "return_2", "text": "Back. Either you are hiring him or you're stalling on something at work. Probably both." }
   ],
   "pickAdventurer": [
     { "id": "adv_1", "text": "Adventurer. He bet me you'd pick this. He doesn't like losing, so he won." }
@@ -61,7 +61,7 @@
     { "id": "cs_1", "text": "C#. Eight years deep. He has opinions about async. Don't ask unless you have time." }
   ],
   "clickSkill_math": [
-    { "id": "math_1", "text": "3D Math and Physics. Eight years of dot products, cross products, and explaining quaternions to people who already know what quaternions are." }
+    { "id": "math_1", "text": "3D Math and Physics. Eight years of dot products, cross products, and explaining quaternions to people who think degrees only refer to temperature." }
   ],
   "clickSkill_optim": [
     { "id": "optim_1", "text": "Performance Optimization. Mobile XR — every millisecond is a moral issue. He'll profile your scene before you finish saying 'feels fine.'" }
@@ -201,6 +201,12 @@
   ],
   "openShowcase_silkroad": [
     { "id": "show_silkroad_1", "text": "Silkroad. Unreal 5 vertical slice. Sole programmer, CTO on the org chart, alone in the trenches in practice. He'll narrate the demo if you make him." }
+  ],
+  "openShowcase_medialogy": [
+    { "id": "show_medialogy_1", "text": "Medialogy. The MSc that fed everything XR after. Comfort thesis — how to make people not throw up in a headset. Foundational work." }
+  ],
+  "openShowcase_aegean": [
+    { "id": "show_aegean_1", "text": "Aegean. Products and systems design engineering — engineering with a humanities streak. Big Chimera was the thesis: location-based AR, built on a Greek island." }
   ],
   "closeShowcase": [
     { "id": "close_show_1", "text": "Back to the sheet. He picks it up. We continue." }

@@ -106,12 +106,14 @@
 
   "education": [
     {
+      "id": "medialogy",
       "degree": "MSc Medialogy",
       "institution": "Aalborg University, Copenhagen",
       "thesis": "Comfort XR — investigating immersion systems to alleviate physical discomfort.",
       "tags": ["Unity", "C#", "Game Design"]
     },
     {
+      "id": "aegean",
       "degree": "MSc Products and Systems Design Engineering",
       "institution": "University of the Aegean, Syros",
       "thesis": "Big Chimera — location-based serious AR game.",
@@ -271,7 +273,7 @@
       "id": "silkroad",
       "title": "Silkroad — Unreal Vertical Slice",
       "tagline": "Sole Programmer / CTO · Unreal 5 · 2019–2021 · DFI-funded",
-      "mood": "manuscript",
+      "mood": "xr-lab",
       "status": "shipped",
       "tags": ["Unreal 5", "Gameplay", "Narrative", "DFI", "CTO"],
       "hero": "assets/showcase/silkroad/hero.jpg",
@@ -282,6 +284,38 @@
         "DFI-funded narrative demo in Unreal 5",
         "Owned character controller, interaction, game state",
         "CTO for two years (don't ask him to say it out loud)"
+      ]
+    },
+    {
+      "id": "medialogy",
+      "title": "Medialogy — Comfort XR",
+      "tagline": "MSc Medialogy · Aalborg University, Copenhagen",
+      "mood": "manuscript",
+      "status": "completed",
+      "tags": ["Unity", "C#", "Game Design", "XR Research", "HCI"],
+      "hero": "assets/showcase/medialogy/hero.jpg",
+      "gallery": [],
+      "story": "Master's thesis: Comfort XR — investigating immersion systems to alleviate physical discomfort in VR. Foundational work that fed directly into the studio work that came after. (Add your full story, photos, and links here.)",
+      "milestones": [
+        "MSc Medialogy — Aalborg University, Copenhagen",
+        "Thesis: Comfort XR",
+        "Unity, C#, Game Design"
+      ]
+    },
+    {
+      "id": "aegean",
+      "title": "Aegean — Big Chimera",
+      "tagline": "MSc Products and Systems Design Engineering · University of the Aegean, Syros",
+      "mood": "manuscript",
+      "status": "completed",
+      "tags": ["Game Design", "Interactive Systems", "Unity", "C#", "AR"],
+      "hero": "assets/showcase/aegean/hero.jpg",
+      "gallery": [],
+      "story": "Master's thesis: Big Chimera — a location-based serious AR game. Built on Syros island, defended in Greek, the project that opened the door to everything XR-shaped that followed. (Add your full story, photos, and links here.)",
+      "milestones": [
+        "MSc Products and Systems Design Engineering — University of the Aegean, Syros",
+        "Thesis: Big Chimera — location-based AR",
+        "Interactive Systems, Game Design, Unity, C#"
       ]
     }
   ]

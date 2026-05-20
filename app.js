@@ -497,9 +497,13 @@ const Views = {
       el('div', { class: 'blurb' }, f.blurb),
     )));
 
-    // Showcases (tiles in sheet) — job showcases are shown via the Completed Quests card instead.
-    const workIds = new Set(d.work.map(w => w.id));
-    $('#showcases').replaceChildren(...d.showcases.filter(s => !workIds.has(s.id)).map(s => el('button', {
+    // Showcases (tiles in sheet) — job + education showcases are shown via
+    // the Completed Quests and Library cards instead.
+    const anchoredIds = new Set([
+      ...d.work.map(w => w.id),
+      ...(d.education || []).map(e => e.id).filter(Boolean),
+    ]);
+    $('#showcases').replaceChildren(...d.showcases.filter(s => !anchoredIds.has(s.id)).map(s => el('button', {
         class: 'showcaseTile', dataset: { id: s.id },
         onclick: () => Showcase.open(s.id)
       },
@@ -513,13 +517,23 @@ const Views = {
       ),
     )));
 
-    // Library — training & lore (formal education)
-    $('#library').replaceChildren(...d.education.map(e => el('div', { class: 'libEdu' },
-      el('div', { class: 'libDeg' }, e.degree),
-      el('div', { class: 'libInst' }, e.institution),
-      el('div', { class: 'libThesis' }, e.thesis),
-      e.tags && e.tags.length ? el('div', { class: 'libTags' }, ...e.tags.map(t => el('span', { class: 'tag' }, t))) : null,
-    )));
+    // Library — training & lore (formal education). Each card opens its
+    // matching showcase if one exists; falls back to a generic narrator line.
+    $('#library').replaceChildren(...d.education.map(e => {
+      const hasShowcase = e.id && d.showcases.some(s => s.id === e.id);
+      return el('div', {
+          class: 'libEdu' + (hasShowcase ? ' libEdu--linked' : ''),
+          onclick: () => {
+            if (hasShowcase) Showcase.open(e.id);
+            else Narrator.fire('clickLibrary', { priority: 'NORMAL', cooldown: 4000 });
+          },
+        },
+        el('div', { class: 'libDeg' }, e.degree, hasShowcase ? el('span', { class: 'libMore' }, '↗ open') : null),
+        el('div', { class: 'libInst' }, e.institution),
+        el('div', { class: 'libThesis' }, e.thesis),
+        e.tags && e.tags.length ? el('div', { class: 'libTags' }, ...e.tags.map(t => el('span', { class: 'tag' }, t))) : null,
+      );
+    }));
 
     $('.sheetBackstory').textContent = d.identity.backstory;
     $('#sheetInvite').textContent = d.identity.sheetInvite || '';
@@ -1187,10 +1201,23 @@ const D20 = {
   locked: false,
   rolling: false,
   firstNat20Seen: false,
+  buildSvg(value, opts = {}) {
+    const cls = 'd20Svg' + (opts.rolling ? ' d20Svg--rolling' : '');
+    return `
+      <svg class="${cls}" viewBox="-50 -50 100 100" aria-hidden="true">
+        ${D20_SHAPE_SVG}
+        <text class="d20SvgNumber" x="0" y="0" text-anchor="middle" dominant-baseline="central"
+              font-size="22" font-weight="700" fill="currentColor">${value}</text>
+      </svg>
+    `;
+  },
   init() {
     // Restore "first nat 20 seen" flag — drives the special konami hint line
     this.firstNat20Seen = Storage.get('nikos.d20.firstNat20Seen') === '1';
     const btn = $('#d20Btn');
+    // Default face: ? until rolled. applyResult overrides with the saved value
+    // on restore (called from renderAdventurer).
+    btn.innerHTML = this.buildSvg('?');
     btn.addEventListener('click', () => {
       if (this.locked || this.rolling) return;
       this.roll();
@@ -1201,23 +1228,15 @@ const D20 = {
     Storage.set(LS.D20_RESULT, String(value));
     this.animateRoll(value);
   },
-  /* Tumble an SVG d20 in 3D CSS while cycling the number on its visible face.
-     Slows toward the end for a settling feel; applies the real result via
-     applyResult once the animation lands. */
+  /* Tumble the SVG d20 (which IS the button) in 3D CSS while cycling the
+     number on its visible face. Slows toward the end for a settling feel;
+     applies the real result via applyResult once the animation lands. */
   animateRoll(finalValue) {
     this.rolling = true;
     const btn = $('#d20Btn');
-    const result = $('#d20Result');
-    btn.classList.add('d20Btn--rolling');
-    result.classList.remove('nat20', 'nat1', 'd20Result--landed');
-    result.innerHTML = `
-      <svg class="d20Svg d20Svg--rolling" viewBox="-50 -50 100 100" aria-hidden="true">
-        ${D20_SHAPE_SVG}
-        <text class="d20SvgNumber" x="0" y="0" text-anchor="middle" dominant-baseline="central"
-              font-family="var(--ff-mono)" font-size="20" font-weight="700" fill="currentColor">?</text>
-      </svg>
-    `;
-    const numEl = result.querySelector('.d20SvgNumber');
+    btn.classList.remove('nat20', 'nat1');
+    btn.innerHTML = this.buildSvg('?', { rolling: true });
+    const numEl = btn.querySelector('.d20SvgNumber');
 
     const totalDuration = 850;
     const startTime = performance.now();
@@ -1226,9 +1245,6 @@ const D20 = {
     const tick = () => {
       const elapsed = performance.now() - startTime;
       if (elapsed >= totalDuration) {
-        btn.classList.remove('d20Btn--rolling');
-        result.classList.add('d20Result--landed');
-        setTimeout(() => result.classList.remove('d20Result--landed'), 360);
         this.rolling = false;
         this.applyResult(finalValue, { restoring: false });
         return;
@@ -1242,19 +1258,16 @@ const D20 = {
   },
   applyResult(value, { restoring = false } = {}) {
     const btn = $('#d20Btn');
-    const result = $('#d20Result');
-    result.classList.remove('nat20', 'nat1');
-    let verdict = '';
-    if (value === 20) { result.classList.add('nat20'); verdict = '🎯 NAT 20'; }
-    else if (value === 1) { result.classList.add('nat1'); verdict = '💀 NAT 1'; }
-    result.innerHTML = `
-      <svg class="d20Svg" viewBox="-50 -50 100 100" aria-label="d20 result ${value}">
-        ${D20_SHAPE_SVG}
-        <text class="d20SvgNumber" x="0" y="0" text-anchor="middle" dominant-baseline="central"
-              font-family="var(--ff-mono)" font-size="20" font-weight="700" fill="currentColor">${value}</text>
-      </svg>
-      ${verdict ? `<span class="d20Verdict">${verdict}</span>` : ''}
-    `;
+    btn.classList.remove('nat20', 'nat1');
+    let face = String(value);
+    if (value === 20) { btn.classList.add('nat20'); }
+    else if (value === 1) { btn.classList.add('nat1'); face = '💀'; }
+    btn.innerHTML = this.buildSvg(face);
+    if (!restoring) {
+      // Pop the die briefly on land
+      btn.classList.add('d20Btn--landed');
+      setTimeout(() => btn.classList.remove('d20Btn--landed'), 360);
+    }
 
     // Only a nat 1 locks the die — everyone else can keep rolling
     if (value === 1) {

@@ -1,2 +1,5 @@
-# Hero: hero.jpg (~1600px, 16:9)
-# Gallery: any .jpg/.png — reference paths from content.json showcases[].gallery
+# Homebrew Faerûn — DM showcase
+# Hero:    hero.jpg|.png|.webp (~1600px wide, 16:9 or 2:1)
+# Background map: FaerunMap.webp — tiled behind the whole modal at low opacity. Tinted to the site palette via CSS (sepia + hue-rotate).
+# Gallery: any .jpg, .png, or .webp — list paths in data/content.json → showcases[id=faerun].gallery
+# Notes:   use a generic fantasy map (not WotC's). Azgaar's generator or your own sketch works. Sepia-friendly.
