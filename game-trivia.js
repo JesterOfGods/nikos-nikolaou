@@ -660,6 +660,7 @@ const LS_IMPOSSIBLE_LB_PREFIX = 'nikos.impossible.leaderboard';
    (or that want a different label there). Falls back to CATEGORIES, then id. */
 const IMPOSSIBLE_NAMES = {
   himym: 'How I Met Your Mother',
+  friends: 'Friends',
 };
 
 function impossibleCategoryName(id) {
@@ -669,6 +670,49 @@ function impossibleCategoryName(id) {
 }
 
 const IMPOSSIBLE_BANKS = {
+  friends: [
+    { q: "What is Chandler Bing's middle name?",
+      o: ["Maurice", "Muriel", "Mortimer", "Matthew"], a: 1 },
+    { q: "What is Ross Geller's middle name?",
+      o: ["Edward", "Ezekiel", "Eustace", "Ethan"], a: 2 },
+    { q: "What is Joey Tribbiani's middle name?",
+      o: ["Francis", "Frank", "Anthony", "Vincent"], a: 0 },
+    { q: "What is the full name of Phoebe's identical twin sister?",
+      o: ["Ursula Buffay", "Frances Buffay", "Lily Buffay", "Phoebe Abbott"], a: 0 },
+    { q: "What is the name of Phoebe's biological father?",
+      o: ["Frank Buffay Sr.", "Joseph Buffay", "Frankie Buffay", "Lou Buffay"], a: 0 },
+    { q: "What are the names of the triplets Phoebe carries as a surrogate for her brother Frank Jr.?",
+      o: ["Frankie, Leslie, and Phoebe Jr.", "Frank Jr. Jr., Leslie, and Chandler", "Frank III, Lily, and Ross", "Frank Jr. Jr., Phoebe, and Joey"], a: 1 },
+    { q: "What is the full name of Ross's second wife, whom he marries in London?",
+      o: ["Emma Waltham", "Emily Waltham", "Elizabeth Waltham", "Eleanor Waltham"], a: 1 },
+    { q: "What is the name of Joey's beloved stuffed penguin?",
+      o: ["Mr. Snuffles", "Hugsy", "Penguinsy", "Joey Jr."], a: 1 },
+    { q: "What is the name of Joey's longtime agent?",
+      o: ["Bobbie Wexler", "Lauren Reed", "Estelle Leonard", "Sandra Cohen"], a: 2 },
+    { q: "What is Joey's character name on the soap opera Days of Our Lives?",
+      o: ["Dr. Drake Ramoray", "Dr. Hans Ramoray", "Dr. Brett Markham", "Dr. Joseph Travers"], a: 0 },
+    { q: "What is the name of Chandler's mother, the erotic novelist?",
+      o: ["Helen Bing", "Nora Tyler Bing", "Loretta Bing", "Maggie Bing"], a: 1 },
+    { q: "Who plays Chandler's father, a Las Vegas drag performer?",
+      o: ["Bea Arthur", "Kathleen Turner", "Susan Sarandon", "Cher"], a: 1 },
+    { q: "Which Hollywood movie does Ross's monkey Marcel end up starring in?",
+      o: ["Congo", "Outbreak", "Twister", "Independence Day"], a: 1 },
+    { q: "Who plays Rachel's father, Dr. Leonard Green?",
+      o: ["Ron Leibman", "Jeff Goldblum", "Charles Grodin", "Alan Alda"], a: 0 },
+    { q: "Reese Witherspoon plays which of Rachel's two sisters?",
+      o: ["Amy", "Jill", "Sandra", "Joanna"], a: 1 },
+    { q: "How many sisters does Joey Tribbiani have?",
+      o: ["Five", "Six", "Seven", "Eight"], a: 2 },
+    { q: "What is the name of Brad Pitt's character — Monica's overweight high-school friend, co-founder of the 'I Hate Rachel Green Club'?",
+      o: ["Will Colbert", "Pete Becker", "Tag Jones", "Tommy Rollerson"], a: 0 },
+    { q: "What are the names of Chandler and Monica's adopted twins?",
+      o: ["Ben and Emma", "Erica and Jack", "Frank and Alice", "Lily and Marvin"], a: 1 },
+    { q: "What does Phoebe legally change her full name to after marrying Mike Hannigan?",
+      o: ["Princess Consuela Banana Hammock", "Regina Phalange", "Phoebe Hannigan Buffay", "Princess Buffay-Hannigan"], a: 0 },
+    { q: "What is the apartment number of Monica's apartment in seasons 5 onward (after the show 'corrected' it)?",
+      o: ["5", "19", "20", "14"], a: 2 },
+  ],
+
   himym: [
     { q: "What is the Mother's full name, revealed in the series finale?",
       o: ["Tracy McConnell", "Stella Zinman", "Cindy McConnell", "Victoria Anderson"], a: 0 },
@@ -703,7 +747,7 @@ const IMPOSSIBLE_BANKS = {
     { q: "Who plays Jessica Glitter, Robin Sparkles' co-star on the Canadian variety show?",
       o: ["Carly Rae Jepsen", "Avril Lavigne", "Nicole Scherzinger", "Alanis Morissette"], a: 2 },
     { q: "Who holds the title of 'Slap Bet Commissioner'?",
-      o: ["Lily", "Marshall", "Ted", "Future Ted"], a: 1 },
+      o: ["Lily", "Marshall", "Ted", "Future Ted"], a: 0 },
     { q: "In Barney's job at GNB, what does the acronym 'PLEASE' stand for?",
       o: ["Provide Legal Exculpation And Sign Everything", "Please Look Elsewhere And Stop Examining", "Profit-Loss Evaluation And Securities Exchange", "Personal Liability Exception And Statute Enforcement"], a: 0 },
     { q: "What are the names of Ted's two future children, who narrate the framing story?",
