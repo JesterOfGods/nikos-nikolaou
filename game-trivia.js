@@ -427,9 +427,8 @@ const Trivia = {
     p('    Strategy game. Multi-fandom. Max 5,500 pts.');
     p('');
     p('  Impossible', 'err');
-    const catNames = Object.keys(IMPOSSIBLE_BANKS).map(impossibleCategoryName).join(', ');
     p('    Single category. 20 deep-cut questions. No mercy. Max 2,000 pts.');
-    p(`    Available: ${catNames}.`);
+    p('    Pick a fandom on the next screen.');
     p('');
     this.printActions([
       { label: '🧠 Normal',     variant: 'primary', onClick: () => this._enterStandard() },
@@ -670,6 +669,49 @@ function impossibleCategoryName(id) {
 }
 
 const IMPOSSIBLE_BANKS = {
+  greek: [
+    { q: "In Hesiod's Theogony, what was the very first being to come into existence?",
+      o: ["Gaia", "Chaos", "Uranus", "Cronus"], a: 1 },
+    { q: "Who castrated Uranus, and with what weapon?",
+      o: ["Zeus, with a thunderbolt", "Cronus, with an adamantine sickle", "Tartarus, with a flint knife", "The Hekatonkheires, with their hundred hands"], a: 1 },
+    { q: "Per Hesiod, what goddess was born from Uranus's severed genitals falling into the sea?",
+      o: ["Aphrodite", "Hephaestus", "Athena", "The Erinyes"], a: 0 },
+    { q: "Of the three Gorgons, only one was mortal. Which?",
+      o: ["Stheno", "Euryale", "Medusa", "Echidna"], a: 2 },
+    { q: "When Perseus beheaded Medusa, what two beings sprang from her severed neck?",
+      o: ["Pegasus and Chimera", "Pegasus and Chrysaor", "Bellerophon and Pegasus", "Chrysaor and Geryon"], a: 1 },
+    { q: "What are the names of the three Hekatonkheires (the hundred-handed ones)?",
+      o: ["Brontes, Steropes, Arges", "Hyperion, Iapetus, Crius", "Mimas, Porphyrion, Alcyoneus", "Briareus, Cottus, Gyges"], a: 3 },
+    { q: "Per Apollodorus, who tricked Cronus into vomiting back up his swallowed children?",
+      o: ["Zeus, by force", "Metis, with an emetic potion", "Rhea, with magic herbs", "Themis, by prophecy"], a: 1 },
+    { q: "Why did Zeus swallow the Titaness Metis, leading to Athena's birth from his head?",
+      o: ["She tried to overthrow him", "A prophecy that her son would overthrow him", "She insulted his mother Rhea", "She refused to marry him"], a: 1 },
+    { q: "Eos asked Zeus to make her mortal lover Tithonus immortal — but forgot to ask for what?",
+      o: ["Eternal youth", "Strength", "Memory", "Beauty"], a: 0 },
+    { q: "Who gave Deianeira the poisoned blood that ultimately killed Heracles?",
+      o: ["Hera, in disguise", "The centaur Nessus", "The goddess Iris", "The priestess of Apollo"], a: 1 },
+    { q: "Who tore Orpheus apart after he lost Eurydice?",
+      o: ["The Erinyes", "The Maenads", "The Cyclopes", "The Sirens"], a: 1 },
+    { q: "In Euripides's Bacchae, King Pentheus of Thebes is torn apart by:",
+      o: ["Dionysus directly", "His own mother Agave", "A wild boar sent by Dionysus", "Bacchic women who do not know him"], a: 1 },
+    { q: "The Lapiths and Centaurs first came to violence at whose wedding feast?",
+      o: ["Pirithous", "Theseus", "Peleus and Thetis", "Cadmus and Harmonia"], a: 0 },
+    { q: "Heracles's 11th labor was to retrieve:",
+      o: ["The Cattle of Geryon", "The Golden Apples of the Hesperides", "The Girdle of Hippolyta", "Cerberus from the Underworld"], a: 1 },
+    { q: "Heracles's 12th and final labor was to:",
+      o: ["Bring Cerberus back alive", "Capture the Erymanthian Boar", "Slay the Stymphalian Birds", "Steal the Mares of Diomedes"], a: 0 },
+    { q: "How did Heracles clean the Augean stables in a single day?",
+      o: ["Burned them with the Hydra's fire", "Diverted two rivers through them", "Made the cattle clean themselves", "Summoned Hephaestus's bellows"], a: 1 },
+    { q: "In Homer's Iliad, Aphrodite is the daughter of Zeus and which goddess (a different lineage from Hesiod's foam-birth)?",
+      o: ["Dione", "Hera", "Themis", "Leto"], a: 0 },
+    { q: "The three Erinyes (Furies) are named:",
+      o: ["Clotho, Lachesis, Atropos", "Aglaea, Euphrosyne, Thalia", "Alecto, Megaera, Tisiphone", "Calliope, Clio, Urania"], a: 2 },
+    { q: "The Pleiades, pursued by a hunter before being turned into stars, were daughters of which Titan?",
+      o: ["Hyperion", "Atlas", "Iapetus", "Oceanus"], a: 1 },
+    { q: "In the Homeric Hymn to Demeter, Persephone became bound to the underworld because Hades tricked her into eating:",
+      o: ["A figgrant cake", "Pomegranate seeds", "Six grapes from Dionysus's vine", "A draught from the Lethe"], a: 1 },
+  ],
+
   harrypotter: [
     { q: "What is Hermione Granger's middle name?",
       o: ["Jane", "Jean", "Joan", "June"], a: 1 },
