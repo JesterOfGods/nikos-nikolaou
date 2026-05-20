@@ -427,9 +427,7 @@ const Trivia = {
     p('    Strategy game. Multi-fandom. Max 5,500 pts.');
     p('');
     p('  Impossible', 'err');
-    const catNames = Object.keys(IMPOSSIBLE_BANKS).map(id =>
-      (CATEGORIES.find(c => c.id === id) || {}).name || id
-    ).join(', ');
+    const catNames = Object.keys(IMPOSSIBLE_BANKS).map(impossibleCategoryName).join(', ');
     p('    Single category. 20 deep-cut questions. No mercy. Max 2,000 pts.');
     p(`    Available: ${catNames}.`);
     p('');
@@ -451,7 +449,7 @@ const Trivia = {
     p('  Each category has its own leaderboard.');
     p('');
     const buttons = Object.keys(IMPOSSIBLE_BANKS).map(id => {
-      const name = (CATEGORIES.find(c => c.id === id) || {}).name || id;
+      const name = impossibleCategoryName(id);
       return { label: `💀  ${name}`, onClick: () => this._enterImpossible(id) };
     });
     buttons.push({ label: '← Back', onClick: () => { this.clearScreen(); this.phase = 'modeSelect'; this.showModeSelect(); } });
@@ -658,7 +656,62 @@ const Trivia = {
 
 const LS_IMPOSSIBLE_LB_PREFIX = 'nikos.impossible.leaderboard';
 
+/* Display names for impossible categories that aren't in CATEGORIES
+   (or that want a different label there). Falls back to CATEGORIES, then id. */
+const IMPOSSIBLE_NAMES = {
+  himym: 'How I Met Your Mother',
+};
+
+function impossibleCategoryName(id) {
+  return IMPOSSIBLE_NAMES[id]
+    || (CATEGORIES.find(c => c.id === id) || {}).name
+    || id;
+}
+
 const IMPOSSIBLE_BANKS = {
+  himym: [
+    { q: "What is the Mother's full name, revealed in the series finale?",
+      o: ["Tracy McConnell", "Stella Zinman", "Cindy McConnell", "Victoria Anderson"], a: 0 },
+    { q: "What is the name of the Mother's college roommate, who briefly dated Ted?",
+      o: ["Stella", "Cindy", "Victoria", "Zoey"], a: 1 },
+    { q: "What instrument does the Mother play in her band?",
+      o: ["Acoustic guitar", "Piano", "Bass guitar", "Violin"], a: 2 },
+    { q: "What is the name of the Mother's deceased ex-boyfriend, who died on her 21st birthday?",
+      o: ["Mitch", "Max", "Marshall", "Mark"], a: 1 },
+    { q: "What is the name of Barney's biological father, played by John Lithgow?",
+      o: ["Jerome 'Jerry' Whittaker", "Sam Gibbs", "Marvin Eriksen Sr.", "Bob Barker"], a: 0 },
+    { q: "What is the name of Barney's mother?",
+      o: ["Patricia Stinson", "Loretta Stinson", "Wendy Stinson", "Judy Stinson"], a: 1 },
+    { q: "Who plays Barney's half-brother James Stinson?",
+      o: ["Neil Patrick Harris", "Joe Manganiello", "Wayne Brady", "Will Forte"], a: 2 },
+    { q: "What is Marshall's father's full name?",
+      o: ["Martin Eriksen Sr.", "Marvin Eriksen Sr.", "Marshall Eriksen Sr.", "Marcus Eriksen Sr."], a: 1 },
+    { q: "What town in Minnesota is Marshall's hometown?",
+      o: ["Duluth", "Minneapolis", "St. Cloud", "St. Paul"], a: 2 },
+    { q: "What is the full middle name of Marshall and Lily's first son, Marvin Eriksen?",
+      o: ["Junior", "Wait For It", "Big Fudge", "Marshmallow"], a: 1 },
+    { q: "What is Ted's architecture firm called, which he founds in season 5?",
+      o: ["Mosbius Designs", "Mosby & Associates", "Ted Mosby Architecture", "Mosby Designs Inc."], a: 0 },
+    { q: "What is the real first name of 'The Captain' (Zoey's ex-husband, played by Kyle MacLachlan)?",
+      o: ["Charles", "George", "Walter", "Frederick"], a: 1 },
+    { q: "What is the name of Robin's Canadian teen pop-star alter ego?",
+      o: ["Robin Sparkles", "Robin Daggers", "Sparkles Robin", "Princess Robin"], a: 0 },
+    { q: "What is the title of Robin Sparkles' second single, set on a beach?",
+      o: ["Let's Go to the Mall (Today!)", "Sandcastles in the Sand", "Beaver Song", "Two Beavers Are Better Than One"], a: 1 },
+    { q: "What is the name of Robin's darker, grunge-era Canadian alter ego revealed later in the series?",
+      o: ["Robin Daggers", "Robin Stinson", "Robin Edge", "Robin Black"], a: 0 },
+    { q: "Who plays Jessica Glitter, Robin Sparkles' co-star on the Canadian variety show?",
+      o: ["Carly Rae Jepsen", "Avril Lavigne", "Nicole Scherzinger", "Alanis Morissette"], a: 2 },
+    { q: "Who holds the title of 'Slap Bet Commissioner'?",
+      o: ["Lily", "Marshall", "Ted", "Future Ted"], a: 1 },
+    { q: "In Barney's job at GNB, what does the acronym 'PLEASE' stand for?",
+      o: ["Provide Legal Exculpation And Sign Everything", "Please Look Elsewhere And Stop Examining", "Profit-Loss Evaluation And Securities Exchange", "Personal Liability Exception And Statute Enforcement"], a: 0 },
+    { q: "What are the names of Ted's two future children, who narrate the framing story?",
+      o: ["Penny and Luke", "Penny and Max", "Lucy and Max", "Penny and Marvin"], a: 0 },
+    { q: "Where does Ted finally meet the Mother in the series?",
+      o: ["MacLaren's Pub", "Farhampton train station", "Central Park", "JFK Airport"], a: 1 },
+  ],
+
   lotr: [
     { q: "Who originally forged Narsil, the sword of Elendil, in the First Age?",
       o: ["Celebrimbor", "Eöl the Dark Elf", "Telchar of Nogrod", "Aulë himself"], a: 2 },
@@ -892,7 +945,7 @@ const Impossible = {
     this._screenEl = document.getElementById('impossibleScreen');
     this._inputEl  = document.getElementById('impossibleInput');
 
-    const catName = (CATEGORIES.find(c => c.id === this.category) || {}).name || this.category;
+    const catName = impossibleCategoryName(this.category);
     const label = this._el.querySelector('#impossibleBarLabel');
     if (label) label.textContent = `Impossible · ${catName} · Deep Cuts`;
 
@@ -936,7 +989,7 @@ const Impossible = {
   showRules() {
     this.setInputVisible(false);
     const p = (t, c = 'out') => this.print(t, c);
-    const catName = (CATEGORIES.find(c => c.id === this.category) || {}).name || this.category;
+    const catName = impossibleCategoryName(this.category);
     const total = this.bank.length;
     const maxScore = total * 100;
     p(`Impossible — ${catName}, deep cuts`, 'narr');
@@ -958,7 +1011,7 @@ const Impossible = {
   showQuestion() {
     this.setInputVisible(false);
     const p = (t, c = 'out') => this.print(t, c);
-    const catName = (CATEGORIES.find(c => c.id === this.category) || {}).name || this.category;
+    const catName = impossibleCategoryName(this.category);
     const total = this.bank.length;
     const q = this.bank[this.idx];
     p(`${catName}  ·  Q ${this.idx + 1} / ${total}  ·  100 pts`, 'narr');
@@ -970,7 +1023,7 @@ const Impossible = {
 
   handleAnswerPick(idx) {
     const q = this.bank[this.idx];
-    const catName = (CATEGORIES.find(c => c.id === this.category) || {}).name || this.category;
+    const catName = impossibleCategoryName(this.category);
     const correct = idx === q.a;
     const pts = correct ? 100 : 0;
     this.score += pts;
@@ -1023,7 +1076,7 @@ const Impossible = {
 
     this.clearScreen();
     const p = (t, c = 'out') => this.print(t, c);
-    const catName = (CATEGORIES.find(c => c.id === this.category) || {}).name || this.category;
+    const catName = impossibleCategoryName(this.category);
     p(`Impossible — ${catName} — Result`, 'narr');
     p('');
     p(`  ${gamertag}  —  ${this.score} / ${maxScore}   (${correctCount}/${total} correct)`, 'ok');
