@@ -387,6 +387,10 @@ const Trivia = {
     this._wasHackerActive = !!(window.Hacker?.active && window.Hacker.inputEl);
     if (this._wasHackerActive) window.Hacker.inputEl.disabled = true;
 
+    // Reset the title bar in case a prior session ran a sub-mode.
+    const label = this._el.querySelector('.triviaBarLabel');
+    if (label) label.textContent = 'Trivia · Pursuit of Points';
+
     this._el.hidden = false;
     this.active = true;
     this.picked = [];
@@ -398,14 +402,11 @@ const Trivia = {
     this.currentDifficulty = 0;
     this.clearScreen();
 
-    this._gamertag = this._loadGamertag();
-    if (this._gamertag) {
-      this.phase = 'rules';
-      this.showRules();
-    } else {
-      this.phase = 'gamertag';
-      this.promptGamertag();
-    }
+    // Always start at the mode picker. Gamertag/rules come after the player
+    // chooses Standard. Impossible mode is its own modal — we close this one
+    // and hand off when picked.
+    this.phase = 'modeSelect';
+    this.showModeSelect();
     setTimeout(() => this._inputEl?.focus(), 220);
   },
 
@@ -414,6 +415,67 @@ const Trivia = {
     if (this.phase === 'gamertag') return this.handleGamertagInput(input);
     if (cmd === 'quit' || cmd === 'exit' || cmd === 'q') return this.quit();
     // All other phases are click-driven; ignore stray input.
+  },
+
+  showModeSelect() {
+    this.setInputVisible(false);
+    const p = (t, c = 'out') => this.print(t, c);
+    p('Trivia — pick your mode', 'narr');
+    p('');
+    p('  Normal', 'ok');
+    p('    10 categories, one question each. Pick order = difficulty curve.');
+    p('    Strategy game. Multi-fandom. Max 5,500 pts.');
+    p('');
+    p('  Impossible', 'err');
+    const catNames = Object.keys(IMPOSSIBLE_BANKS).map(id =>
+      (CATEGORIES.find(c => c.id === id) || {}).name || id
+    ).join(', ');
+    p('    Single category. 20 deep-cut questions. No mercy. Max 2,000 pts.');
+    p(`    Available: ${catNames}.`);
+    p('');
+    this.printActions([
+      { label: '🧠 Normal',     variant: 'primary', onClick: () => this._enterStandard() },
+      { label: '💀 Impossible',                     onClick: () => this.showImpossiblePicker() },
+      { label: 'Cancel',                            onClick: () => this.quit() },
+    ]);
+  },
+
+  showImpossiblePicker() {
+    this.phase = 'impossiblePicker';
+    this.clearScreen();
+    this.setInputVisible(false);
+    const p = (t, c = 'out') => this.print(t, c);
+    p('Impossible — pick a category', 'narr');
+    p('');
+    p('  20 deep-cut questions in a single category.');
+    p('  Each category has its own leaderboard.');
+    p('');
+    const buttons = Object.keys(IMPOSSIBLE_BANKS).map(id => {
+      const name = (CATEGORIES.find(c => c.id === id) || {}).name || id;
+      return { label: `💀  ${name}`, onClick: () => this._enterImpossible(id) };
+    });
+    buttons.push({ label: '← Back', onClick: () => { this.clearScreen(); this.phase = 'modeSelect'; this.showModeSelect(); } });
+    buttons.push({ label: 'Cancel', onClick: () => this.quit() });
+    this.printActions(buttons);
+  },
+
+  _enterStandard() {
+    this.clearScreen();
+    this._gamertag = this._loadGamertag();
+    if (this._gamertag) {
+      this.phase = 'rules';
+      this.showRules();
+    } else {
+      this.phase = 'gamertag';
+      this.promptGamertag();
+    }
+  },
+
+  _enterImpossible(categoryId) {
+    // Close this modal and hand off to the Impossible one (separate window).
+    this.quit();
+    if (window.Narrator?.fire) window.Narrator.fire('openImpossible');
+    if (window.Impossible?.open) window.Impossible.open(categoryId);
   },
 
   showRules() {
@@ -597,6 +659,49 @@ const Trivia = {
 const LS_IMPOSSIBLE_LB_PREFIX = 'nikos.impossible.leaderboard';
 
 const IMPOSSIBLE_BANKS = {
+  lotr: [
+    { q: "Who originally forged Narsil, the sword of Elendil, in the First Age?",
+      o: ["Celebrimbor", "Eöl the Dark Elf", "Telchar of Nogrod", "Aulë himself"], a: 2 },
+    { q: "What is Gandalf's true Maia name, used in Valinor?",
+      o: ["Curunír", "Mithrandir", "Olórin", "Tharkûn"], a: 2 },
+    { q: "What is Saruman's true Maia name in Quenya?",
+      o: ["Aiwendil", "Olórin", "Curumo", "Pallando"], a: 2 },
+    { q: "Which Vala did Sauron originally serve, before turning to Melkor?",
+      o: ["Manwë", "Aulë", "Mandos", "Oromë"], a: 1 },
+    { q: "Under what assumed name did Sauron deceive the Elven-smiths of Eregion into forging the Rings of Power?",
+      o: ["Mairon", "Annatar", "Gorthaur", "Tar-Mairon"], a: 1 },
+    { q: "Which Elven smith forged the Three Elven Rings independently of Sauron?",
+      o: ["Galadriel", "Celebrimbor", "Fëanor", "Gil-galad"], a: 1 },
+    { q: "Celebrimbor was the grandson of which legendary First Age elf?",
+      o: ["Fingolfin", "Finarfin", "Fëanor", "Finwë"], a: 2 },
+    { q: "Who was the last King of Gondor before the Stewardship, lost to the Witch-king in Minas Morgul?",
+      o: ["Anárion", "Eldacar", "Eärnil II", "Eärnur"], a: 3 },
+    { q: "Who was the first of the Ruling Stewards of Gondor?",
+      o: ["Pelendur", "Húrin of Emyn Arnen", "Vorondil the Hunter", "Mardil Voronwë"], a: 3 },
+    { q: "What is the name of Aragorn's father?",
+      o: ["Arador", "Arathorn II", "Arvedui", "Argonui"], a: 1 },
+    { q: "What name was Aragorn given as a child, raised in secret at Rivendell?",
+      o: ["Elessar", "Thorongil", "Estel", "Telcontar"], a: 2 },
+    { q: "How old is Aragorn during the War of the Ring?",
+      o: ["47", "67", "87", "107"], a: 2 },
+    { q: "What is the name of Bilbo Baggins's mother?",
+      o: ["Mirabella Took", "Belladonna Took", "Primula Brandybuck", "Lobelia Sackville-Baggins"], a: 1 },
+    { q: "What is the name of Frodo Baggins's mother, who drowned with his father on the Brandywine?",
+      o: ["Belladonna Took", "Esmeralda Took", "Primula Brandybuck", "Eglantine Banks"], a: 2 },
+    { q: "Who is Galadriel's mother?",
+      o: ["Indis", "Eärwen", "Anairë", "Nerdanel"], a: 1 },
+    { q: "What was the name of Treebeard's long-lost beloved Entwife?",
+      o: ["Wandlimb", "Fimbrethil", "Beechbone", "Quickbeam"], a: 1 },
+    { q: "What was Mirkwood called before it was darkened by the Necromancer?",
+      o: ["Eryn Galen", "Greenwood the Great", "Eryn Lasgalen", "Taur-im-Duinath"], a: 1 },
+    { q: "What name did Mirkwood take after Sauron's defeat, when Thranduil's realm was cleansed?",
+      o: ["Greenwood the Great", "Taur-nu-Fuin", "Doriath", "Eryn Lasgalen"], a: 3 },
+    { q: "What was the name of the great White Tree of Númenor, ancestor of Gondor's White Tree?",
+      o: ["Galathilion", "Telperion", "Nimloth", "Laurelin"], a: 2 },
+    { q: "In which hidden First Age Elven city were Glamdring, Orcrist, and Sting forged?",
+      o: ["Nargothrond", "Doriath", "Gondolin", "Menegroth"], a: 2 },
+  ],
+
   onepiece: [
     { q: "Who was the captain of the legendary Rocks Pirates that fought Roger and Garp at God Valley?",
       o: ["Silvers Rayleigh", "Rocks D. Xebec", "Edward Newgate", "Shiki the Golden Lion"], a: 1 },
