@@ -696,10 +696,14 @@ const Showcase = {
       const titleParts = Array.isArray(ch.titleParts) && ch.titleParts.length
         ? ch.titleParts
         : [sc.title];
+      const images = Array.isArray(ch.images) && ch.images.length
+        ? ch.images
+        : (ch.image ? [ch.image] : []);
       hero.classList.add('coverHero');
       hero.replaceChildren(
         el('div', { class: 'coverHero__art' },
-          el('img', { class: 'coverHero__photo', src: ch.image, alt: '' }),
+          el('img', { class: 'coverHero__photo coverHero__photo--a coverHero__photo--active', src: images[0] || '', alt: '' }),
+          images.length > 1 ? el('img', { class: 'coverHero__photo coverHero__photo--b', src: '', alt: '' }) : null,
           ch.mask ? el('img', { class: 'coverHero__mask', src: ch.mask, alt: '', 'aria-hidden': 'true' }) : null,
         ),
         el('div', { class: 'coverHero__panel' },
@@ -719,6 +723,26 @@ const Showcase = {
           ch.byline ? el('p', { class: 'coverHero__byline' }, ch.byline) : null,
         ),
       );
+
+      // Crossfade rotation between cover images (only if more than one)
+      if (this._coverInterval) { clearInterval(this._coverInterval); this._coverInterval = null; }
+      if (images.length > 1) {
+        const imgs = hero.querySelectorAll('.coverHero__photo');
+        let idx = 0;
+        let activeIdx = 0;
+        this._coverInterval = setInterval(() => {
+          idx = (idx + 1) % images.length;
+          const next = imgs[1 - activeIdx];
+          const swap = () => {
+            imgs[activeIdx].classList.remove('coverHero__photo--active');
+            next.classList.add('coverHero__photo--active');
+            activeIdx = 1 - activeIdx;
+          };
+          next.onload = swap;
+          next.src = images[idx];
+          if (next.complete && next.naturalHeight > 0) swap();
+        }, ch.rotateMs || 5000);
+      }
     } else if (sc.hero) {
       const img = new Image();
       img.onload = () => { hero.classList.add('has-image'); hero.style.backgroundImage = `url("${sc.hero}")`; hero.innerHTML = ''; };
@@ -760,6 +784,7 @@ const Showcase = {
     Narrator.fire(`openShowcase_${id}`, { priority: 'HIGH', cooldown: 0 });
   },
   close() {
+    if (this._coverInterval) { clearInterval(this._coverInterval); this._coverInterval = null; }
     this.el.classList.add('leaving');
     setTimeout(() => {
       this.el.hidden = true;
