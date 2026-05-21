@@ -193,10 +193,6 @@
       "tags": ["TTRPG", "Original System", "Worldbuilding", "Game Design", "Playtesting"],
       "hero": "assets/showcase/ttrpg/ch07-paths.png",
       "coverHero": {
-        "images": [
-          "assets/showcase/ttrpg/ch07-paths.png",
-          "assets/showcase/ttrpg/ch06-heritage.png"
-        ],
         "rotateMs": 5000,
         "kicker": "First Edition",
         "titleParts": ["GRIT", "&", "GLORY"],

@@ -83,12 +83,29 @@ const Storage = {
 
 async function loadData() {
   try {
-    const [content, voicelines, now] = await Promise.all([
+    const [content, voicelines, now, assetManifest] = await Promise.all([
       fetch('data/content.json').then(r => r.json()),
       fetch('data/voicelines.json').then(r => r.json()),
       fetch('data/now.json').then(r => r.json()),
+      fetch('data/asset-manifest.json').then(r => r.ok ? r.json() : {}).catch(() => ({})),
     ]);
-    State.data = { content, voicelines, now };
+    // Merge auto-discovered images into showcases.
+    // Rules:
+    //   - coverHero.images: if empty/missing, fall back to manifest entries for that id.
+    //   - gallery: if empty/missing AND no coverHero, fall back to manifest minus the hero file.
+    //   - manual values always win, so individual showcases can override.
+    for (const sc of (content.showcases || [])) {
+      const manifestImgs = assetManifest[sc.id] || [];
+      if (!manifestImgs.length) continue;
+      if (sc.coverHero) {
+        if (!Array.isArray(sc.coverHero.images) || sc.coverHero.images.length === 0) {
+          sc.coverHero.images = manifestImgs.slice();
+        }
+      } else if (!Array.isArray(sc.gallery) || sc.gallery.length === 0) {
+        sc.gallery = manifestImgs.filter(p => p !== sc.hero);
+      }
+    }
+    State.data = { content, voicelines, now, assetManifest };
   } catch (err) {
     console.error('Data load failed:', err);
     showDataError();
