@@ -750,9 +750,10 @@ const Showcase = {
       img.src = sc.hero;
     }
 
-    // Gallery — placeholders for now
+    // Gallery — hidden entirely if empty
     const gallery = $('#showcaseGallery');
     if (sc.gallery && sc.gallery.length > 0) {
+      gallery.hidden = false;
       gallery.replaceChildren(...sc.gallery.map(src => {
         const item = el('div', { class: 'galleryItem' });
         const img = new Image();
@@ -761,11 +762,8 @@ const Showcase = {
         return item;
       }));
     } else {
-      gallery.replaceChildren(
-        el('div', { class: 'galleryItem' }),
-        el('div', { class: 'galleryItem' }),
-        el('div', { class: 'galleryItem' }),
-      );
+      gallery.hidden = true;
+      gallery.replaceChildren();
     }
 
     const storyEl = $('#showcaseStory');
