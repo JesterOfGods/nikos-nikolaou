@@ -186,19 +186,48 @@
   "showcases": [
     {
       "id": "ttrpg",
-      "title": "My TTRPG",
-      "tagline": "Rules + setting + stories — slowly growing",
+      "title": "Grit & Glory",
+      "tagline": "A roleplaying game of survival, steel, and scars.",
       "mood": "manuscript",
-      "status": "in-development",
-      "tags": ["TTRPG", "Worldbuilding", "Game Design", "Original IP"],
-      "hero": "assets/showcase/ttrpg/hero.jpg",
-      "gallery": [],
-      "story": "A custom TTRPG system, born from years of GM-ing D&D and a homebrew Faerûn that kept outgrowing its borrowed bones. Rules, setting, and stories — built together so the mechanics serve the world and the world earns its mechanics. Currently in active development.",
+      "status": "first edition in writing",
+      "tags": ["TTRPG", "Original System", "Worldbuilding", "Game Design", "Playtesting"],
+      "hero": "assets/showcase/ttrpg/ch07-paths.png",
+      "coverHero": {
+        "image": "assets/showcase/ttrpg/ch07-paths.png",
+        "mask": "assets/showcase/ttrpg/edge_banner_strip.png",
+        "kicker": "First Edition",
+        "titleParts": ["GRIT", "&", "GLORY"],
+        "tagline": "A Roleplaying Game of Survival, Steel, and Scars",
+        "teaser": [
+          "After the gods withdrew and the Shatter cracked the sky, the world kept turning — colder, hungrier, and still worth fighting for.",
+          "Grit & Glory is a tabletop RPG of earned competence and real consequence. Build a dice pool from what you've trained and watch yourself go thin under pressure. Watch your gear wear down, one die-step at a time, blow by blow."
+        ],
+        "byline": "Designed and Written by Nikos Nikolaou · 2026"
+      },
+      "gallery": [
+        "assets/showcase/ttrpg/ch00-storyteller-desk.png",
+        "assets/showcase/ttrpg/ch00-glossary-inline.png",
+        "assets/showcase/ttrpg/ch06-heritage.png",
+        "assets/showcase/ttrpg/ch13-burden.png",
+        "assets/showcase/ttrpg/ch19-friction.png",
+        "assets/showcase/ttrpg/ch20-opposition.png",
+        "assets/showcase/ttrpg/ch22-5e-conversion.png",
+        "assets/showcase/ttrpg/ch22-conversion-inline.png",
+        "assets/showcase/ttrpg/ch25-disciplines.png"
+      ],
+      "story": [
+        "Grit & Glory grew out of a six-year Faerûn campaign that kept outgrowing the rules holding it together. D&D's HP bloat didn't match the wounds the table was telling stories about; levels arrived faster than the world's economy could absorb; the players kept inventing — from whole cloth — the mechanics they wanted to see. Eventually I stopped patching and started writing my own.",
+        "The system is built on three locked feelings. The Grind: every action carries weight; nothing is free. The Welcome Bruise: the only band of outcome that delivers per-roll advancement is the one where you almost made it; growth is paid for in scars. Lawful Brutality: no hidden target numbers; the world is hostile, but it tells you exactly how hard it's pushing back, in the currency of dice.",
+        "Sessions feel like pressure — every roll spends something: focus, gear, daylight, blood. Campaigns feel like becoming. Who your character is at session ten isn't who they were at session one, because something happened on the road, and something stayed.",
+        "Heroism isn't a birthright here. Hope is earned. So is glory.",
+        "Currently in writing. First-edition draft sits at 387 pages, the bestiary grows teeth every time I declare it finished, and playtest reports live in their own folder so design decisions stay auditable years from now."
+      ],
       "milestones": [
-        "6+ years GM-ing D&D",
-        "Custom Faerûn that kept outgrowing canon",
-        "Started building my own system in 2024",
-        "Rules and setting growing in parallel"
+        "Six years of homebrew Faerûn → homebrewing rules started in 2024",
+        "First-edition draft: 387 pages and growing",
+        "Three locked pillars — Grind, Welcome Bruise, Lawful Brutality",
+        "No d20, no class levels, no static AC",
+        "Design decisions tracked as DDRs; playtests as audited reports"
       ]
     },
     {
@@ -225,7 +254,7 @@
       "mood": "dm-screen",
       "status": "active-campaign",
       "tags": ["D&D", "GM", "Worldbuilding", "Improv"],
-      "hero": "assets/showcase/faerun/hero.jpg",
+      "hero": "assets/showcase/faerun/FaerunMap.webp",
       "gallery": [],
       "story": "A Faerûn that's been edited by the players for six years. I run a mix of homebrew arcs and heavily-modified prebuilt campaigns — modified to what my players actually want to do. Rules and story beats are improvised when the table demands it. Canon doesn't survive contact with the party.",
       "milestones": [

@@ -685,17 +685,45 @@ const Showcase = {
     $('#showcaseTagline').textContent = sc.tagline;
     $('#showcaseTags').replaceChildren(...sc.tags.map(t => el('span', { class: 'tag' }, t)));
 
-    // Hero — image or placeholder
+    // Hero — cover-style split layout, or background image, or placeholder
     const hero = $('#showcaseHero');
-    if (sc.hero) {
-      // Use a probe so missing files fall back gracefully
+    hero.classList.remove('has-image', 'coverHero');
+    hero.style.backgroundImage = '';
+    hero.innerHTML = '';
+
+    if (sc.coverHero) {
+      const ch = sc.coverHero;
+      const titleParts = Array.isArray(ch.titleParts) && ch.titleParts.length
+        ? ch.titleParts
+        : [sc.title];
+      hero.classList.add('coverHero');
+      hero.replaceChildren(
+        el('div', { class: 'coverHero__art' },
+          el('img', { class: 'coverHero__photo', src: ch.image, alt: '' }),
+          ch.mask ? el('img', { class: 'coverHero__mask', src: ch.mask, alt: '', 'aria-hidden': 'true' }) : null,
+        ),
+        el('div', { class: 'coverHero__panel' },
+          ch.kicker ? el('span', { class: 'coverHero__kicker' }, ch.kicker) : null,
+          el('h3', { class: 'coverHero__title' },
+            ...titleParts.map((part, i) => el('span', {
+              class: 'coverHero__titlePart' + (part.trim() === '&' ? ' coverHero__titlePart--amp' : ''),
+            }, part))
+          ),
+          el('span', { class: 'coverHero__rule', 'aria-hidden': 'true' }),
+          ch.tagline ? el('p', { class: 'coverHero__tagline' }, ch.tagline) : null,
+          ch.teaser
+            ? (Array.isArray(ch.teaser)
+                ? ch.teaser.map(p => el('p', { class: 'coverHero__teaser' }, p))
+                : el('p', { class: 'coverHero__teaser' }, ch.teaser))
+            : null,
+          ch.byline ? el('p', { class: 'coverHero__byline' }, ch.byline) : null,
+        ),
+      );
+    } else if (sc.hero) {
       const img = new Image();
       img.onload = () => { hero.classList.add('has-image'); hero.style.backgroundImage = `url("${sc.hero}")`; hero.innerHTML = ''; };
       img.onerror = () => { hero.classList.remove('has-image'); hero.style.backgroundImage = ''; hero.replaceChildren(el('div', { class: 'placeholder' }, 'Hero image goes here.', el('span', {}, `drop a file at ${sc.hero}`))); };
       img.src = sc.hero;
-    } else {
-      hero.classList.remove('has-image');
-      hero.innerHTML = '';
     }
 
     // Gallery — placeholders for now
@@ -716,7 +744,12 @@ const Showcase = {
       );
     }
 
-    $('#showcaseStory').textContent = sc.story;
+    const storyEl = $('#showcaseStory');
+    if (Array.isArray(sc.story)) {
+      storyEl.replaceChildren(...sc.story.map(p => el('p', {}, p)));
+    } else {
+      storyEl.replaceChildren(el('p', {}, sc.story || ''));
+    }
     $('#showcaseMilestones').replaceChildren(...sc.milestones.map(m => el('li', {}, m)));
 
     this.el.setAttribute('data-mood', sc.mood);
