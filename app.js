@@ -689,6 +689,11 @@ const Showcase = {
   init() {
     this.el = $('#showcase');
     $('#closeShowcase').addEventListener('click', () => this.close());
+    // Click on backdrop (empty space outside the inner panel) closes too.
+    // Strict equality so clicks inside .showcaseInner or on the Back button don't double-fire.
+    this.el.addEventListener('click', (e) => {
+      if (e.target === this.el) this.close();
+    });
     // ESC to close
     document.addEventListener('keydown', (e) => {
       if (e.key === 'Escape' && !this.el.hidden) this.close();
