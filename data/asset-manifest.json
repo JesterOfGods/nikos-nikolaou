@@ -1,4 +1,10 @@
 {
+  "aegean": [
+    "assets/showcase/aegean/areal-insideout.jpg",
+    "assets/showcase/aegean/bigchimera-mapbox-code.jpg",
+    "assets/showcase/aegean/bigchimera-routing.jpg",
+    "assets/showcase/aegean/hero.jpg"
+  ],
   "faerun": [
     "assets/showcase/faerun/FaerunMap.webp"
   ],

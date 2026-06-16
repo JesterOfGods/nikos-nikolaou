@@ -256,17 +256,27 @@
     {
       "id": "khora",
       "title": "Khora — XR Work",
-      "tagline": "Lead XR Developer · 2021–2025 · SXSW-awarded",
+      "tagline": "Lead XR Developer · 2021–2025 · SXSW-recognized",
       "mood": "xr-lab",
       "status": "shipped",
-      "tags": ["XR", "VR", "AR", "Unity", "C#", "Healthcare", "Award"],
+      "tags": ["XR", "VR", "AR", "Unity", "C#", "Healthcare", "Cultural Heritage", "Award"],
       "hero": "assets/showcase/khora/hero.jpg",
       "gallery": [],
-      "story": "Spearheaded engineering on the studio's award-winning XR work — including an SXSW-recognized project. Built on-location AR with high-precision tracking, custom interaction systems for VR, and interactive training simulations for healthcare in Denmark and East Africa. Bridged visual fidelity with technical constraints in tight loops with artists and designers.",
+      "story": [
+        "Lead XR developer at Khora — Copenhagen's XR studio — from 2021 to 2025. Khora builds VR and AR for whoever walks in: hospitals, museums, trade unions, the National Museum, a parachute association. The brief changed every few weeks and the device budget never got more generous. I shipped across all of it.",
+        "The healthcare and training cluster is where the stakes lived. A neonatal-resuscitation VR simulation — quiz, sandbox, and timed skill drills — that piloted with 45 health workers across three hospitals in Pemba, Tanzania, under EU Horizon's XR2LEARN. Conflict-handling VR for Ambulance Syd paramedics, branching films where the wrong de-escalation ends the scenario. Robot-handling training for Industriens Uddannelser. A mobility game for people with cerebral palsy that re-tuned itself to each player's reach.",
+        "The heritage and empathy cluster is where the craft lived. On-site AR that rebuilt Esrum Monastery on a tablet and let visitors watch it fall. A VR climb up Nikolaj Kunsthal's tower while it was closed for renovation. VR Qayak for the Nuuk museum — kayaking, drum dance, Greenlandic history. A 360 time-travel through Copenhagen's Rådhuspladsen for Nationalmuseet. And quieter, heavier pieces — 'With These Hands', survivor testimony you hold in your own hands — where a dropped frame breaks the spell entirely.",
+        "Underneath the variety, the same engineering discipline every time: strict budgets on Quest 2, Pico, and Oculus Go; high-precision tracking for on-location AR; studio-wide templates and asset standards so the next project didn't start from zero. Clients changed their minds, scopes drifted, hardware shipped late — and the thing went out the door anyway. One of them came back with an SXSW nod."
+      ],
       "milestones": [
-        "SXSW award-winning project",
-        "On-location AR with high-precision tracking",
-        "Healthcare training simulations (Denmark + East Africa)",
+        "Lead XR developer at Khora, 2021–2025",
+        "SXSW-recognized project",
+        "Neonatal resuscitation VR — piloted with 45 health workers across 3 hospitals in Pemba, Tanzania (EU Horizon / XR2LEARN)",
+        "Conflict-handling VR for Ambulance Syd paramedics",
+        "Robot-handling training VR for Industriens Uddannelser",
+        "Cerebral-palsy mobility game (Copenhagen University · Jonstrupvang)",
+        "Heritage AR/VR: Esrum Monastery, Nikolaj Kunsthal tower, VR Qayak (Nuuk), Nationalmuseet",
+        "Empathy VR: 'With These Hands', SUS empathy-for-the-elderly",
         "Studio-wide dev templates and asset standards"
       ]
     },
@@ -310,14 +320,20 @@
       "tagline": "MSc Medialogy · Aalborg University, Copenhagen",
       "mood": "manuscript",
       "status": "completed",
-      "tags": ["Unity", "C#", "Game Design", "XR Research", "HCI"],
+      "tags": ["Unity", "C#", "XR Research", "HCI", "Healthcare", "VR"],
       "hero": "assets/showcase/medialogy/hero.jpg",
       "gallery": [],
-      "story": "Master's thesis: Comfort XR — investigating immersion systems to alleviate physical discomfort in VR. Foundational work that fed directly into the studio work that came after. (Add your full story, photos, and links here.)",
+      "story": [
+        "Master's thesis at Aalborg University, Copenhagen: pain distraction in VR for needle procedures — specifically K-wire insertions and epidural needle work. The hard cases. Patient awake, fully conscious, and the worst of it is anticipation: watching the needle, bracing for it. The question was whether presence could pull attention off the needle entirely.",
+        "Cartoons are passive; you can look away. VR can demand you look, reach, and act somewhere else while the procedure happens. The build became the seed of Comfort XR — an immersive distraction layer that drops you somewhere more interesting than the table and keeps you there through the moment that usually triggers the panic.",
+        "It's the foundational piece — the proof that the method worked on real procedural pain, not just nerves. The same instinct scaled up into the XR-for-healthcare work that followed. Comfort XR later extended to a softer audience entirely — kids at the dentist — reaching real clinics with Rigshospitalet and Ringkøbing-Skjern Kommune."
+      ],
       "milestones": [
         "MSc Medialogy — Aalborg University, Copenhagen",
-        "Thesis: Comfort XR",
-        "Unity, C#, Game Design"
+        "Thesis: VR pain distraction for K-wire and epidural needle procedures",
+        "Active immersion vs. needle anticipation in conscious patients",
+        "Seeded Comfort XR — the XR-for-healthcare path started here",
+        "Comfort XR later extended to pediatric dentistry (Rigshospitalet & Ringkøbing-Skjern)"
       ]
     },
     {
@@ -326,14 +342,22 @@
       "tagline": "MSc Products and Systems Design Engineering · University of the Aegean, Syros",
       "mood": "manuscript",
       "status": "completed",
-      "tags": ["Game Design", "Interactive Systems", "Unity", "C#", "AR"],
+      "tags": ["Game Design", "Serious Games", "Location-Based", "Unity", "C#", "AR"],
       "hero": "assets/showcase/aegean/hero.jpg",
       "gallery": [],
-      "story": "Master's thesis: Big Chimera — a location-based serious AR game. Built on Syros island, defended in Greek, the project that opened the door to everything XR-shaped that followed. (Add your full story, photos, and links here.)",
+      "story": [
+        "Master's thesis at the University of the Aegean, on Syros, February 2019: a location-aware mobile AR serious game for protecting the architectural and artistic heritage of Ermoupolis — the island's neoclassical capital. Built in Unity on Mapbox: real GPS and the actual streets of Ermoupolis, so the game knew where you physically stood and walked you between real heritage buildings.",
+        "The hook — and the name — comes from a book. Big Chimera ties M. Karagatsis's novel 'Η Μεγάλη Χίμαιρα' (The Great Chimera) to the real place it's set in. As you walk Ermoupolis, the app overlays the novel's scenes onto the exact buildings where they happen: the couple's arrival at the harbor aboard the ship Chimera, the wedding at Agios Nikolaos, the receptions in the shipowners' mansions. Story and city become the same layer.",
+        "It was built as a serious game, not a guided tour — players don't just see the heritage, they learn why it matters and why it needs protecting. The whole thing was shaped by rapid prototyping and round after round of user feedback: build, test on real people walking the real town, redesign, repeat, then evaluate the final app empirically.",
+        "Before the thesis came the internship, filed under AReal — an alternate-reality game: transmedia, real-world narrative, puzzles a community solves in real time. It surfaced as 'Inside Out' with Cat White Studios at the Eve's Walk Festival on Syros. Location-based, serious games, AR, GPS, Unity — every thread that became the XR career started here, on a Greek island, in a language he defended a thesis in."
+      ],
       "milestones": [
-        "MSc Products and Systems Design Engineering — University of the Aegean, Syros",
-        "Thesis: Big Chimera — location-based AR",
-        "Interactive Systems, Game Design, Unity, C#"
+        "MSc Products & Systems Design Engineering — University of the Aegean, Syros (Feb 2019)",
+        "Thesis: a location-aware mobile AR serious game for the heritage of Ermoupolis, defended in Greek",
+        "Ties M. Karagatsis's novel 'The Great Chimera' to the real streets where it's set",
+        "Built in Unity + Mapbox — real GPS, routing, and Ermoupolis geography in 3D",
+        "Designed and evaluated through rapid prototyping + continuous user feedback",
+        "Internship: AReal / 'Inside Out' ARG — Cat White Studios, Eve's Walk Festival (Syros)"
       ]
     }
   ]
