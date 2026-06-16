@@ -210,13 +210,6 @@
         "Sessions feel like pressure — every roll spends something: focus, gear, daylight, blood. Campaigns feel like becoming. Who your character is at session ten isn't who they were at session one, because something happened on the road, and something stayed.",
         "Heroism isn't a birthright here. Hope is earned. So is glory.",
         "Currently in writing. First-edition draft sits at 387 pages, the bestiary grows teeth every time I declare it finished, and playtest reports live in their own folder so design decisions stay auditable years from now."
-      ],
-      "milestones": [
-        "Six years of homebrew Faerûn → homebrewing rules started in 2024.",
-        "First-edition draft: 387 pages and growing. FAST!",
-        "Three locked pillars — Grind, Welcome Bruise, Lawful Brutality.",
-        "No d20, no class levels, no static AC.",
-        "Design decisions tracked as DDRs; playtests as audited reports."
       ]
     },
     {
@@ -228,13 +221,7 @@
       "tags": ["3D Printing", "Resin", "FDM", "Mini Painting", "Making"],
       "hero": "assets/showcase/minis/hero.jpg",
       "gallery": [],
-      "story": "Started with one printer. Ended up with a small company for a while. Resin for fine detail, FDM for terrain and brackets. I paint the minis I print — Grey Knights for 40k, Rohan for Middle-earth Strategy Battle Game, and one-off characters for whoever's at the table.",
-      "milestones": [
-        "Ran a small 3D print company",
-        "Resin + FDM at home",
-        "Painting Grey Knights (40k) — long-term army",
-        "Painting Rohan (MESBG)"
-      ]
+      "story": "Started with one printer. Ended up with a small company for a while. Resin for fine detail, FDM for terrain and brackets. I paint the minis I print — Grey Knights for 40k, Rohan for Middle-earth Strategy Battle Game, and one-off characters for whoever's at the table."
     },
     {
       "id": "faerun",
@@ -242,15 +229,14 @@
       "tagline": "Six years of GM notes — the players' fault, mostly",
       "mood": "dm-screen",
       "status": "active-campaign",
-      "tags": ["D&D", "GM", "Worldbuilding", "Improv"],
+      "tags": ["D&D", "GM", "Worldbuilding", "Homebrew", "Improv"],
       "hero": "assets/showcase/faerun/hero.jpg",
-      "gallery": [],
-      "story": "A Faerûn that's been edited by the players for six years. I run a mix of homebrew arcs and heavily-modified prebuilt campaigns — modified to what my players actually want to do. Rules and story beats are improvised when the table demands it. Canon doesn't survive contact with the party.",
-      "milestones": [
-        "6+ years GM-ing",
-        "Mix of homebrew + edited prebuilts",
-        "Improvises rules and story beats",
-        "World evolves with the players"
+      "gallery": false,
+      "story": [
+        "Six-plus years running Faerûn — a mix of homebrew arcs and prebuilt campaigns modified past recognition, because the table never wants to do the thing the book expects. Four campaigns have actually reached an ending, which, if you've run D&D, you know is the real boss fight: 'A Series of Unfortunate Rolls', 'And It All Went to Hell', 'The Blue Plague', and 'Until Death Do Us Apart'.",
+        "They tell you what kind of GM he is. 'And It All Went to Hell' — Elturel and its second sun torn screaming into Avernus, the party racing a collapsing skyline to a crater where a city used to be. 'Until Death Do Us Apart' — a warlord who takes Shar's curse of vampirism not for power but to outlive the universe and find the one love fate keeps killing, lifetime after lifetime. Read-aloud handouts, Alaundo's prophecies, a whole homebrew mythology where Loki, the Raven Queen, and the Lord of Light seal a death-goddess in iron.",
+        "Underneath the stories is a rules problem he kept solving. He keeps a homebrewery — a curated stack of other people's house rules he likes, plus his own: the Blood Sorcerer and Red Wizard subclasses are his. The whole house ruleset even has a name; it started as 'The Two Wolves' before it became 'Until Death Do Us Apart', and it's what he runs most games on.",
+        "That ruleset is the tell. Patch enough of a system and one day you notice you're not patching anymore — you're writing a new one. That's the exact moment Grit & Glory started. Canon doesn't survive contact with the party; turns out, neither do the rules."
       ]
     },
     {
@@ -260,7 +246,7 @@
       "mood": "xr-lab",
       "status": "shipped",
       "tags": ["XR", "VR", "AR", "Unity", "C#", "Healthcare", "Cultural Heritage", "Award"],
-      "hero": "assets/showcase/khora/hero.jpg",
+      "hero": "assets/showcase/khora/khora-qayak.png",
       "gallery": [],
       "story": [
         "Lead XR developer at Khora — Copenhagen's XR studio — from 2021 to 2025. Khora builds VR and AR for whoever walks in: hospitals, museums, trade unions, the National Museum, a parachute association. The brief changed every few weeks and the device budget never got more generous. I shipped across all of it.",
@@ -321,7 +307,7 @@
       "mood": "manuscript",
       "status": "completed",
       "tags": ["Unity", "C#", "XR Research", "HCI", "Healthcare", "VR"],
-      "hero": "assets/showcase/medialogy/hero.jpg",
+      "hero": "assets/showcase/medialogy/comfort-xr.png",
       "gallery": [],
       "story": [
         "Master's thesis at Aalborg University, Copenhagen: pain distraction in VR for needle procedures — specifically K-wire insertions and epidural needle work. The hard cases. Patient awake, fully conscious, and the worst of it is anticipation: watching the needle, bracing for it. The question was whether presence could pull attention off the needle entirely.",

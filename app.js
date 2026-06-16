@@ -93,8 +93,10 @@ async function loadData() {
     // Rules:
     //   - coverHero.images: if empty/missing, fall back to manifest entries for that id.
     //   - gallery: if empty/missing AND no coverHero, fall back to manifest minus the hero file.
+    //   - gallery: false opts out entirely (hero only, no gallery even if images exist).
     //   - manual values always win, so individual showcases can override.
     for (const sc of (content.showcases || [])) {
+      if (sc.gallery === false) continue;
       const manifestImgs = assetManifest[sc.id] || [];
       if (!manifestImgs.length) continue;
       if (sc.coverHero) {
@@ -794,7 +796,10 @@ const Showcase = {
     } else {
       storyEl.replaceChildren(el('p', {}, sc.story || ''));
     }
-    $('#showcaseMilestones').replaceChildren(...sc.milestones.map(m => el('li', {}, m)));
+    // Milestones — hidden entirely (heading included) when a showcase has none
+    const milestones = Array.isArray(sc.milestones) ? sc.milestones : [];
+    $('#showcaseMilestonesHeading').hidden = milestones.length === 0;
+    $('#showcaseMilestones').replaceChildren(...milestones.map(m => el('li', {}, m)));
 
     this.el.setAttribute('data-mood', sc.mood);
     this.el.hidden = false;

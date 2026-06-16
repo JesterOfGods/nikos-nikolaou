@@ -6,7 +6,21 @@
     "assets/showcase/aegean/hero.jpg"
   ],
   "faerun": [
-    "assets/showcase/faerun/FaerunMap.webp"
+    "assets/showcase/faerun/FaerunMap.webp",
+    "assets/showcase/faerun/hero.jpg",
+    "assets/showcase/faerun/until-death-do-us-apart.png"
+  ],
+  "khora": [
+    "assets/showcase/khora/khora-cerebral-palsy.jpg",
+    "assets/showcase/khora/khora-conflict.png",
+    "assets/showcase/khora/khora-esrum.png",
+    "assets/showcase/khora/khora-neonatal.png",
+    "assets/showcase/khora/khora-parachute.png",
+    "assets/showcase/khora/khora-qayak.png",
+    "assets/showcase/khora/khora-withthesehands.png"
+  ],
+  "medialogy": [
+    "assets/showcase/medialogy/comfort-xr.png"
   ],
   "ttrpg": [
     "assets/showcase/ttrpg/ch06-heritage.png",
