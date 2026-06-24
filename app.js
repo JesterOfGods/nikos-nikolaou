@@ -634,17 +634,15 @@ const Views = {
       el('div', { class: 's' }, s.tagline),
     )));
 
-    // Education — each degree opens its matching showcase (medialogy, aegean) when
-    // one exists, mirroring the adventurer Library.
+    // Education — each degree with a matching showcase (medialogy, aegean) gets the
+    // same "Read more" button as Experience, for consistency.
     $('#commonerEducation').replaceChildren(...d.education.map(e => {
       const hasShowcase = e.id && d.showcases.some(s => s.id === e.id);
-      return el('div', {
-          class: 'commonerEdu' + (hasShowcase ? ' commonerEdu--linked' : ''),
-          onclick: hasShowcase ? () => Showcase.open(e.id) : undefined,
-        },
-        el('div', { class: 'deg' }, e.degree, hasShowcase ? el('span', { class: 'eduMore' }, '↗ open') : null),
+      return el('div', { class: 'commonerEdu' },
+        el('div', { class: 'deg' }, e.degree),
         el('div', { class: 'inst' }, e.institution),
         el('div', { class: 'thesis' }, e.thesis),
+        hasShowcase ? el('button', { class: 'commonerReadMore', onclick: () => Showcase.open(e.id) }, 'Read more ↗') : null,
       );
     }));
 
