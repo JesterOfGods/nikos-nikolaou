@@ -22,7 +22,8 @@
       "Bash(powershell -Command \"\\(Get-Item 'c:\\\\Users\\\\nniko\\\\Documents\\\\my-ttrpg\\\\production\\\\G&G new layout.pdf'\\).Length\")",
       "Bash(powershell -Command \"Test-Path 'c:\\\\Projects\\\\my-website\\\\assets\\\\showcase\\\\ttrpg\\\\hero.jpg'\")",
       "Bash(powershell -Command \"Get-ChildItem 'c:\\\\Projects\\\\my-website\\\\assets\\\\showcase\\\\ttrpg\\\\' -ErrorAction SilentlyContinue | Select-Object Name, Length\")",
-      "Bash(powershell -Command \"Select-String -Path 'c:\\\\Users\\\\nniko\\\\Documents\\\\my-ttrpg\\\\source-material\\\\template.typ' -Pattern 'chapter-opener|ink-splatter|edge|mask' -SimpleMatch | Select-Object -First 30\")"
+      "Bash(powershell -Command \"Select-String -Path 'c:\\\\Users\\\\nniko\\\\Documents\\\\my-ttrpg\\\\source-material\\\\template.typ' -Pattern 'chapter-opener|ink-splatter|edge|mask' -SimpleMatch | Select-Object -First 30\")",
+      "Bash(python3 -c \"import json; d=json.load\\(open\\('data/content.json'\\)\\); print\\(list\\(d.keys\\(\\)\\)\\)\")"
     ]
   }
 }

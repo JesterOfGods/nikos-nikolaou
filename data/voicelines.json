@@ -121,7 +121,9 @@
     { "id": "proj_khora_1", "text": "Khora. The SXSW one. He won't tell you which award, he'll tell you what the team built." }
   ],
   "clickProject_silkroad": [
-    { "id": "proj_silkroad_1", "text": "Silkroad. Sole programmer. Unreal 5. A vertical slice that shipped. He was CTO for two years and won't say the word 'CTO' out loud unless you ask him to." }
+    { "id": "proj_silkroad_1", "text": "Silkroad. Sole programmer. Unreal 5. A vertical slice that shipped. He was CTO for two years and won't say the word 'CTO' out loud unless you ask him to." },
+    { "id": "proj_silkroad_2", "text": "He built the slice that won the DFI grant, then left in 2021. On good terms — he just wasn't there for the rest. The game grew up without him and is on Steam now as 'Yokai Tales: Fox'. Go wishlist it." },
+    { "id": "proj_silkroad_3", "text": "Important footnote: he hasn't touched this project since 2021. The grant and the groundwork were his. Everything 'Yokai Tales: Fox' became after that belongs to the people who stayed." }
   ],
   "clickProject_ttrpg": [
     { "id": "proj_ttrpg_1", "text": "His TTRPG. Rules. Setting. Stories. Slowly growing. He won't show you everything — some of it isn't ready. The rest he just hasn't decided you've earned yet." }
@@ -205,7 +207,8 @@
     { "id": "show_novo_1", "text": "Novo. Sterile-bright room, headset on a cleaned-down desk. Most of what you'd see here is under NDA. He'll show you the shape, not the contents." }
   ],
   "openShowcase_silkroad": [
-    { "id": "show_silkroad_1", "text": "Silkroad. Unreal 5 vertical slice. Sole programmer, CTO on the org chart, alone in the trenches in practice. He'll narrate the demo if you make him." }
+    { "id": "show_silkroad_1", "text": "Silkroad. Unreal 5 vertical slice. Sole programmer, CTO on the org chart, alone in the trenches in practice. He'll narrate the demo if you make him." },
+    { "id": "show_silkroad_2", "text": "Read the fine print on this one. He took it from concept to a grant-winning slice, then walked in 2021 — friendly exit, zero involvement since. What it is today, 'Yokai Tales: Fox' on Steam, is somebody else's victory lap. Worth a look anyway." }
   ],
   "openShowcase_medialogy": [
     { "id": "show_medialogy_1", "text": "Medialogy. The MSc that fed everything XR after. The thesis — VR pain-distraction for needle work. K-wires, epidurals. The dentist came later, when the patients got smaller. Foundational." }

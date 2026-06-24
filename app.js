@@ -94,9 +94,10 @@ async function loadData() {
     //   - coverHero.images: if empty/missing, fall back to manifest entries for that id.
     //   - gallery: if empty/missing AND no coverHero, fall back to manifest minus the hero file.
     //   - gallery: false opts out entirely (hero only, no gallery even if images exist).
+    //   - slideshow: true reads the manifest directly at render time, so skip merging here.
     //   - manual values always win, so individual showcases can override.
     for (const sc of (content.showcases || [])) {
-      if (sc.gallery === false) continue;
+      if (sc.gallery === false || sc.slideshow) continue;
       const manifestImgs = assetManifest[sc.id] || [];
       if (!manifestImgs.length) continue;
       if (sc.coverHero) {
@@ -709,13 +710,42 @@ const Showcase = {
     $('#showcaseTagline').textContent = sc.tagline;
     $('#showcaseTags').replaceChildren(...sc.tags.map(t => el('span', { class: 'tag' }, t)));
 
-    // Hero — cover-style split layout, or background image, or placeholder
+    // Hero — slideshow, cover-style split layout, background image, or placeholder
     const hero = $('#showcaseHero');
-    hero.classList.remove('has-image', 'coverHero');
+    hero.classList.remove('has-image', 'coverHero', 'slideshow');
     hero.style.backgroundImage = '';
     hero.innerHTML = '';
+    if (this._coverInterval) { clearInterval(this._coverInterval); this._coverInterval = null; }
 
-    if (sc.coverHero) {
+    if (sc.slideshow) {
+      // Auto-changing slideshow at hero size, cycling every image for this category.
+      const manifestImgs = (State.data.assetManifest && State.data.assetManifest[sc.id]) || [];
+      const images = manifestImgs.slice();
+      if (sc.hero && !images.includes(sc.hero)) images.unshift(sc.hero);
+      hero.classList.add('slideshow');
+      if (images.length === 0) {
+        hero.replaceChildren(el('div', { class: 'placeholder' }, 'Slideshow images go here.', el('span', {}, `drop files in assets/showcase/${sc.id}/`)));
+      } else {
+        const slides = images.map((src, i) => el('img', {
+          class: 'slide' + (i === 0 ? ' slide--active' : ''),
+          src, alt: '', loading: i === 0 ? 'eager' : 'lazy', draggable: 'false',
+        }));
+        const dots = images.length > 1
+          ? images.map((_, i) => el('span', { class: 'slideDot' + (i === 0 ? ' slideDot--active' : ''), 'aria-hidden': 'true' }))
+          : [];
+        hero.replaceChildren(...slides, dots.length ? el('div', { class: 'slideDots' }, ...dots) : null);
+        if (images.length > 1) {
+          let idx = 0;
+          this._coverInterval = setInterval(() => {
+            slides[idx].classList.remove('slide--active');
+            if (dots.length) dots[idx].classList.remove('slideDot--active');
+            idx = (idx + 1) % slides.length;
+            slides[idx].classList.add('slide--active');
+            if (dots.length) dots[idx].classList.add('slideDot--active');
+          }, sc.slideshowMs || 3500);
+        }
+      }
+    } else if (sc.coverHero) {
       const ch = sc.coverHero;
       const titleParts = Array.isArray(ch.titleParts) && ch.titleParts.length
         ? ch.titleParts
@@ -749,7 +779,6 @@ const Showcase = {
       );
 
       // Crossfade rotation between cover images (only if more than one)
-      if (this._coverInterval) { clearInterval(this._coverInterval); this._coverInterval = null; }
       if (images.length > 1) {
         const imgs = hero.querySelectorAll('.coverHero__photo');
         let idx = 0;
@@ -774,9 +803,9 @@ const Showcase = {
       img.src = sc.hero;
     }
 
-    // Gallery — hidden entirely if empty
+    // Gallery — hidden entirely if empty or when the slideshow already shows every image
     const gallery = $('#showcaseGallery');
-    if (sc.gallery && sc.gallery.length > 0) {
+    if (!sc.slideshow && sc.gallery && sc.gallery.length > 0) {
       gallery.hidden = false;
       gallery.replaceChildren(...sc.gallery.map(src => {
         const item = el('div', { class: 'galleryItem' });
@@ -800,6 +829,14 @@ const Showcase = {
     const milestones = Array.isArray(sc.milestones) ? sc.milestones : [];
     $('#showcaseMilestonesHeading').hidden = milestones.length === 0;
     $('#showcaseMilestones').replaceChildren(...milestones.map(m => el('li', {}, m)));
+
+    // External links (e.g. a shipped game, the original concept) — hidden when none
+    const links = Array.isArray(sc.links) ? sc.links : [];
+    const linksEl = $('#showcaseLinks');
+    linksEl.hidden = links.length === 0;
+    linksEl.replaceChildren(...links.map(l => el('a', {
+      class: 'showcaseLink', href: l.url, target: '_blank', rel: 'noopener',
+    }, l.label)));
 
     this.el.setAttribute('data-mood', sc.mood);
     this.el.hidden = false;

@@ -96,10 +96,11 @@
       "location": "Copenhagen",
       "period": "2019–2021",
       "bullets": [
-        "Sole programmer on a narrative game demo in Unreal 5 — owned gameplay systems concept to DFI-funded vertical slice.",
+        "Sole programmer on a narrative game demo in Unreal 5 — took gameplay systems from concept to a DFI-funded vertical slice.",
+        "Built the vertical slice that secured the studio's Danish Film Institute (DFI) grant.",
         "Implemented character controllers, interaction systems, game states — responsive, bug-free demo.",
         "Collaborated on core design decisions — mechanics had to be fun, responsive, technically feasible.",
-        "Applied Agile to align technical deliverables with evolving design goals."
+        "Left in good standing in 2021, once the grant was secured — no involvement in the project since. It has since evolved and released on Steam as 'Yokai Tales: Fox'."
       ]
     }
   ],
@@ -220,6 +221,7 @@
       "status": "ongoing",
       "tags": ["3D Printing", "Resin", "FDM", "Mini Painting", "Making"],
       "hero": "assets/showcase/minis/hero.jpg",
+      "slideshow": true,
       "gallery": [],
       "story": "Started with one printer. Ended up with a small company for a while. Resin for fine detail, FDM for terrain and brackets. I paint the minis I print — Grey Knights for 40k, Rohan for Middle-earth Strategy Battle Game, and one-off characters for whoever's at the table."
     },
@@ -247,6 +249,7 @@
       "status": "shipped",
       "tags": ["XR", "VR", "AR", "Unity", "C#", "Healthcare", "Cultural Heritage", "Award"],
       "hero": "assets/showcase/khora/khora-qayak.png",
+      "slideshow": true,
       "gallery": [],
       "story": [
         "Lead XR developer at Khora — Copenhagen's XR studio — from 2021 to 2025. Khora builds VR and AR for whoever walks in: hospitals, museums, trade unions, the National Museum, a parachute association. The brief changed every few weeks and the device budget never got more generous. I shipped across all of it.",
@@ -286,18 +289,27 @@
     {
       "id": "silkroad",
       "title": "Silkroad — Unreal Vertical Slice",
-      "tagline": "Sole Programmer / CTO · Unreal 5 · 2019–2021 · DFI-funded",
+      "tagline": "Sole Programmer / CTO · Unreal 5 · 2019–2021 · DFI-funded · departed 2021",
       "mood": "xr-lab",
-      "status": "shipped",
-      "tags": ["Unreal 5", "Gameplay", "Narrative", "DFI", "CTO"],
+      "status": "shipped (left 2021)",
+      "tags": ["Unreal 5", "Gameplay", "Narrative", "DFI", "CTO", "Past role"],
       "hero": "assets/showcase/silkroad/hero.jpg",
       "gallery": [],
-      "story": "Sole programmer on a narrative game demo in Unreal 5 — a DFI-funded vertical slice, taken from concept to shipped. Owned every gameplay system: character controller, interaction, game state. Collaborated tightly with design on what was fun AND technically feasible. Two years carrying the engineering side of a small studio while wearing the CTO title on the side — one he still won't say out loud unless you ask twice.",
+      "story": [
+        "Sole programmer at Silkroad Studios from 2019 to 2021, and CTO on the side. I took a narrative game demo in Unreal 5 from concept to a DFI-funded vertical slice — owning every gameplay system: character controller, interaction, game state. Two years carrying the engineering of a small studio while wearing a title he still won't say out loud unless you ask twice.",
+        "The work grew out of the studio's earlier 'Hyelight' concept (Behance link below). I was the developer who built the vertical slice that secured the studio's Danish Film Institute grant — and then I left the company in 2021. To be clear: I'm on good terms with Silkroad, but I've had no involvement in the project since I left. The engineering groundwork and the grant were mine; everything the game became after 2021 belongs to the team that stayed.",
+        "And it became something. The project has since grown well beyond what I worked on and is now on Steam as 'Yokai Tales: Fox' — a hand-painted narrative adventure. Years of other people's work after my time, and genuinely worth a look. Go wishlist it."
+      ],
       "milestones": [
-        "Sole programmer — concept to vertical slice",
-        "DFI-funded narrative demo in Unreal 5",
-        "Owned character controller, interaction, game state",
-        "CTO for two years (don't ask him to say it out loud)"
+        "Sole programmer + CTO, Silkroad Studios, 2019–2021",
+        "Took the Unreal 5 narrative demo from concept to vertical slice",
+        "Built the vertical slice that secured the DFI (Danish Film Institute) grant",
+        "Left in good standing in 2021 — no involvement in the project since",
+        "Now on Steam as 'Yokai Tales: Fox' (entirely post-departure work)"
+      ],
+      "links": [
+        { "label": "▶ Play / wishlist Yokai Tales: Fox on Steam", "url": "https://store.steampowered.com/app/2817760/Yokai_Tales_Fox/" },
+        { "label": "Original 'Hyelight' concept on Behance", "url": "https://www.behance.net/gallery/59232739/Hyelight" }
       ]
     },
     {
