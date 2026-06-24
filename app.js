@@ -626,13 +626,16 @@ const Views = {
     // so exclude both here. What remains is the standalone project work.
     const educationIds = new Set((d.education || []).map(e => e.id).filter(Boolean));
     const workIds = new Set(d.work.map(w => w.id));
-    $('#commonerShowcases').replaceChildren(...d.showcases.filter(s => !educationIds.has(s.id) && !workIds.has(s.id)).map(s => el('button', {
+    $('#commonerShowcases').replaceChildren(...d.showcases.filter(s => !educationIds.has(s.id) && !workIds.has(s.id)).map(s => {
+      const v = cleanCut(s);
+      return el('button', {
         class: 'commonerShowcase',
         onclick: () => Showcase.open(s.id)
       },
-      el('div', { class: 't' }, s.title),
-      el('div', { class: 's' }, s.tagline),
-    )));
+      el('div', { class: 't' }, v.title),
+      el('div', { class: 's' }, v.tagline),
+    );
+    }));
 
     // Education — each degree with a matching showcase (medialogy, aegean) gets the
     // same "Read more" button as Experience, for consistency.
@@ -697,6 +700,11 @@ const ViewSwap = {
 
 /* ════ 7. Showcase overlay ════ */
 
+// The clean, professional cut of a showcase — what commoners see. `clean` is a
+// sparse overlay (only the fields that differ, e.g. tagline/story/milestones);
+// adventurers get the raw, narrated object. Same renderer feeds off both.
+function cleanCut(sc) { return sc.clean ? { ...sc, ...sc.clean } : sc; }
+
 const Showcase = {
   el: null,
   init() {
@@ -713,8 +721,10 @@ const Showcase = {
     });
   },
   open(id) {
-    const sc = State.data.content.showcases.find(s => s.id === id);
-    if (!sc) return;
+    const raw = State.data.content.showcases.find(s => s.id === id);
+    if (!raw) return;
+    // Commoners get the clean cut; adventurers get the raw, narrated one.
+    const sc = State.view === 'commoner' ? cleanCut(raw) : raw;
 
     $('#showcaseTitle').textContent = sc.title;
     $('#showcaseTagline').textContent = sc.tagline;

@@ -193,6 +193,29 @@
       "status": "first edition in writing",
       "tags": ["TTRPG", "Original System", "Worldbuilding", "Game Design", "Playtesting"],
       "hero": "assets/showcase/ttrpg/ch07-paths.png",
+      "clean": {
+        "tagline": "Original tabletop RPG — system design, worldbuilding, playtesting",
+        "coverHero": {
+          "kicker": "First Edition",
+          "titleParts": ["GRIT", "&", "GLORY"],
+          "tagline": "A Roleplaying Game of Survival, Steel, and Scars",
+          "teaser": [
+            "An original tabletop RPG, designed and written solo — built around earned competence, meaningful consequence, and transparent, dice-driven difficulty.",
+            "First-edition draft ~390 pages, with an accompanying bestiary and playtest-validated design decisions."
+          ],
+          "byline": "Designed and Written by Nikos Nikolaou · 2026"
+        },
+        "story": [
+          "An original tabletop RPG system, designed and written solo, that grew out of years of running campaigns whose stories outpaced existing rules.",
+          "The design centers on three principles: a meaningful resource cost for every action, advancement earned through near-misses, and fully transparent difficulty. The first-edition draft runs to roughly 390 pages, with an accompanying bestiary and design decisions documented and validated through playtesting."
+        ],
+        "milestones": [
+          "Original RPG system — designed and written solo",
+          "First-edition draft ~390 pages, in active development",
+          "Three core design pillars with transparent, dice-driven resolution",
+          "Design decisions documented and validated through playtesting"
+        ]
+      },
       "coverHero": {
         "rotateMs": 5000,
         "kicker": "First Edition",
@@ -206,11 +229,11 @@
       },
       "gallery": [],
       "story": [
-        "Grit & Glory grew out of a six-year Faerûn campaign that kept outgrowing the rules holding it together. D&D's HP bloat didn't match the wounds the table was telling stories about; levels arrived faster than the world's economy could absorb; the players kept inventing — from whole cloth — the mechanics they wanted to see. Eventually I stopped patching and started writing my own system.",
+        "Grit & Glory grew out of a six-year Faerûn campaign that kept outgrowing the rules holding it together. D&D's HP bloat didn't match the wounds the table was telling stories about; levels arrived faster than the world's economy could absorb; the players kept inventing — from whole cloth — the mechanics they wanted to see. Eventually he stopped patching and started writing his own system.",
         "The system is built on three locked feelings. The Grind: every action carries weight; nothing is free. The Welcome Bruise: the only band of outcome that delivers per-roll advancement is the one where you almost made it; growth is paid for in scars. Lawful Brutality: no hidden target numbers; the world is hostile, but it tells you exactly how hard it's pushing back, in the currency of dice.",
         "Sessions feel like pressure — every roll spends something: focus, gear, daylight, blood. Campaigns feel like becoming. Who your character is at session ten isn't who they were at session one, because something happened on the road, and something stayed.",
         "Heroism isn't a birthright here. Hope is earned. So is glory.",
-        "Currently in writing. First-edition draft sits at 387 pages, the bestiary grows teeth every time I declare it finished, and playtest reports live in their own folder so design decisions stay auditable years from now."
+        "Currently in writing. First-edition draft sits at 387 pages, the bestiary grows teeth every time he declares it finished, and playtest reports live in their own folder so design decisions stay auditable years from now."
       ]
     },
     {
@@ -222,8 +245,12 @@
       "tags": ["3D Printing", "Resin", "FDM", "Mini Painting", "Making"],
       "hero": "assets/showcase/minis/hero.jpg",
       "slideshow": true,
+      "clean": {
+        "tagline": "Resin + FDM 3D printing and miniature painting",
+        "story": "An ongoing 3D printing and miniature-painting practice — resin for fine detail, FDM for terrain and larger pieces. Painted projects include Warhammer 40,000 Grey Knights and Middle-earth Strategy Battle Game Rohan, alongside custom one-off models."
+      },
       "gallery": [],
-      "story": "Started with one printer. Ended up with a small company for a while. Resin for fine detail, FDM for terrain and brackets. I paint the minis I print — Grey Knights for 40k, Rohan for Middle-earth Strategy Battle Game, and one-off characters for whoever's at the table."
+      "story": "Started with one printer. Ended up with a small company for a while. Resin for fine detail, FDM for terrain and brackets. He paints the minis he prints — Grey Knights for 40k, Rohan for Middle-earth Strategy Battle Game, and one-off characters for whoever's at the table."
     },
     {
       "id": "faerun",
@@ -233,6 +260,13 @@
       "status": "active-campaign",
       "tags": ["D&D", "GM", "Worldbuilding", "Homebrew", "Improv"],
       "hero": "assets/showcase/faerun/hero.jpg",
+      "clean": {
+        "tagline": "Tabletop RPG game master & homebrew designer — six+ years",
+        "story": [
+          "Six-plus years as a Dungeons & Dragons game master, running a mix of homebrew and heavily adapted published campaigns, with four full campaigns brought to a conclusion.",
+          "The role extended well beyond running games into systems and worldbuilding: original subclasses, a curated and extended house ruleset, and original mythology. This long-running design practice directly informed the original RPG system project."
+        ]
+      },
       "gallery": false,
       "story": [
         "Six-plus years running Faerûn — a mix of homebrew arcs and prebuilt campaigns modified past recognition, because the table never wants to do the thing the book expects. Four campaigns have actually reached an ending, which, if you've run D&D, you know is the real boss fight: 'A Series of Unfortunate Rolls', 'And It All Went to Hell', 'The Blue Plague', and 'Until Death Do Us Apart'.",
@@ -250,9 +284,17 @@
       "tags": ["XR", "VR", "AR", "Unity", "C#", "Healthcare", "Cultural Heritage", "Award"],
       "hero": "assets/showcase/khora/khora-qayak.png",
       "slideshow": true,
+      "clean": {
+        "tagline": "Lead XR Developer · 2021–2025 · SXSW-recognized",
+        "story": [
+          "Lead XR developer at Khora, Copenhagen's XR studio, from 2021 to 2025, delivering VR and AR projects across healthcare, cultural heritage, and professional training for clients including hospitals, museums, and the National Museum of Denmark.",
+          "Healthcare and training work included a neonatal-resuscitation VR simulation piloted with 45 health workers across three hospitals in Pemba, Tanzania (EU Horizon / XR2LEARN), conflict-handling VR for Ambulance Syd paramedics, robot-handling training for Industriens Uddannelser, and an adaptive mobility game for people with cerebral palsy.",
+          "Heritage and empathy work included on-site AR reconstruction of Esrum Monastery, a VR tour of Nikolaj Kunsthal's tower, VR Qayak for the Nuuk museum, and a 360° historical experience of Copenhagen's Rådhuspladsen for the National Museum. All delivered under strict performance budgets on Quest 2, Pico, and Oculus Go, supported by studio-wide templates and asset standards. One project received an SXSW nod."
+        ]
+      },
       "gallery": [],
       "story": [
-        "Lead XR developer at Khora — Copenhagen's XR studio — from 2021 to 2025. Khora builds VR and AR for whoever walks in: hospitals, museums, trade unions, the National Museum, a parachute association. The brief changed every few weeks and the device budget never got more generous. I shipped across all of it.",
+        "Lead XR developer at Khora — Copenhagen's XR studio — from 2021 to 2025. Khora builds VR and AR for whoever walks in: hospitals, museums, trade unions, the National Museum, a parachute association. The brief changed every few weeks and the device budget never got more generous. He shipped across all of it.",
         "The healthcare and training cluster is where the stakes lived. A neonatal-resuscitation VR simulation — quiz, sandbox, and timed skill drills — that piloted with 45 health workers across three hospitals in Pemba, Tanzania, under EU Horizon's XR2LEARN. Conflict-handling VR for Ambulance Syd paramedics, branching films where the wrong de-escalation ends the scenario. Robot-handling training for Industriens Uddannelser. A mobility game for people with cerebral palsy that re-tuned itself to each player's reach.",
         "The heritage and empathy cluster is where the craft lived. On-site AR that rebuilt Esrum Monastery on a tablet and let visitors watch it fall. A VR climb up Nikolaj Kunsthal's tower while it was closed for renovation. VR Qayak for the Nuuk museum — kayaking, drum dance, Greenlandic history. A 360 time-travel through Copenhagen's Rådhuspladsen for Nationalmuseet. And quieter, heavier pieces — 'With These Hands', survivor testimony you hold in your own hands — where a dropped frame breaks the spell entirely.",
         "Underneath the variety, the same engineering discipline every time: strict budgets on Quest 2, Pico, and Oculus Go; high-precision tracking for on-location AR; studio-wide templates and asset standards so the next project didn't start from zero. Clients changed their minds, scopes drifted, hardware shipped late — and the thing went out the door anyway. One of them came back with an SXSW nod."
@@ -277,6 +319,13 @@
       "status": "shipped",
       "tags": ["XR", "VR", "Unity", "C#", "Pharma", "Training", "Visualization", "Performance"],
       "hero": "assets/showcase/novo/hero.jpg",
+      "clean": {
+        "tagline": "Senior XR Developer · 2025–2026 · Pharmaceutical equipment training",
+        "story": [
+          "Senior XR developer building VR training and visualization for pharmaceutical manufacturing equipment — interactive simulations that let operators learn complex machinery in a headset before working on the production line. Most of the work is covered by NDA.",
+          "Delivered custom Unity tooling that shortened design-feedback loops, performance profiling and debugging that kept dense, high-fidelity scenes running smoothly within strict budgets, and a modular architecture built for fast iteration. Also led code reviews and mentored junior developers."
+        ]
+      },
       "gallery": [],
       "story": [
         "Senior XR developer building VR training and visualization for pharmaceutical equipment — the machines that fill, inspect, and package medicine, learned in a headset before anyone gets near the real production line. Most of it lives under NDA, so the specifics stay inside the building. The shape of the work is fair game.",
@@ -298,10 +347,18 @@
       "status": "shipped (left 2021)",
       "tags": ["Unreal", "Unity", "Gameplay", "Narrative", "DFI", "CTO", "Past role"],
       "slideshow": true,
+      "clean": {
+        "tagline": "Programmer & CTO · Unreal Engine · DFI-funded · 2019–2021",
+        "story": [
+          "Sole programmer and CTO at Silkroad Studios from 2019 to 2021, joining at the start of 'Foxtale', an Unreal Engine narrative game, and owning gameplay engineering from concept through to a vertical slice funded by the Danish Film Institute (DFI).",
+          "The Foxtale vertical slice is under NDA; the images shown here are from 'Hyelight', a Unity game I worked on as a programmer with the same team that went on to make Foxtale, and the project that inspired it. I departed in 2021 once the grant was secured, with no further involvement.",
+          "Foxtale was later renamed and released on Steam as 'Yokai Tales: Fox'."
+        ]
+      },
       "gallery": [],
       "story": [
         "Silkroad Studios, 2019 to 2021: sole programmer and CTO, in at the start of 'Foxtale' — an Unreal narrative game. He owned the gameplay engineering and took it from concept to a DFI-funded vertical slice. Two years holding up the engineering of a small studio while wearing a title he still won't say out loud unless you ask twice.",
-        "The Foxtale vertical slice itself sits behind an NDA — those images can't be shown here. So what's on this page is 'Hyelight', a Unity game he worked on as a programmer that inspired Foxtale; the Behance link below is the full project. That's the work that set everything here in motion.",
+        "The Foxtale vertical slice itself sits behind an NDA — those images can't be shown here. So what's on this page is 'Hyelight', a Unity game he worked on as a programmer — with the same team that went on to make Foxtale — and the project that inspired it; the Behance link below is the full project. That's the work that set everything here in motion.",
         "He built the vertical slice that secured the studio's Danish Film Institute grant — and then he left in 2021. To be clear: he's on good terms with Silkroad, but he's had no involvement in the project since. The engineering groundwork and the grant were his; everything Foxtale became after 2021 belongs to the team that stayed.",
         "Curious what it became? Foxtale was renamed and released on Steam as 'Yokai Tales: Fox' — a hand-painted narrative adventure, years of other people's work after his time. Wishlist link below."
       ],
@@ -327,6 +384,14 @@
       "status": "completed",
       "tags": ["Unity", "C#", "XR Research", "HCI", "Healthcare", "VR"],
       "hero": "assets/showcase/medialogy/comfort-xr.png",
+      "clean": {
+        "tagline": "MSc Medialogy · Aalborg University, Copenhagen",
+        "story": [
+          "Master's thesis at Aalborg University, Copenhagen: VR-based pain distraction for awake needle procedures — K-wire insertions and epidural needle work — where patient anticipation is the most difficult factor to manage.",
+          "Unlike passive media, VR can actively redirect attention by requiring the patient to look, reach, and act elsewhere during the procedure. The work became the foundation of Comfort XR, an immersive distraction system.",
+          "Comfort XR validated the approach on real procedural pain and later extended to pediatric dentistry, reaching clinics with Rigshospitalet and Ringkøbing-Skjern Kommune."
+        ]
+      },
       "gallery": [],
       "story": [
         "Master's thesis at Aalborg University, Copenhagen: pain distraction in VR for needle procedures — specifically K-wire insertions and epidural needle work. The hard cases. Patient awake, fully conscious, and the worst of it is anticipation: watching the needle, bracing for it. The question was whether presence could pull attention off the needle entirely.",
@@ -349,6 +414,14 @@
       "status": "completed",
       "tags": ["Game Design", "Serious Games", "Location-Based", "Unity", "C#", "AR"],
       "hero": "assets/showcase/aegean/hero.jpg",
+      "clean": {
+        "tagline": "MSc Products & Systems Design Engineering · University of the Aegean, Syros",
+        "story": [
+          "Master's thesis at the University of the Aegean, Syros (2019): a location-aware mobile AR serious game for protecting the architectural heritage of Ermoupolis. Built in Unity with Mapbox, using real GPS and the town's streets to guide players between heritage buildings.",
+          "The game overlays scenes from M. Karagatsis's novel 'The Great Chimera' onto the real locations where they are set, combining narrative with place. It was designed as a serious game focused on heritage awareness and refined through rapid prototyping and iterative on-location user testing.",
+          "An earlier internship produced 'Inside Out', an alternate-reality game presented with Cat White Studios at the Eve's Walk Festival on Syros."
+        ]
+      },
       "gallery": [],
       "story": [
         "Master's thesis at the University of the Aegean, on Syros, February 2019: a location-aware mobile AR serious game for protecting the architectural and artistic heritage of Ermoupolis — the island's neoclassical capital. Built in Unity on Mapbox: real GPS and the actual streets of Ermoupolis, so the game knew where you physically stood and walked you between real heritage buildings.",
