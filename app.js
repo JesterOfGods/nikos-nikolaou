@@ -598,17 +598,22 @@ const Views = {
     $('#commonerLinkedin').setAttribute('target', '_blank');
     $('#commonerLinkedin').setAttribute('rel', 'noopener');
 
-    // Work
-    $('#commonerWork').replaceChildren(...d.work.map(w => el('div', { class: 'commonerJob' },
-      el('div', { class: 'row' },
-        el('div', {},
-          el('div', { class: 'roleLine' }, w.role),
-          el('div', { class: 'companyLine' }, `${w.company} · ${w.location}`),
+    // Work — bullets shown inline as before; each job with a showcase gets a small
+    // "Read more" button that opens it (these work tabs used to live in Selected Work).
+    $('#commonerWork').replaceChildren(...d.work.map(w => {
+      const hasShowcase = d.showcases.some(s => s.id === w.id);
+      return el('div', { class: 'commonerJob' },
+        el('div', { class: 'row' },
+          el('div', {},
+            el('div', { class: 'roleLine' }, w.role),
+            el('div', { class: 'companyLine' }, `${w.company} · ${w.location}`),
+          ),
+          el('div', { class: 'period' }, w.period),
         ),
-        el('div', { class: 'period' }, w.period),
-      ),
-      el('ul', {}, ...w.bullets.map(b => el('li', {}, b))),
-    )));
+        el('ul', {}, ...w.bullets.map(b => el('li', {}, b))),
+        hasShowcase ? el('button', { class: 'commonerReadMore', onclick: () => Showcase.open(w.id) }, 'Read more ↗') : null,
+      );
+    }));
 
     // Skills
     $('#commonerSkills').replaceChildren(...d.skills.map(s => el('div', { class: 'commonerSkillChip' },
@@ -616,8 +621,12 @@ const Views = {
       el('span', { class: 'y' }, `${s.years}y`),
     )));
 
-    // Showcases (compact tile)
-    $('#commonerShowcases').replaceChildren(...d.showcases.map(s => el('button', {
+    // Selected Work (compact tile) — work showcases now open from each job's
+    // "Read more" button, and education showcases live in the Education section,
+    // so exclude both here. What remains is the standalone project work.
+    const educationIds = new Set((d.education || []).map(e => e.id).filter(Boolean));
+    const workIds = new Set(d.work.map(w => w.id));
+    $('#commonerShowcases').replaceChildren(...d.showcases.filter(s => !educationIds.has(s.id) && !workIds.has(s.id)).map(s => el('button', {
         class: 'commonerShowcase',
         onclick: () => Showcase.open(s.id)
       },
@@ -625,12 +634,19 @@ const Views = {
       el('div', { class: 's' }, s.tagline),
     )));
 
-    // Education
-    $('#commonerEducation').replaceChildren(...d.education.map(e => el('div', { class: 'commonerEdu' },
-      el('div', { class: 'deg' }, e.degree),
-      el('div', { class: 'inst' }, e.institution),
-      el('div', { class: 'thesis' }, e.thesis),
-    )));
+    // Education — each degree opens its matching showcase (medialogy, aegean) when
+    // one exists, mirroring the adventurer Library.
+    $('#commonerEducation').replaceChildren(...d.education.map(e => {
+      const hasShowcase = e.id && d.showcases.some(s => s.id === e.id);
+      return el('div', {
+          class: 'commonerEdu' + (hasShowcase ? ' commonerEdu--linked' : ''),
+          onclick: hasShowcase ? () => Showcase.open(e.id) : undefined,
+        },
+        el('div', { class: 'deg' }, e.degree, hasShowcase ? el('span', { class: 'eduMore' }, '↗ open') : null),
+        el('div', { class: 'inst' }, e.institution),
+        el('div', { class: 'thesis' }, e.thesis),
+      );
+    }));
 
     // Beyond Work
     $('#commonerBeyond').textContent =

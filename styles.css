@@ -707,6 +707,8 @@ body.boot .app { display: none !important; }
 .commonerJob ul { margin-top: 0.5rem; display: grid; gap: 0.25rem; }
 .commonerJob ul li { font-size: 0.88rem; color: var(--ink-dim); padding-left: 0.9em; position: relative; }
 .commonerJob ul li::before { content: "·"; color: var(--accent); position: absolute; left: 0; font-weight: 700; }
+.commonerReadMore { margin-top: 0.6rem; padding: 0.3rem 0.8rem; background: var(--surface); border: 1px solid #2c2517; border-radius: 999px; color: var(--ink-dim); font-family: var(--ff-mono); font-size: 0.75rem; cursor: pointer; transition: all var(--t-fast) ease; }
+.commonerReadMore:hover { border-color: var(--accent); color: var(--accent); background: var(--surface-2); }
 
 .commonerSkills { display: flex; flex-wrap: wrap; gap: 0.4rem; }
 .commonerSkillChip { padding: 0.35rem 0.7rem; background: var(--surface); border: 1px solid #2c2517; border-radius: 999px; font-size: 0.82rem; color: var(--ink-dim); }
@@ -723,6 +725,9 @@ body.boot .app { display: none !important; }
 .commonerEdu .deg { color: var(--ink); font-weight: 600; }
 .commonerEdu .inst { color: var(--ink-dim); font-size: 0.9rem; }
 .commonerEdu .thesis { color: var(--ink-faint); font-size: 0.85rem; margin-top: 0.2rem; font-style: italic; }
+.commonerEdu--linked { cursor: pointer; transition: color var(--t-fast) ease; }
+.commonerEdu--linked:hover .deg { color: var(--accent); }
+.commonerEdu .eduMore { font-family: var(--ff-mono); font-size: 0.72rem; color: var(--accent); margin-left: 0.5rem; font-weight: 400; }
 
 .commonerFooter { padding-top: 2rem; text-align: center; color: var(--ink-faint); font-family: var(--ff-mono); font-size: 0.78rem; }
 
