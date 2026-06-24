@@ -293,15 +293,8 @@
       "mood": "xr-lab",
       "status": "shipped (left 2021)",
       "tags": ["Unreal", "Unity", "Gameplay", "Narrative", "DFI", "CTO", "Past role"],
-      "hero": "assets/showcase/silkroad/hyelight-09.png",
-      "gallery": [
-        "assets/showcase/silkroad/hyelight-10.png",
-        "assets/showcase/silkroad/hyelight-02.png",
-        "assets/showcase/silkroad/hyelight-05.png",
-        "assets/showcase/silkroad/hyelight-04.png",
-        "assets/showcase/silkroad/hyelight-01.png",
-        "assets/showcase/silkroad/hyelight-03.png"
-      ],
+      "slideshow": true,
+      "gallery": [],
       "story": [
         "Silkroad Studios, 2019 to 2021: sole programmer and CTO, in at the start of 'Foxtale' — an Unreal narrative game. He owned the gameplay engineering and took it from concept to a DFI-funded vertical slice. Two years holding up the engineering of a small studio while wearing a title he still won't say out loud unless you ask twice.",
         "Foxtale didn't come from nowhere. It was inspired by 'Hyelight', his own university diploma project — a Unity game he built solo as the only coder and developer. The images on this page are Hyelight; the Behance link below is the full project. That's the work that set everything here in motion.",
