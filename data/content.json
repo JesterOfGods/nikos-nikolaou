@@ -70,7 +70,7 @@
       "period": "2025–2026",
       "bullets": [
         "Designed custom Unity tools that accelerated prototyping and shortened design-feedback loops.",
-        "Led high-fidelity training simulations with strict modular architecture and performance budgets.",
+        "Built VR training and visualization for pharmaceutical production equipment under strict modular architecture and performance budgets.",
         "Owned performance profiling and debugging for heavy scenes — kept everything smooth.",
         "Mentored junior developers and reviewed code to raise team production standards."
       ]
@@ -271,17 +271,21 @@
     },
     {
       "id": "novo",
-      "title": "Novo — XR for Healthcare",
-      "tagline": "Senior XR Developer · 2025–2026 · Training simulations",
+      "title": "Novo — XR for Pharma",
+      "tagline": "Senior XR Developer · 2025–2026 · Pharmaceutical equipment training",
       "mood": "xr-lab",
       "status": "shipped",
-      "tags": ["XR", "VR", "Unity", "C#", "Healthcare", "Training", "Performance"],
+      "tags": ["XR", "VR", "Unity", "C#", "Pharma", "Training", "Visualization", "Performance"],
       "hero": "assets/showcase/novo/hero.jpg",
       "gallery": [],
-      "story": "Senior XR developer on high-fidelity VR training simulations for healthcare. Most of the work lives under NDA, so specifics stay quiet — but the shape of it: custom Unity tooling that shortened design-feedback loops, performance profiling and debugging passes that kept heavy scenes smooth, and modular architecture under strict performance budgets. Also reviewed code and mentored junior developers so the team's output kept rising.",
+      "story": [
+        "Senior XR developer building VR training and visualization for pharmaceutical equipment — the machines that fill, inspect, and package medicine, learned in a headset before anyone gets near the real production line. Most of it lives under NDA, so the specifics stay inside the building. The shape of the work is fair game.",
+        "Custom Unity tooling that pulled the design-feedback loop from days down to a sitting. Profiling and debugging passes that kept dense, high-fidelity machinery running smooth in a headset — because a training sim that drops frames teaches exactly the wrong thing. Modular architecture under strict performance budgets, the same discipline as always. Plus the off-spec work that never makes the brief: reviewing code and mentoring juniors so the team shipped faster than the NDA will ever let him prove."
+      ],
       "milestones": [
-        "Custom Unity tooling that accelerated prototyping",
-        "Performance profiling + debugging on heavy VR scenes",
+        "VR training + visualization for pharmaceutical production equipment",
+        "Custom Unity tooling that shortened the design-feedback loop",
+        "Performance profiling + debugging on dense, high-fidelity machinery scenes",
         "Modular architecture under strict perf budgets",
         "Mentored juniors and led code review"
       ]

@@ -67,7 +67,6 @@ narrator.fire(triggerId, {
 
 ## Things deliberately NOT in v1
 
-- ElevenLabs voice cloning (do later when Nikos records a 30s sample)
 - Analytics, even privacy-respecting ones
 - Service worker / offline support
 
