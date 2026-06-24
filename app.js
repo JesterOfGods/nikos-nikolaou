@@ -645,10 +645,6 @@ const Views = {
         hasShowcase ? el('button', { class: 'commonerReadMore', onclick: () => Showcase.open(e.id) }, 'Read more ↗') : null,
       );
     }));
-
-    // Beyond Work
-    $('#commonerBeyond').textContent =
-      'Game Master for 6+ years (D&D, building my own TTRPG system). Mini painter (Grey Knights for 40k, Rohan for MESBG). 3D printing (resin + FDM — ran my own company for a while). MTG Commander. Adversarial communicator by sport. Will not be taking the Books proficiency.';
   },
 };
 

@@ -714,7 +714,7 @@ body.boot .app { display: none !important; }
 .commonerSkillChip { padding: 0.35rem 0.7rem; background: var(--surface); border: 1px solid #2c2517; border-radius: 999px; font-size: 0.82rem; color: var(--ink-dim); }
 .commonerSkillChip .y { color: var(--accent); font-family: var(--ff-mono); margin-left: 0.35rem; font-size: 0.75rem; }
 
-.commonerShowcases { display: grid; grid-template-columns: repeat(3, 1fr); gap: 0.65rem; }
+.commonerShowcases { display: grid; grid-template-columns: repeat(3, 1fr); gap: 0.65rem; margin-top: 0.85rem; }
 @media (max-width: 640px) { .commonerShowcases { grid-template-columns: 1fr; } }
 .commonerShowcase { padding: 0.85rem 1rem; background: var(--surface); border: 1px solid #2c2517; border-radius: var(--rad); cursor: pointer; transition: all var(--t-fast) ease; }
 .commonerShowcase:hover { border-color: var(--accent); background: var(--surface-2); }
