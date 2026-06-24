@@ -68,9 +68,6 @@ narrator.fire(triggerId, {
 ## Things deliberately NOT in v1
 
 - ElevenLabs voice cloning (do later when Nikos records a 30s sample)
-- Paint-a-mini accent customization
-- Embedded WebGL mini
-- The "Heretic" hidden third door (post-Konami unlock — easy to add)
 - Analytics, even privacy-respecting ones
 - Service worker / offline support
 
