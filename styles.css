@@ -1434,11 +1434,12 @@ body.boot .app { display: none !important; }
    Sepia + hue-rotate retints any source map toward the site's tan palette. */
 .showcase[data-mood="dm-screen"]::before {
   content: "";
-  position: absolute;
+  position: fixed;
   inset: 0;
   background-image: url('assets/showcase/faerun/FaerunMap.webp');
   background-size: cover;
   background-position: center;
+  background-attachment: fixed;
   filter: sepia(0.7) hue-rotate(-15deg) saturate(0.55) brightness(0.75);
   opacity: 0.32;
   pointer-events: none;

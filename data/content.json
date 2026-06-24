@@ -96,11 +96,11 @@
       "location": "Copenhagen",
       "period": "2019–2021",
       "bullets": [
-        "Sole programmer on a narrative game demo in Unreal 5 — took gameplay systems from concept to a DFI-funded vertical slice.",
+        "Sole programmer at the start of 'Foxtale', an Unreal narrative game — owned gameplay systems from concept to a DFI-funded vertical slice.",
         "Built the vertical slice that secured the studio's Danish Film Institute (DFI) grant.",
         "Implemented character controllers, interaction systems, game states — responsive, bug-free demo.",
-        "Collaborated on core design decisions — mechanics had to be fun, responsive, technically feasible.",
-        "Left in good standing in 2021, once the grant was secured — no involvement in the project since. It has since evolved and released on Steam as 'Yokai Tales: Fox'."
+        "Foxtale was inspired by 'Hyelight', his own Unity diploma project where he was sole coder and developer.",
+        "Left in good standing in 2021, once the grant was secured — no involvement since. Foxtale later released on Steam as 'Yokai Tales: Fox'."
       ]
     }
   ],
@@ -288,28 +288,38 @@
     },
     {
       "id": "silkroad",
-      "title": "Silkroad — Unreal Vertical Slice",
-      "tagline": "Sole Programmer / CTO · Unreal 5 · 2019–2021 · DFI-funded · departed 2021",
+      "title": "Silkroad — Foxtale (now Yokai Tales: Fox)",
+      "tagline": "Sole Programmer / CTO · Unreal · DFI-funded · 2019–2021 · departed 2021",
       "mood": "xr-lab",
       "status": "shipped (left 2021)",
-      "tags": ["Unreal 5", "Gameplay", "Narrative", "DFI", "CTO", "Past role"],
-      "hero": "assets/showcase/silkroad/hero.jpg",
-      "gallery": [],
+      "tags": ["Unreal", "Unity", "Gameplay", "Narrative", "DFI", "CTO", "Past role"],
+      "hero": "assets/showcase/silkroad/hyelight-09.png",
+      "gallery": [
+        "assets/showcase/silkroad/hyelight-10.png",
+        "assets/showcase/silkroad/hyelight-02.png",
+        "assets/showcase/silkroad/hyelight-05.png",
+        "assets/showcase/silkroad/hyelight-04.png",
+        "assets/showcase/silkroad/hyelight-01.png",
+        "assets/showcase/silkroad/hyelight-03.png"
+      ],
       "story": [
-        "Sole programmer at Silkroad Studios from 2019 to 2021, and CTO on the side. I took a narrative game demo in Unreal 5 from concept to a DFI-funded vertical slice — owning every gameplay system: character controller, interaction, game state. Two years carrying the engineering of a small studio while wearing a title he still won't say out loud unless you ask twice.",
-        "The work grew out of the studio's earlier 'Hyelight' concept (Behance link below). I was the developer who built the vertical slice that secured the studio's Danish Film Institute grant — and then I left the company in 2021. To be clear: I'm on good terms with Silkroad, but I've had no involvement in the project since I left. The engineering groundwork and the grant were mine; everything the game became after 2021 belongs to the team that stayed.",
-        "And it became something. The project has since grown well beyond what I worked on and is now on Steam as 'Yokai Tales: Fox' — a hand-painted narrative adventure. Years of other people's work after my time, and genuinely worth a look. Go wishlist it."
+        "Silkroad Studios, 2019 to 2021: sole programmer and CTO, in at the start of 'Foxtale' — an Unreal narrative game. He owned the gameplay engineering and took it from concept to a DFI-funded vertical slice. Two years holding up the engineering of a small studio while wearing a title he still won't say out loud unless you ask twice.",
+        "Foxtale didn't come from nowhere. It was inspired by 'Hyelight', his own university diploma project — a Unity game he built solo as the only coder and developer. The images on this page are Hyelight; the Behance link below is the full project. That's the work that set everything here in motion.",
+        "He built the vertical slice that secured the studio's Danish Film Institute grant — and then he left in 2021. To be clear: he's on good terms with Silkroad, but he's had no involvement in the project since. The engineering groundwork and the grant were his; everything Foxtale became after 2021 belongs to the team that stayed.",
+        "Curious what it became? Foxtale was renamed and released on Steam as 'Yokai Tales: Fox' — a hand-painted narrative adventure, years of other people's work after his time. Wishlist link below."
       ],
       "milestones": [
-        "Sole programmer + CTO, Silkroad Studios, 2019–2021",
-        "Took the Unreal 5 narrative demo from concept to vertical slice",
-        "Built the vertical slice that secured the DFI (Danish Film Institute) grant",
-        "Left in good standing in 2021 — no involvement in the project since",
-        "Now on Steam as 'Yokai Tales: Fox' (entirely post-departure work)"
+        "Sole programmer + CTO at Silkroad Studios, 2019–2021",
+        "In at the start of 'Foxtale', an Unreal narrative game",
+        "Took it from concept to a DFI-funded vertical slice",
+        "Built the slice that secured the DFI (Danish Film Institute) grant",
+        "Inspired by 'Hyelight', his solo Unity diploma project (the images here)",
+        "Left in good standing in 2021 — no involvement since",
+        "Foxtale released on Steam as 'Yokai Tales: Fox' (post-departure work)"
       ],
       "links": [
-        { "label": "▶ Play / wishlist Yokai Tales: Fox on Steam", "url": "https://store.steampowered.com/app/2817760/Yokai_Tales_Fox/" },
-        { "label": "Original 'Hyelight' concept on Behance", "url": "https://www.behance.net/gallery/59232739/Hyelight" }
+        { "label": "▶ Curious what Foxtale became? Wishlist Yokai Tales: Fox on Steam", "url": "https://store.steampowered.com/app/2817760/Yokai_Tales_Fox/" },
+        { "label": "Hyelight — his Unity diploma project (the inspiration) on Behance", "url": "https://www.behance.net/gallery/59232739/Hyelight" }
       ]
     },
     {
