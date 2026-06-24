@@ -99,7 +99,7 @@
         "Sole programmer at the start of 'Foxtale', an Unreal narrative game — owned gameplay systems from concept to a DFI-funded vertical slice.",
         "Built the vertical slice that secured the studio's Danish Film Institute (DFI) grant.",
         "Implemented character controllers, interaction systems, game states — responsive, bug-free demo.",
-        "Foxtale was inspired by 'Hyelight', his own Unity diploma project where he was sole coder and developer.",
+        "Foxtale was inspired by 'Hyelight', a Unity game he worked on as a programmer.",
         "Left in good standing in 2021, once the grant was secured — no involvement since. Foxtale later released on Steam as 'Yokai Tales: Fox'."
       ]
     }
@@ -297,7 +297,7 @@
       "gallery": [],
       "story": [
         "Silkroad Studios, 2019 to 2021: sole programmer and CTO, in at the start of 'Foxtale' — an Unreal narrative game. He owned the gameplay engineering and took it from concept to a DFI-funded vertical slice. Two years holding up the engineering of a small studio while wearing a title he still won't say out loud unless you ask twice.",
-        "Foxtale didn't come from nowhere. It was inspired by 'Hyelight', his own university diploma project — a Unity game he built solo as the only coder and developer. The images on this page are Hyelight; the Behance link below is the full project. That's the work that set everything here in motion.",
+        "Foxtale didn't come from nowhere. It was inspired by 'Hyelight', a Unity game he worked on as a programmer. The images on this page are Hyelight; the Behance link below is the full project. That's the work that set everything here in motion.",
         "He built the vertical slice that secured the studio's Danish Film Institute grant — and then he left in 2021. To be clear: he's on good terms with Silkroad, but he's had no involvement in the project since. The engineering groundwork and the grant were his; everything Foxtale became after 2021 belongs to the team that stayed.",
         "Curious what it became? Foxtale was renamed and released on Steam as 'Yokai Tales: Fox' — a hand-painted narrative adventure, years of other people's work after his time. Wishlist link below."
       ],
@@ -306,13 +306,13 @@
         "In at the start of 'Foxtale', an Unreal narrative game",
         "Took it from concept to a DFI-funded vertical slice",
         "Built the slice that secured the DFI (Danish Film Institute) grant",
-        "Inspired by 'Hyelight', his solo Unity diploma project (the images here)",
+        "Inspired by 'Hyelight', a Unity game he programmed on (the images here)",
         "Left in good standing in 2021 — no involvement since",
         "Foxtale released on Steam as 'Yokai Tales: Fox' (post-departure work)"
       ],
       "links": [
         { "label": "▶ Curious what Foxtale became? Wishlist Yokai Tales: Fox on Steam", "url": "https://store.steampowered.com/app/2817760/Yokai_Tales_Fox/" },
-        { "label": "Hyelight — his Unity diploma project (the inspiration) on Behance", "url": "https://www.behance.net/gallery/59232739/Hyelight" }
+        { "label": "Hyelight — the Unity game he programmed on (the inspiration) on Behance", "url": "https://www.behance.net/gallery/59232739/Hyelight" }
       ]
     },
     {
